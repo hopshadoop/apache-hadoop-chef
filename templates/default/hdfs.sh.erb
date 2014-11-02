@@ -1,0 +1,14 @@
+#!/bin/bash
+
+command=hdfs
+
+# for some reason, .bash_profile isn't sourced with
+# the -l argument. Source it explicitly.
+sudo -u <%= node[:hadoop][:user] %> bash -l <<EOF
+source /home/<%= node[:hadoop][:user] %>/.bash_profile
+/srv/hadoop/bin/$command $@
+EOF
+
+exit $?
+
+

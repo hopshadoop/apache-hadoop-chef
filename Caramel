@@ -1,0 +1,6 @@
+hadoop/install
+hadoop/nn:L/hadoop/install
+hadoop/rm:hadoop/nn,L/hadoop/install
+hadoop/dn:hadoop/rm,L/hadoop/install
+hadoop/nm:hadoop/dn,L/hadoop/install
+hadoop/jhs:hadoop/dn,L/hadoop/install
