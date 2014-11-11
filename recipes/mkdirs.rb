@@ -9,7 +9,7 @@ for d in node[:mr][:dirs]
 end
 
 bash 'restart-nn' do
-  user node[:hadoop][:user]
+  user node[:hdfs][:user]
   code <<-EOH
  		#{node[:hadoop][:home]}/sbin/restart-nn.sh
  	EOH

@@ -15,6 +15,20 @@ group node[:hadoop][:group] do
   append true
 end
 
+user node[:hadoop][:mr][:user] do
+  supports :manage_home => true
+  home "/home/#{node[:hadoop][:mr][:user]}"
+  action :create
+  system true
+  shell "/bin/bash"
+end
+
+group node[:hadoop][:group] do
+  action :modify
+  members #{node[:hadoop][:mr][:user]}
+  append true
+end
+
 # TODO - if multiple RMs, and node[:yarn][:rm][:addrs] is set because
 # RMs are in different node groups, then use the attribute. Else
 # use the private_ips
@@ -29,7 +43,7 @@ Chef::Log.info "Resourcemanager IP: #{rm_ip}"
 template "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do
   source "yarn-site.xml.erb"
   owner node[:hadoop][:yarn][:user]
-  group node[:hadoop][:yarn][:user]
+  group node[:hadoop][:group]
   mode "666"
   variables({
               :rm_ip => rm_ip,
@@ -41,8 +55,8 @@ end
 
 template "#{node[:hadoop][:home]}/etc/hadoop/mapred-site.xml" do
   source "mapred-site.xml.erb"
-  owner node[:hadoop][:yarn][:user]
-  group node[:hadoop][:yarn][:user]
+  owner node[:hadoop][:mr][:user]
+  group node[:hadoop][:group]
   mode "666"
   variables({
               :rm_ip => rm_ip
@@ -53,7 +67,7 @@ end
 template "#{node[:hadoop][:home]}/etc/hadoop/capacity-scheduler.xml" do
   source "capacity-scheduler.xml.erb"
   owner node[:hadoop][:yarn][:user]
-  group node[:hadoop][:yarn][:user]
+  group node[:hadoop][:group]
   mode "666"
   variables({
               :rm_ip => rm_ip

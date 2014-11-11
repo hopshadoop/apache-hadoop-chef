@@ -1,5 +1,5 @@
 default[:hadoop][:version]                 = "2.4.0"
-default[:hadoop][:user]                    = "hdfs"
+default[:hdfs][:user]                    = "hdfs"
 default[:hadoop][:group]                   = "hadoop"
 default[:hadoop][:dir]                     = "/srv"
 default[:hadoop][:home]                    = "#{default[:hadoop][:dir]}/hadoop-#{default[:hadoop][:version]}"
@@ -26,7 +26,7 @@ default[:hadoop][:format]                  = "true"
 default[:hadoop][:io_buffer_sz]            = 131072
 
 default[:hadoop][:yarn][:scripts]          = %w{ start stop restart root-start }
-default[:hadoop][:yarn][:user]             = node[:hadoop][:user]
+default[:hadoop][:yarn][:user]             = "yarn"
 default[:hadoop][:yarn][:nm][:memory_mbs]  = 2500
 default[:hadoop][:yarn][:ps_port]          = 20888
 
@@ -67,7 +67,7 @@ default[:hadoop][:nm][:jmxport]            = "8083"
 default[:hadoop][:jmx][:username]          = "monitorRole"
 default[:hadoop][:jmx][:password]          = "hadoop"
 
-default[:hadoop][:mr][:user]               = node[:hadoop][:user]
+default[:hadoop][:mr][:user]               = "mapred"
 
 default[:hadoop][:nn][:public_ips]         = ['10.0.2.15']
 default[:hadoop][:nn][:private_ips]        = ['10.0.2.15']
@@ -88,4 +88,6 @@ default[:hadoop][:nn][:addrs]              = []
 # build the native libraries. Is much slower, but removes warning when using services.
 default[:hadoop][:native_libraries]        = "false"
 
-default[:kagent][:enabled]               = "false"
+default[:kagent][:enabled]                 = "false"
+
+default[:maven][:version]                  = "3.2.3"

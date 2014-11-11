@@ -2,7 +2,7 @@ source "https://api.berkshelf.com"
 
 metadata
 
-cookbook 'kagent', github: 'hopshadoop/kagent-chef'
+cookbook 'kagent', github: 'karamelize/kagent-chef'
 cookbook 'java'
 
 # Need to include these versions, or we get a 'chef-sugar' berks vendor error
@@ -12,3 +12,4 @@ cookbook 'build-essential', '~> 1.3.2'
 cookbook 'cmake', '~> 0.3.0'
 cookbook 'apt', '~> 2.6.0'
 cookbook 'yum', '~> 3.4.0'
+cookbook 'magic_shell', '~> 1.0'
