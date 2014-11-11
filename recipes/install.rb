@@ -113,14 +113,13 @@ if node[:hadoop][:native_libraries].eql? "true"
     bash 'install_maven' do
       user "root"
       code <<-EOH
-        set -e
         cd #{Chef::Config[:file_cache_path]}
         wget http://apache.mirrors.spacedump.net/maven/maven-3/#{node[:maven][:version]}/binaries/apache-maven-#{node[:maven][:version]}-bin.tar.gz
         tar xvf apache-maven-#{node[:maven][:version]}-bin.tar.gz
-        mv -f apache-maven-#{node[:maven][:version]} /usr/local
+        mv -f apache-maven-#{node[:maven][:version]} /usr/local/
         rm -f /usr/local/maven
         ln -s /usr/local/apache-maven-#{node[:maven][:version]} /usr/local/maven
-        chown -R #{node[:hdfs][:user]}:#{node[:hadoop][:group]} /usr/local/maven
+        chown -R #{node[:hdfs][:user]}:#{node[:hadoop][:group]} /usr/local/apache-maven-#{node[:maven][:version]}
         # echo "export M2_HOME=/usr/local/maven" > /root/profile.d/maven.sh
         # echo "\n" > /root/profile.d/maven.sh
         # echo "export M2=$M2_HOME/bin " >>  /root/profile.d/maven.sh
