@@ -1,4 +1,3 @@
-#include_recipe "hadoop::install"
 libpath = File.expand_path '../../../kagent/libraries', __FILE__
 require File.join(libpath, 'inifile')
 

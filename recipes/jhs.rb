@@ -19,6 +19,32 @@ service yarn_command do
   action :nothing
 end
 
+
+tmp_dirs   = ["/mr-history", node[:hadoop][:jhs][:inter_dir], node[:hadoop][:jhs][:done_dir], "/tmp"]
+
+ for d in tmp_dirs
+   Chef::Log.info "Creating hdfs directory: #{d}"
+   hadoop_hdfs_directory d do
+    action :create
+    mode "1777"
+   end
+ end
+
+node.normal[:mr][:dirs] = [node[:hadoop][:mr][:staging_dir], node[:hadoop][:mr][:tmp_dir]]
+ for d in node[:mr][:dirs]
+   Chef::Log.info "Creating hdfs directory: #{d}"
+   hadoop_hdfs_directory d do
+    action :create
+    mode "0775"
+   end
+ end
+
+   # hadoop_hdfs_directory "mapred" do
+   #  action :nothing
+   #  mode "1777"
+   # end
+
+
 template "/etc/init.d/#{yarn_command}" do
   source "#{yarn_command}.erb"
   owner node[:hdfs][:user]
@@ -26,20 +52,7 @@ template "/etc/init.d/#{yarn_command}" do
   mode 0754
   notifies :enable, resources(:service => yarn_command)
   notifies :restart, resources(:service => yarn_command)
-end
-
-user node[:hadoop][:mr][:user] do
-  supports :manage_home => true
-  home "/home/#{node[:hadoop][:yarn][:user]}"
-  action :create
-  system true
-  shell "/bin/bash"
-end
-
-group node[:hadoop][:group] do
-  action :modify
-  members node[:hadoop][:mr][:user]
-  append true
+#  notifies :mapred_dirs, 'hadoop_hdfs_directory[mapred]', :delayed
 end
 
 if node[:kagent][:enabled] == "true" 

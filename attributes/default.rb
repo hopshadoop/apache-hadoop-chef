@@ -1,5 +1,5 @@
 default[:hadoop][:version]                 = "2.4.0"
-default[:hdfs][:user]                    = "hdfs"
+default[:hdfs][:user]                      = "hdfs"
 default[:hadoop][:group]                   = "hadoop"
 default[:hadoop][:dir]                     = "/srv"
 default[:hadoop][:home]                    = "#{default[:hadoop][:dir]}/hadoop-#{default[:hadoop][:version]}"
@@ -51,7 +51,8 @@ default[:hadoop][:jhs][:http_port]         = 19888
 
 default[:hadoop][:mr][:staging_dir]        = "/user"
 default[:hadoop][:mr][:tmp_dir]            = "/tmp/hadoop/mapreduce"
-default[:hadoop][:jhs][:inter_dir]         = "/mr-history/tmp"
+
+default[:hadoop][:jhs][:inter_dir]         = "/mr-history/done_intermediate"
 default[:hadoop][:jhs][:done_dir]          = "/mr-history/done"
 
 # YARN CONFIG VARIABLES
@@ -91,3 +92,4 @@ default[:hadoop][:native_libraries]        = "false"
 default[:kagent][:enabled]                 = "false"
 
 default[:maven][:version]                  = "3.2.3"
+default[:maven][:checksum]                 = "2fcfdb327eb94b8595d97ee4181ef0a6"

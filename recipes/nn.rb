@@ -1,4 +1,3 @@
-#include_recipe "hadoop::install"
 libpath = File.expand_path '../../../kagent/libraries', __FILE__
 require File.join(libpath, 'inifile')
 
@@ -39,8 +38,8 @@ template "/etc/init.d/namenode" do
   owner node[:hdfs][:user]
   group node[:hadoop][:group]
   mode 0754
-  notifies :enable, resources(:service => "namenode"), :immediately
-  notifies :restart, resources(:service => "namenode")
+  notifies :enable, resources(:service => "namenode")
+  notifies :restart, resources(:service => "namenode"), :immediately
 end
 
 if node[:kagent][:enabled] == "true" 

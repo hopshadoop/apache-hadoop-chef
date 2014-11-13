@@ -1,34 +1,6 @@
 #include_recipe "hadoop::install"
 
 
-user node[:hadoop][:yarn][:user] do
-  supports :manage_home => true
-  home "/home/#{node[:hadoop][:yarn][:user]}"
-  action :create
-  system true
-  shell "/bin/bash"
-end
-
-group node[:hadoop][:group] do
-  action :modify
-  members #{node[:hadoop][:yarn][:user]}
-  append true
-end
-
-user node[:hadoop][:mr][:user] do
-  supports :manage_home => true
-  home "/home/#{node[:hadoop][:mr][:user]}"
-  action :create
-  system true
-  shell "/bin/bash"
-end
-
-group node[:hadoop][:group] do
-  action :modify
-  members #{node[:hadoop][:mr][:user]}
-  append true
-end
-
 # TODO - if multiple RMs, and node[:yarn][:rm][:addrs] is set because
 # RMs are in different node groups, then use the attribute. Else
 # use the private_ips
