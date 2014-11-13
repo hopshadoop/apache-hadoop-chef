@@ -39,12 +39,6 @@ node.normal[:mr][:dirs] = [node[:hadoop][:mr][:staging_dir], node[:hadoop][:mr][
    end
  end
 
-   # hadoop_hdfs_directory "mapred" do
-   #  action :nothing
-   #  mode "1777"
-   # end
-
-
 template "/etc/init.d/#{yarn_command}" do
   source "#{yarn_command}.erb"
   owner node[:hdfs][:user]
@@ -52,7 +46,6 @@ template "/etc/init.d/#{yarn_command}" do
   mode 0754
   notifies :enable, resources(:service => yarn_command)
   notifies :restart, resources(:service => yarn_command)
-#  notifies :mapred_dirs, 'hadoop_hdfs_directory[mapred]', :delayed
 end
 
 if node[:kagent][:enabled] == "true" 

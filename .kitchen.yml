@@ -1,0 +1,54 @@
+---
+driver:
+  name: vagrant
+  customize:
+    memory: 5000
+    natdnshostresolver1: "on"
+    natdnsproxy1: "on"
+#    forward_port : "20888,20888"
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: centos-6.5
+  - name: ubuntu-12.04
+  - name: ubuntu-14.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[kagent::install]
+      - recipe[hadoop::install]
+      - recipe[kagent::default]
+      - recipe[hadoop::nn]
+      - recipe[hadoop::dn]
+      - recipe[hadoop::rm]
+      - recipe[hadoop::nm]
+      - recipe[hadoop::jhs]
+      - recipe[hadoop::ps]
+
+    attributes:
+         hadoop:
+            user: glassfish
+            nn:
+               private_ips: ["10.0.2.15"]
+            dn:
+               private_ips: ["10.0.2.15"]
+            rm:
+               private_ips: ["10.0.2.15"]
+            nm:
+               private_ips: ["10.0.2.15"]
+            jhs:
+               private_ips: ["10.0.2.15"]
+#            native_libraries: "true"
+         kagent:
+            private_ips: ["10.0.2.15"]
+            public_ips: ["10.0.2.15"]
+         kmon:
+            private_ips: ["10.0.2.15"]
+            public_ips: ["10.0.2.15"]
+         private_ips: ["10.0.2.15"]
+         public_ips: ["10.0.2.15"]
+         vagrant: "enabled"
+

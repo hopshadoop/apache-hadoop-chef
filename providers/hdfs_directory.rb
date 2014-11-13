@@ -14,24 +14,3 @@ action :create do
   end
  
 end
-
-
-action :mapred_dirs do
-  node.normal[:mr][:dirs] = [node[:hadoop][:mr][:staging_dir], node[:hadoop][:mr][:tmp_dir]]
-  tmp_dirs   = [node[:hadoop][:jhs][:inter_dir], node[:hadoop][:jhs][:done_dir], "/tmp"]
-
-  for d in tmp_dirs
-    hadoop_hdfs_directory d do
-      action :create
-      mode "1777"
-    end
-  end
-
-  for d in node[:mr][:dirs]
-    Chef::Log.info "One Creating hdfs directory: #{d}"
-    hadoop_hdfs_directory d do
-      action :create
-      mode "0755"
-    end
-  end
-end
