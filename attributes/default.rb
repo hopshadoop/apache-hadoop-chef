@@ -8,7 +8,6 @@ default[:hadoop][:tmp_dir]                 = "#{default[:hadoop][:home]}/tmp"
 default[:hadoop][:conf_dir]                = "#{default[:hadoop][:home]}/etc/hadoop"
 default[:hadoop][:sbin_dir]                = "#{default[:hadoop][:home]}/sbin"
 
-#default[:hadoop][:download_url]            = "#{default[:download_url]}/hadoop-#{default[:hadoop][:version]}.tgz"
 default[:hadoop][:download_url]            = "http://193.10.67.171/hops/hadoop-#{default[:hadoop][:version]}.tgz"
 default[:hadoop][:protobuf_url]            = "https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz"
 default[:hadoop][:hadoop_src_url]          = "http://193.10.67.171/hops/hadoop-#{default[:hadoop][:version]}-src.tar.gz"
