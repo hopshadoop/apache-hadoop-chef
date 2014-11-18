@@ -228,3 +228,12 @@ link "#{node[:hadoop][:dir]}/hadoop" do
   to node[:hadoop][:home]
 end
 include_recipe "hadoop"
+
+
+bash 'update_permissions_etc_dir' do
+  user "root"
+  code <<-EOH
+    set -e
+    chmod 775 -R #{node[:hadoop][:conf_dir]}
+  EOH
+end
