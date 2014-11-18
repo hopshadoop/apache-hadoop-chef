@@ -1,5 +1,5 @@
 default[:hadoop][:version]                 = "2.4.0"
-default[:hadoop][:user]                    = "hdfs"
+default[:hdfs][:user]                      = "hdfs"
 default[:hadoop][:group]                   = "hadoop"
 default[:hadoop][:dir]                     = "/srv"
 default[:hadoop][:home]                    = "#{default[:hadoop][:dir]}/hadoop-#{default[:hadoop][:version]}"
@@ -8,7 +8,6 @@ default[:hadoop][:tmp_dir]                 = "#{default[:hadoop][:home]}/tmp"
 default[:hadoop][:conf_dir]                = "#{default[:hadoop][:home]}/etc/hadoop"
 default[:hadoop][:sbin_dir]                = "#{default[:hadoop][:home]}/sbin"
 
-#default[:hadoop][:download_url]            = "#{default[:download_url]}/hadoop-#{default[:hadoop][:version]}.tgz"
 default[:hadoop][:download_url]            = "http://193.10.67.171/hops/hadoop-#{default[:hadoop][:version]}.tgz"
 default[:hadoop][:protobuf_url]            = "https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz"
 default[:hadoop][:hadoop_src_url]          = "http://193.10.67.171/hops/hadoop-#{default[:hadoop][:version]}-src.tar.gz"
@@ -26,7 +25,7 @@ default[:hadoop][:format]                  = "true"
 default[:hadoop][:io_buffer_sz]            = 131072
 
 default[:hadoop][:yarn][:scripts]          = %w{ start stop restart root-start }
-default[:hadoop][:yarn][:user]             = node[:hadoop][:user]
+default[:hadoop][:yarn][:user]             = "yarn"
 default[:hadoop][:yarn][:nm][:memory_mbs]  = 2500
 default[:hadoop][:yarn][:ps_port]          = 20888
 
@@ -51,7 +50,8 @@ default[:hadoop][:jhs][:http_port]         = 19888
 
 default[:hadoop][:mr][:staging_dir]        = "/user"
 default[:hadoop][:mr][:tmp_dir]            = "/tmp/hadoop/mapreduce"
-default[:hadoop][:jhs][:inter_dir]         = "/mr-history/tmp"
+
+default[:hadoop][:jhs][:inter_dir]         = "/mr-history/done_intermediate"
 default[:hadoop][:jhs][:done_dir]          = "/mr-history/done"
 
 # YARN CONFIG VARIABLES
@@ -67,7 +67,7 @@ default[:hadoop][:nm][:jmxport]            = "8083"
 default[:hadoop][:jmx][:username]          = "monitorRole"
 default[:hadoop][:jmx][:password]          = "hadoop"
 
-default[:hadoop][:mr][:user]               = node[:hadoop][:user]
+default[:hadoop][:mr][:user]               = "mapred"
 
 default[:hadoop][:nn][:public_ips]         = ['10.0.2.15']
 default[:hadoop][:nn][:private_ips]        = ['10.0.2.15']
@@ -88,4 +88,7 @@ default[:hadoop][:nn][:addrs]              = []
 # build the native libraries. Is much slower, but removes warning when using services.
 default[:hadoop][:native_libraries]        = "false"
 
-default[:kagent][:enabled]               = "false"
+default[:kagent][:enabled]                 = "false"
+
+default[:maven][:version]                  = "3.2.3"
+default[:maven][:checksum]                 = "2fcfdb327eb94b8595d97ee4181ef0a6"
