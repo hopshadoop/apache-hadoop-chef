@@ -178,6 +178,7 @@ natives="#{Chef::Config[:file_cache_path]}/.downloaded_#{hadoop_src_name}"
 bash 'extract-hadoop-src' do
   user "root"
   code <<-EOH
+        set -e
         cd #{Chef::Config[:file_cache_path]}
 	tar -xf #{cached_hadoop_src_filename} 
         cd #{hadoop_src_name}

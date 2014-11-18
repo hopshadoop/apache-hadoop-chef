@@ -3,6 +3,7 @@ source "https://api.berkshelf.com"
 metadata
 
 cookbook 'kagent', github: 'hopshadoop/kagent-chef'
+cookbook 'ark', github: 'hopshadoop/ark', "~> 1.0"
 cookbook 'java'
 
 # Need to include these versions, or we get a 'chef-sugar' berks vendor error
