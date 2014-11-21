@@ -234,6 +234,6 @@ bash 'update_permissions_etc_dir' do
   user "root"
   code <<-EOH
     set -e
-    chmod 775 -R #{node[:hadoop][:conf_dir]}
+    chmod 775 #{node[:hadoop][:conf_dir]}
   EOH
 end
