@@ -26,6 +26,7 @@ tmp_dirs   = ["/mr-history", node[:hadoop][:jhs][:inter_dir], node[:hadoop][:jhs
    Chef::Log.info "Creating hdfs directory: #{d}"
    hadoop_hdfs_directory d do
     action :create
+    owner node[:hdfs][:user]
     mode "1777"
    end
  end
@@ -35,6 +36,7 @@ node.normal[:mr][:dirs] = [node[:hadoop][:mr][:staging_dir], node[:hadoop][:mr][
    Chef::Log.info "Creating hdfs directory: #{d}"
    hadoop_hdfs_directory d do
     action :create
+    owner node[:hadoop][:mr][:user]    
     mode "0775"
    end
  end
