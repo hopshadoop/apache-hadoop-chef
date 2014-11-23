@@ -168,7 +168,7 @@ bash 'extract-hadoop' do
   user "root"
   code <<-EOH
 	tar -zxf #{cached_package_filename} -C #{node[:hadoop][:dir]}
-# chown -L : traverse symbolic links
+        # chown -L : traverse symbolic links
         chown -RL #{node[:hdfs][:user]}:#{node[:hadoop][:group]} #{node[:hadoop][:home]}
         touch #{hin}
 	EOH

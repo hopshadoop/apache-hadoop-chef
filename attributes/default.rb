@@ -2,15 +2,15 @@ default[:hadoop][:version]                 = "2.4.0"
 default[:hdfs][:user]                      = "hdfs"
 default[:hadoop][:group]                   = "hadoop"
 default[:hadoop][:dir]                     = "/srv"
-default[:hadoop][:home]                    = "#{default[:hadoop][:dir]}/hadoop-#{default[:hadoop][:version]}"
-default[:hadoop][:logs_dir]                = "#{default[:hadoop][:home]}/logs"
-default[:hadoop][:tmp_dir]                 = "#{default[:hadoop][:home]}/tmp"
-default[:hadoop][:conf_dir]                = "#{default[:hadoop][:home]}/etc/hadoop"
-default[:hadoop][:sbin_dir]                = "#{default[:hadoop][:home]}/sbin"
+default[:hadoop][:home]                    = "#{node[:hadoop][:dir]}/hadoop-#{node[:hadoop][:version]}"
+default[:hadoop][:logs_dir]                = "#{node[:hadoop][:home]}/logs"
+default[:hadoop][:tmp_dir]                 = "#{node[:hadoop][:home]}/tmp"
+default[:hadoop][:conf_dir]                = "#{node[:hadoop][:home]}/etc/hadoop"
+default[:hadoop][:sbin_dir]                = "#{node[:hadoop][:home]}/sbin"
 
-default[:hadoop][:download_url]            = "http://193.10.67.171/hops/hadoop-#{default[:hadoop][:version]}.tgz"
+default[:hadoop][:download_url]            = "http://193.10.67.171/hops/hadoop-#{node[:hadoop][:version]}.tgz"
 default[:hadoop][:protobuf_url]            = "https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz"
-default[:hadoop][:hadoop_src_url]          = "http://193.10.67.171/hops/hadoop-#{default[:hadoop][:version]}-src.tar.gz"
+default[:hadoop][:hadoop_src_url]          = "http://193.10.67.171/hops/hadoop-#{node[:hadoop][:version]}-src.tar.gz"
 default[:hadoop][:nn][:http_port]          = 50070
 default[:hadoop][:dn][:http_port]          = 50075
 
@@ -40,7 +40,7 @@ default[:hadoop][:am][:max_retries]        = 2
 default[:hadoop][:yarn][:aux_services]     = "mapreduce_shuffle"
 default[:hadoop][:mr][:shuffle_class]      = "org.apache.hadoop.mapred.ShuffleHandler"
 
-default[:hadoop][:yarn][:app_classpath]    = "#{default[:hadoop][:home]}/etc/hadoop/, #{default[:hadoop][:home]}, #{default[:hadoop][:home]}/lib/*, #{default[:hadoop][:home]}/share/hadoop/yarn/test/*, #{default[:hadoop][:home]}/share/hadoop/yarn/*, #{default[:hadoop][:home]}/share/hadoop/yarn/lib/*, #{default[:hadoop][:home]}/share/hadoop/mapreduce/*, #{default[:hadoop][:home]}/share/hadoop/mapreduce/lib/*, , #{default[:hadoop][:home]}/share/hadoop/mapreduce/test/*, #{default[:hadoop][:home]}/share/hadoop/common/lib/*, #{default[:hadoop][:home]}/share/hadoop/hdfs/lib/*, #{default[:hadoop][:home]}/share/hadoop/tools/lib/*, #{default[:hadoop][:home]}/share/hadoop/common/*, , #{default[:hadoop][:home]}/share/hadoop/common/*, #{default[:hadoop][:home]}/share/hadoop/hdfs/*, #{default[:hadoop][:home]}/share/hadoop/mapreduce/*"
+default[:hadoop][:yarn][:app_classpath]    = "#{node[:hadoop][:home]}/etc/hadoop/, #{node[:hadoop][:home]}, #{node[:hadoop][:home]}/lib/*, #{node[:hadoop][:home]}/share/hadoop/yarn/test/*, #{node[:hadoop][:home]}/share/hadoop/yarn/*, #{node[:hadoop][:home]}/share/hadoop/yarn/lib/*, #{node[:hadoop][:home]}/share/hadoop/mapreduce/*, #{node[:hadoop][:home]}/share/hadoop/mapreduce/lib/*, , #{node[:hadoop][:home]}/share/hadoop/mapreduce/test/*, #{node[:hadoop][:home]}/share/hadoop/common/lib/*, #{node[:hadoop][:home]}/share/hadoop/hdfs/lib/*, #{node[:hadoop][:home]}/share/hadoop/tools/lib/*, #{node[:hadoop][:home]}/share/hadoop/common/*, , #{node[:hadoop][:home]}/share/hadoop/common/*, #{node[:hadoop][:home]}/share/hadoop/hdfs/*, #{node[:hadoop][:home]}/share/hadoop/mapreduce/*"
 
 default[:hadoop][:rm][:addr]               = []
 default[:hadoop][:rm][:http_port]          = 8088
