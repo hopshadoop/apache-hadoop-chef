@@ -57,38 +57,3 @@ attribute "hadoop/format",
 :type => 'string',
 :default => "true"
 
-attribute 'hadoop/nn/public_ips',
-:display_name => 'Public ips for NameNodes',
-:description => 'Public ips of Namenodes',
-:type => 'array',
-:default => '[10.0.2.15]'
-
-attribute 'hadoop/nn/private_ips',
-:display_name => 'Public ips for NameNodes',
-:description => 'Public ips of Namenodes',
-:type => 'array',
-:default => '[10.0.2.15]'
-
-attribute 'hadoop/rm/public_ips',
-:display_name => 'Public ips for ResourceManagers',
-:description => 'Public ips of ResourceManagers',
-:type => 'array',
-:default => '[10.0.2.15]'
-
-attribute 'hadoop/nn/private_ips',
-:display_name => 'Public ips for ResourceManagers',
-:description => 'Public ips of ResourceManagers',
-:type => 'array',
-:default => '[10.0.2.15]'
-
-attribute 'hadoop/public_ips',
-:display_name => 'Public ips for these nodes',
-:description => 'Public ips of nodes in this group',
-:type => 'array',
-:default => '[10.0.2.15]'
-
-attribute 'hadoop/private_ips',
-:display_name => 'Private ips for these nodes',
-:description => 'Private ips of nodes in this group',
-:type => 'array',
-:default => '[10.0.2.15]'
