@@ -142,10 +142,36 @@ end
 directory node[:hadoop][:dir] do
   owner node[:hdfs][:user]
   group node[:hadoop][:group]
-  mode "0775"
+  mode "0774"
   recursive true
   action :create
 end
+
+directory node[:hadoop][:data_dir] do
+  owner node[:hdfs][:user]
+  group node[:hadoop][:group]
+  mode "0774"
+  recursive true
+  action :create
+end
+
+
+directory node[:hadoop][:dn][:data_dir] do
+  owner node[:hdfs][:user]
+  group node[:hadoop][:group]
+  mode "0774"
+  recursive true
+  action :create
+end
+
+directory node[:hadoop][:nn][:name_dir] do
+  owner node[:hdfs][:user]
+  group node[:hadoop][:group]
+  mode "0774"
+  recursive true
+  action :create
+end
+
 
 package_url = node[:hadoop][:download_url]
 Chef::Log.info "Downloading hadoop binaries from #{package_url}"

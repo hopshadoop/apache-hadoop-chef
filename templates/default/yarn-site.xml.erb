@@ -23,6 +23,11 @@
 		<value>hdfs://<%= @rm_ip %>:<%= node[:hadoop][:yarn][:ps_port] %></value>
 	</property>
 	<property>
+		<name>yarn.resourcemanager.webapp.address</name>
+		<value><%= @rm_ip %>:8088</value>
+	</property>
+
+	<property>
 		<name>yarn.application.classpath</name>
 		<value><%= node[:hadoop][:yarn][:app_classpath] %></value>
 	</property>

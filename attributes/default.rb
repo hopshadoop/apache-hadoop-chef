@@ -7,6 +7,9 @@ default[:hadoop][:logs_dir]                = "#{node[:hadoop][:home]}/logs"
 default[:hadoop][:tmp_dir]                 = "#{node[:hadoop][:home]}/tmp"
 default[:hadoop][:conf_dir]                = "#{node[:hadoop][:home]}/etc/hadoop"
 default[:hadoop][:sbin_dir]                = "#{node[:hadoop][:home]}/sbin"
+default[:hadoop][:data_dir]                = "/var/data/hadoop"
+default[:hadoop][:dn][:data_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/dn"
+default[:hadoop][:nn][:name_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/nn"
 
 default[:hadoop][:download_url]            = "http://193.10.67.171/hops/hadoop-#{node[:hadoop][:version]}.tgz"
 default[:hadoop][:protobuf_url]            = "https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz"
@@ -16,13 +19,15 @@ default[:hadoop][:dn][:http_port]          = 50075
 
 default[:hadoop][:leader_check_interval_ms]= 1000
 default[:hadoop][:missed_hb]               = 1
-default[:hadoop][:repl]                    = 1
+default[:hadoop][:num_replicas]            = 3
 default[:hadoop][:db]                      = "hadoop"
 default[:hadoop][:nn][:scripts]            = %w{ format-nn.sh start-nn.sh stop-nn.sh restart-nn.sh root-start-nn.sh hdfs.sh yarn.sh hadoop.sh } 
 default[:hadoop][:dn][:scripts]            = %w{ start-dn.sh stop-dn.sh restart-dn.sh root-start-dn.sh hdfs.sh yarn.sh hadoop.sh } 
 default[:hadoop][:max_retries]             = 0
 default[:hadoop][:format]                  = "true"
 default[:hadoop][:io_buffer_sz]            = 131072
+
+default[:hadoop][:nn][:heap_size]          = 1000
 
 default[:hadoop][:yarn][:scripts]          = %w{ start stop restart root-start }
 default[:hadoop][:yarn][:user]             = "yarn"

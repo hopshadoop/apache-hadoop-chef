@@ -25,6 +25,7 @@
 </property>
 
 
+<!-- fs.default.name is deprecated -->
  <property>
   <name>fs.defaultFS</name>
   <value><%= @firstNN %></value>
@@ -39,6 +40,11 @@
 <property>
   <name>hadoop.proxyuser.hopshub.groups</name>
   <value>*</value>
+</property>
+
+<property>
+  <name>hadoop.http.staticuser.user</name>
+  <value>hdfs</value>
 </property>
 
 
