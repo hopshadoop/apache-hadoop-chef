@@ -18,9 +18,9 @@ end
 if node[:hadoop][:format].eql? "true"
 
 # TODO: test if the NameNode is running
-  if ::File.directory?("#{node[:hadoop][:tmp_dir]}/dfs/data/current/")
+  if ::File.directory?("#{node[:hadoop][:tmp_dir]}/dfs/name/current")
     # if the nn has already been formatted, re-formatting it returns error
-    Chef::Log.info "Not formatting the NameNode. Remove this directory before formatting: (sudo rm -rf #{node[:hadoop][:tmp_dir]}/dfs/data/current/)"
+    Chef::Log.info "Not formatting the NameNode. Remove this directory before formatting: (sudo rm -rf #{node[:hadoop][:tmp_dir]}/dfs/name/current)"
   else 
     bash 'format-nn' do
       user node[:hdfs][:user]
