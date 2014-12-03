@@ -41,7 +41,7 @@ restart() {
 }
 
 status() {
-  PID_FILE="<%= node[:hadoop][:logs_dir] %>hadoop-<%= node[:hdfs][:user] %>-datanode.pid"
+  PID_FILE=<%= "#{node[:hadoop][:logs_dir]}" %>hadoop-<%= "#{node[:hdfs][:user]}" %>-datanode.pid
   PID=`cat $PID_FILE`
   kill -0 $PID
   return $?
