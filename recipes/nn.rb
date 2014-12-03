@@ -25,7 +25,7 @@ if node[:hadoop][:format].eql? "true"
     bash 'format-nn' do
       user node[:hdfs][:user]
       code <<-EOH
-   	#{node[:hadoop][:home]}/sbin/stop-nn.sh
+        set -e
    	#{node[:hadoop][:home]}/sbin/format-nn.sh
  	EOH
     end

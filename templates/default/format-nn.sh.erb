@@ -8,10 +8,12 @@ source /home/<%= node[:hdfs][:user] %>/.bash_profile
 HDFS=$rootDir/bin/hdfs
 log=$rootDir/logs/hadoop-<%= node[:hdfs][:user] %>-$command.log
 
-echo "Formating namenode on ..."
+echo "Stopping namenode if running ..."
+$rootDir/sbin/stop-nn.sh
 # -nonInteractive an option for -format command
 # -force option not supplied. Could be: node['hadoop']['force_format'] ? ' -force' : ''
 echo "$HDFS $command -format > $log"
+
 $HDFS $command -format > "$log"
 #sleep 2; head "$log"
 res=$?
