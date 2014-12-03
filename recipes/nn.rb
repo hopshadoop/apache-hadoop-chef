@@ -26,7 +26,9 @@ if node[:hadoop][:format].eql? "true"
       user node[:hdfs][:user]
       code <<-EOH
         set -e
-   	#{node[:hadoop][:home]}/sbin/format-nn.sh
+        if [ `service namenode status` -ne 0 ] ; then
+        	#{node[:hadoop][:home]}/sbin/format-nn.sh
+        fi 
  	EOH
     end
   end
