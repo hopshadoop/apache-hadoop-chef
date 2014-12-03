@@ -49,18 +49,6 @@ status() {
 
 # user-supplied parameter to stop/start/restart process.
 case "$1" in
-  status)
-    status
-    ;;
-  -h|--help)
-    echo ""
-    echo "usage: <prog> start|stop|restart|status"
-    echo ""
-    exit 0
-    ;;
-  *)
-    echo $"Usage: <prog> {start|stop|restart|status}"
-    exit 1
   start)
     start
     ;;
