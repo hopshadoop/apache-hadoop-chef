@@ -39,7 +39,7 @@ restart() {
 }
 
 status() {
-  PID_FILE=<%= node[:hadoop][:logs_dir] %>mapred-<%= node[:hadoop][:mapred][:user] %>-historyserver.pid
+  PID_FILE="<%= node[:hadoop][:logs_dir] %>mapred-<%= node[:hadoop][:mapred][:user] %>-historyserver.pid"
   PID=`cat $PID_FILE`
   kill -0 $PID
   return $?
@@ -70,7 +70,7 @@ case "$1" in
     exit 0
     ;;
   *)
-    echo $"Usage: <prog> {start|stop|restart|status}"
+    echo "Usage: <prog> {start|stop|restart|status}"
     exit 1
   esac
 
