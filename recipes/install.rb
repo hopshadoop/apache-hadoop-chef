@@ -196,6 +196,11 @@ bash 'extract-hadoop' do
 	tar -zxf #{cached_package_filename} -C #{node[:hadoop][:dir]}
         # chown -L : traverse symbolic links
         chown -RL #{node[:hdfs][:user]}:#{node[:hadoop][:group]} #{node[:hadoop][:home]}
+        # remove the config files that we would otherwise overwrite
+        rm #{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml
+        rm #{node[:hadoop][:home]}/etc/hadoop/core-site.xml
+        rm #{node[:hadoop][:home]}/etc/hadoop/hdfs-site.xml
+        rm #{node[:hadoop][:home]}/etc/hadoop/mapred-site.xml
         touch #{hin}
 	EOH
   not_if { ::File.exist?("#{hin}") }

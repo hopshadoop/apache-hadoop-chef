@@ -22,6 +22,7 @@ template "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do
               :my_ip => my_ip,
               :available_mem_mb => node[:hadoop][:yarn][:nm][:memory_mbs]
             })
+  action :create_if_missing
 #  notifies :restart, resources(:service => "rm")
 end
 

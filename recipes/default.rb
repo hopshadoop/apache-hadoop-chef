@@ -18,6 +18,7 @@ template "#{node[:hadoop][:home]}/etc/hadoop/core-site.xml" do
   variables({
               :firstNN => firstNN
             })
+  action :create_if_missing
 end
 
 template "#{node[:hadoop][:home]}/etc/hadoop/hdfs-site.xml" do
@@ -32,6 +33,7 @@ template "#{node[:hadoop][:home]}/etc/hadoop/hdfs-site.xml" do
               :addr4 => my_ip + ":40103",
               :addr5 => my_ip + ":40104",
             })
+  action :create_if_missing
 end
 
 template "#{node[:hadoop][:home]}/etc/hadoop/hadoop-env.sh" do
