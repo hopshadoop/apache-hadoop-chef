@@ -39,10 +39,20 @@ restart() {
 }
 
 status() {
-  PID_FILE=<%= "#{node[:hadoop][:logs_dir]}" %>mapred-<%= "#{node[:hadoop][:mr][:user]}" %>-historyserver.pid"
-  PID=`cat $PID_FILE`
-  kill -0 $PID
-  return $?
+  PID_FILE=<%= "#{node[:hadoop][:logs_dir]}" %>/mapred-<%= "#{node[:hadoop][:mr][:user]}" %>-historyserver.pid
+  if [ -f $PID_FILE ] ; then
+     PID=`cat $PID_FILE`
+     kill -0 $PID
+     res=$?
+  else 
+     res=1
+  fi
+  if [ $res -eq 0 ] ; then
+   echo "jobhistoryserver($PID) is running"
+  else
+   echo "jobhistoryserver is not running"
+  fi
+  return $res
 }
 
 

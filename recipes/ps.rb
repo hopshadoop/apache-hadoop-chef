@@ -19,7 +19,7 @@ end
 # end
 
 service yarn_command do
-  supports :restart => true, :stop => true, :start => true
+  supports :restart => true, :stop => true, :start => true, :status => true
   action :nothing
 end
 

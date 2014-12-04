@@ -38,10 +38,20 @@ restart() {
 }
 
 status() {
-  PID_FILE=<%= "#{node[:hadoop][:logs_dir]}" %>yarn-<%= "#{node[:hadoop][:yarn][:user]}" %>-nodemanager.pid
-  PID=`cat $PID_FILE`
-  kill -0 $PID
-  return $?
+  PID_FILE=<%= "#{node[:hadoop][:logs_dir]}" %>/yarn-<%= "#{node[:hadoop][:yarn][:user]}" %>-nodemanager.pid
+  if [ -f $PID_FILE ] ; then
+     PID=`cat $PID_FILE`
+     kill -0 $PID
+     res=$?
+  else 
+     res=1
+  fi
+  if [ $res -eq 0 ] ; then
+   echo "nodemanager($PID) is running"
+  else
+   echo "nodemanager is not running"
+  fi
+  return $res
 }
 
 

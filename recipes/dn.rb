@@ -13,7 +13,7 @@ end
 
 
 service "datanode" do
-  supports :restart => true, :stop => true, :start => true
+  supports :restart => true, :stop => true, :start => true, :status => true
   action :nothing
 end
 
