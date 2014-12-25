@@ -20,3 +20,4 @@ dependencies:
       - hadoop::install
     global:  
       - hadoop::nn
+      - hadoop::dn
