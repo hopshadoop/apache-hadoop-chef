@@ -13,7 +13,7 @@ $rootDir/sbin/stop-nn.sh
 # -force ensures command doesn't user to confirm for re-formatting.
 echo "$HDFS $command -format -force -nonInteractive > $log"
 
-$HDFS $command -format > "$log"
+$HDFS $command -format -force -nonInteractive > "$log"
 #sleep 2; head "$log"
 res=$?
 #error=`grep -i error $log`
