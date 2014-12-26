@@ -6,7 +6,6 @@
 # use the private_ips
 
 rm_ip = private_recipe_ip("hadoop","rm")
-my_ip = my_private_ip()
 Chef::Log.info "Resourcemanager IP: #{rm_ip}"
 
 #total_mem = node['memory']['total'].split('kB')[0].to_i / 1024
@@ -19,7 +18,6 @@ template "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do
   mode "666"
   variables({
               :rm_ip => rm_ip,
-              :my_ip => my_ip,
               :available_mem_mb => node[:hadoop][:yarn][:nm][:memory_mbs]
             })
   action :create_if_missing
