@@ -100,4 +100,20 @@
 		<value><%= node[:hadoop][:am][:max_retries] %></value>
 		<description>Number of times to try to restart the ApplicationMaster by the ResourceManager if its NodeManager fails.</description>
 	</property>
+	<property>
+		<name>yarn.log-aggregation-enable</name>
+		<value><%= node[:hadoop][:yarn][:log_aggregation] %></value>
+		<description>Default time (in seconds) to retain log files on the NodeManager Only applicable if log-aggregation is disabled.</description>
+	</property>
+	<property>
+		<name>yarn.log-aggregation.retain-seconds</name>
+		<value><%= node[:hadoop][:yarn][:log_retain_secs] %></value>
+		<description>Default time (in seconds) to retain log files in HDFS. Only applicable if log-aggregation is disabled.</description>
+	</property>
+	<property>
+		<name>yarn.log-aggregation.retain-check-interval-seconds</name>
+		<value><%= node[:hadoop][:yarn][:log_retain_check] %></value>
+		<description>Default time (in seconds) between checks for retained log files in HDFS. Only applicable if log-aggregation is disabled.</description>
+	</property>
+
 </configuration>

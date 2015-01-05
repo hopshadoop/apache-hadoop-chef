@@ -34,11 +34,14 @@ default[:hadoop][:yarn][:user]             = "yarn"
 default[:hadoop][:yarn][:nm][:memory_mbs]  = 2500
 default[:hadoop][:yarn][:ps_port]          = 20888
 
-default[:hadoop][:yarn][:vpmem_ratio]      = 2.1
+default[:hadoop][:yarn][:vpmem_ratio]      = 5.1
 default[:hadoop][:yarn][:vcores]           = 2
 default[:hadoop][:yarn][:min_vcores]       = 1
 default[:hadoop][:yarn][:max_vcores]       = 4
+default[:hadoop][:yarn][:log_aggregation]  = "true"
 default[:hadoop][:yarn][:log_retain_secs]  = 10800
+default[:hadoop][:yarn][:log_retain_check] = 100
+
 
 default[:hadoop][:am][:max_retries]        = 2
 
