@@ -1,14 +1,14 @@
 dependencies: 
-  - recipe: hadoop::rm,
+  - recipe: hadoop::rm
     global:  
       - hadoop::nn
-  - recipe: hadoop::dn,
+  - recipe: hadoop::dn
     global:  
       - hadoop::rm
-  - recipe: hadoop::nm,
+  - recipe: hadoop::nm
     global:  
       - hadoop::rm
-  - recipe: hadoop::jhs,
+  - recipe: hadoop::jhs
     global:  
       - hadoop::nn
       - hadoop::dn
