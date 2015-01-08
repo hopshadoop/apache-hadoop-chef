@@ -33,23 +33,29 @@ attribute "hadoop/version",
 :default => "2.4.0"
 
 
-attribute "hadoop/namenode/addrs",
-:display_name => "Namenode ip addresses (comma-separated)",
-:description => "A comma-separated list of Namenode ip address",
-:type => 'array',
-:default => ""
-
 attribute "yarn/resourcemanager",
 :display_name => "Ip address",
 :description => "Ip address for the resourcemanager",
 :type => 'string',
 :default => ""
 
-attribute "hadoop/user",
-:display_name => "Username to run hadoop as",
-:description => "Username to run hadoop as",
+attribute "hadoop/yarn/user",
+:display_name => "Username to run yarn as",
+:description => "Username to run yarn as",
 :type => 'string',
-:default => ""
+:default => "yarn"
+
+attribute "hadoop/mr/user",
+:display_name => "Username to run mapReduce as",
+:description => "Username to run mapReduce as",
+:type => 'string',
+:default => "mapred"
+
+attribute "hdfs/user",
+:display_name => "Username to run hdfs as",
+:description => "Username to run hdfs as",
+:type => 'string',
+:default => "hdfs"
 
 attribute "hadoop/format",
 :display_name => "Format HDFS",

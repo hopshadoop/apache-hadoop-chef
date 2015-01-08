@@ -1,23 +1,15 @@
 dependencies: 
-  - recipe: hadoop::nn,
-    local:  
-      - hadoop::install
-  - recipe: hadoop::rm,
-    local:  
-      - hadoop::install
+  - recipe: hadoop::rm
     global:  
       - hadoop::nn
-  - recipe: hadoop::dn,
-    local: 
-      - hadoop::install
+  - recipe: hadoop::dn
     global:  
       - hadoop::rm
-  - recipe: hadoop::nm,
-    local:   
-      - hadoop::install
-  - recipe: hadoop::jhs,
-    local:
-      - hadoop::install
+  - recipe: hadoop::nm
+    global:  
+      - hadoop::rm
+  - recipe: hadoop::jhs
     global:  
       - hadoop::nn
       - hadoop::dn
+      - hadoop::nm
