@@ -11,6 +11,11 @@ Chef::Log.info "Resourcemanager IP: #{rm_ip}"
 #total_mem = node['memory']['total'].split('kB')[0].to_i / 1024
 #available_mem = (total_mem > 500) ? total_mem - 500 : total_mem
 
+file "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do 
+  owner node[:hadoop][:yarn][:user]
+  action :delete
+end
+
 template "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do
   source "yarn-site.xml.erb"
   owner node[:hadoop][:yarn][:user]
@@ -24,6 +29,11 @@ template "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do
 #  notifies :restart, resources(:service => "rm")
 end
 
+file "#{node[:hadoop][:home]}/etc/hadoop/mapred-site.xml" do 
+  owner node[:hadoop][:mr][:user]
+  action :delete
+end
+
 template "#{node[:hadoop][:home]}/etc/hadoop/mapred-site.xml" do
   source "mapred-site.xml.erb"
   owner node[:hadoop][:mr][:user]
@@ -33,6 +43,11 @@ template "#{node[:hadoop][:home]}/etc/hadoop/mapred-site.xml" do
               :rm_ip => rm_ip
             })
 #  notifies :restart, resources(:service => "jhs")
+end
+
+file "#{node[:hadoop][:home]}/etc/hadoop/capacity-scheduler.xml" do 
+  owner node[:hadoop][:yarn][:user]
+  action :delete
 end
 
 template "#{node[:hadoop][:home]}/etc/hadoop/capacity-scheduler.xml" do
