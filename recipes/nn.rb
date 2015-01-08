@@ -36,7 +36,7 @@ end
 
 service "namenode" do
   supports :restart => true, :stop => true, :start => true, :status => true
-  action :nothing
+  action :restart
 end
 
 template "/etc/init.d/namenode" do
