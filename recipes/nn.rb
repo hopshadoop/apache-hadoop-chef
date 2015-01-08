@@ -36,7 +36,7 @@ end
 
 service "namenode" do
   supports :restart => true, :stop => true, :start => true, :status => true
-  action :restart
+  action :nothing
 end
 
 template "/etc/init.d/namenode" do
@@ -59,4 +59,7 @@ if node[:kagent][:enabled] == "true"
     pid_file "#{node[:hadoop][:logs_dir]}/hadoop-#{node[:hdfs][:user]}-namenode.pid"
     web_port node[:hadoop][:nn][:http_port]
   end
+end
+
+hops_start "namenode" do
 end

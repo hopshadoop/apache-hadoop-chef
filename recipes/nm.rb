@@ -39,3 +39,6 @@ if node[:kagent][:enabled] == "true"
     web_port node[:hadoop]["#{yarn_service}"][:http_port]
   end
 end
+
+hops_start "#{yarn_command}" do
+end

@@ -49,3 +49,6 @@ if node[:kagent][:enabled] == "true"
     command_script "#{node[:hadoop][:home]}/bin/yarn"
   end
 end
+
+hops_start "#{yarn_command}" do
+end
