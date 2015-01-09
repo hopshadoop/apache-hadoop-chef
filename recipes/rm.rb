@@ -24,7 +24,7 @@ end
 
 service yarn_command do
   supports :restart => true, :stop => true, :start => true, :status => true
-  action :restart
+  action :nothing
 end
 
 template "/etc/init.d/#{yarn_command}" do
@@ -33,6 +33,7 @@ template "/etc/init.d/#{yarn_command}" do
   group node[:hadoop][:hadoop]
   mode 0754
   notifies :enable, resources(:service => yarn_command)
+  notifies :restart, resources(:service => yarn_command)
 end
 
 if node[:kagent][:enabled] == "true" 

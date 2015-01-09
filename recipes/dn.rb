@@ -14,7 +14,7 @@ end
 
 service "datanode" do
   supports :restart => true, :stop => true, :start => true, :status => true
-  action :restart
+  action :nothing
 end
 
 template "/etc/init.d/datanode" do
@@ -23,7 +23,7 @@ template "/etc/init.d/datanode" do
   group node[:hadoop][:group]
   mode 0754
   notifies :enable, resources(:service => "datanode")
-#  notifies :restart, resources(:service => "datanode"), :immediately
+  notifies :restart, resources(:service => "datanode"), :immediately
 end
 
 
