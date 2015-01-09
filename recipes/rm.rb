@@ -50,5 +50,5 @@ if node[:kagent][:enabled] == "true"
   end
 end
 
-hops_start "#{yarn_command}" do
+hadoop_start "#{yarn_command}" do
 end

@@ -61,5 +61,6 @@ if node[:kagent][:enabled] == "true"
   end
 end
 
-hops_start "namenode" do
+hadoop_start "namenode" do
 end
+

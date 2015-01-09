@@ -41,3 +41,6 @@ if node[:kagent][:enabled] == "true"
     command_script "#{node[:hadoop][:home]}/bin/hdfs"
   end
 end
+
+hadoop_start "datanode" do
+end
