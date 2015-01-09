@@ -3,9 +3,10 @@ action :start_if_not_running do
     user "root"
     code <<-EOH
      set -e
-     if [ `service #{new_resource.name} status` -ne 0 ] ; then
-         service #{new_resource.name}
-     fi 
+  #  service status returns '0' even if the service is not running ;(
+  #   if [ `service #{new_resource.name} status` -ne 0 ] ; then
+         service #{new_resource.name} restart
+ #    fi 
     EOH
   end
 
