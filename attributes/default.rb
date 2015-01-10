@@ -31,7 +31,7 @@ default[:hadoop][:nn][:heap_size]          = 1000
 
 default[:hadoop][:yarn][:scripts]          = %w{ start stop restart root-start }
 default[:hadoop][:yarn][:user]             = "yarn"
-default[:hadoop][:yarn][:nm][:memory_mbs]  = 2500
+default[:hadoop][:yarn][:nm][:memory_mbs]  = 3000
 default[:hadoop][:yarn][:ps_port]          = 20888
 
 default[:hadoop][:yarn][:vpmem_ratio]      = 4.1
