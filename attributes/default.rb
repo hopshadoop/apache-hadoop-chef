@@ -38,7 +38,7 @@ default[:hadoop][:yarn][:vpmem_ratio]      = 4.1
 default[:hadoop][:yarn][:vcores]           = 2
 default[:hadoop][:yarn][:min_vcores]       = 1
 default[:hadoop][:yarn][:max_vcores]       = 4
-default[:hadoop][:yarn][:log_aggregation]  = "true"
+default[:hadoop][:yarn][:log_aggregation]  = "false"
 default[:hadoop][:yarn][:log_retain_secs]  = 10800
 default[:hadoop][:yarn][:log_retain_check] = 100
 

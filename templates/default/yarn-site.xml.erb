@@ -103,7 +103,7 @@
 	<property>
 		<name>yarn.log-aggregation-enable</name>
 		<value><%= node[:hadoop][:yarn][:log_aggregation] %></value>
-		<description>Default time (in seconds) to retain log files on the NodeManager Only applicable if log-aggregation is disabled.</description>
+		<description>Enable Default aggregatioin of log files HDFS, deleting them from the NodeManager.</description>
 	</property>
 	<property>
 		<name>yarn.log-aggregation.retain-seconds</name>
