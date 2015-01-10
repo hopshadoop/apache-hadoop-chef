@@ -20,11 +20,11 @@
   </property>
   <property>
     <name>yarn.web-proxy.address</name>
-    <value>hdfs://<%= @rm_public_ip %>:<%= node[:hadoop][:yarn][:ps_port] %></value>
+    <value>hdfs://<%= @rm_private_ip %>:<%= node[:hadoop][:yarn][:ps_port] %></value>
   </property>
   <property>
     <name>yarn.resourcemanager.webapp.address</name>
-    <value><%= @rm_public_ip %>:8088</value>
+    <value><%= @rm_private_ip %>:8088</value>
     <description>The http address of the RM web application.</description>
   </property>
 
