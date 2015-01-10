@@ -1,4 +1,4 @@
-dependencies: 
+:dependencies: 
   - recipe: hadoop::install
   - recipe: hadoop::nn
     local:
