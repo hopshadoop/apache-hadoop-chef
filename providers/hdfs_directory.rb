@@ -1,5 +1,4 @@
 action :create do
-  Chef::Log.info "Creating hdfs directory: #{@new_resource}"
   Chef::Log.info "Creating hdfs directory: #{@new_resource.name}"
 
   bash "mk-dir-#{new_resource.name}" do
