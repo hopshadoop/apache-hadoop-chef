@@ -59,7 +59,6 @@ template "#{node[:hadoop][:home]}/etc/hadoop/yarn-jmxremote.password" do
 end
 
 
-
 template "#{node[:hadoop][:home]}/sbin/kill-process.sh" do 
   source "kill-process.sh.erb"
   owner node[:hdfs][:user]
