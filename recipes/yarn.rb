@@ -47,7 +47,7 @@ template "#{node[:hadoop][:home]}/etc/hadoop/mapred-site.xml" do
   group node[:hadoop][:group]
   mode "666"
   variables({
-              :rm_ip => rm_ip
+              :rm_ip => rm_private_ip
             })
 #  notifies :restart, resources(:service => "jhs")
 end
@@ -63,7 +63,7 @@ template "#{node[:hadoop][:home]}/etc/hadoop/capacity-scheduler.xml" do
   group node[:hadoop][:group]
   mode "666"
   variables({
-              :rm_ip => rm_ip
+              :rm_ip => rm_private_ip
             })
  # notifies :restart, resources(:service => "jhs")
 end
