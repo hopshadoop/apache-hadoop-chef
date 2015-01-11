@@ -18,6 +18,7 @@ user node[:hdfs][:user] do
   home "/home/#{node[:hdfs][:user]}"
   system true
   shell "/bin/bash"
+  not_if "getent passwd #{node[:hdfs]['user']}"
 end
 
 user node[:hadoop][:yarn][:user] do
@@ -26,6 +27,7 @@ user node[:hadoop][:yarn][:user] do
   action :create
   system true
   shell "/bin/bash"
+  not_if "getent passwd #{node[:hadoop][:yarn]['user']}"
 end
 
 user node[:hadoop][:mr][:user] do
@@ -34,6 +36,7 @@ user node[:hadoop][:mr][:user] do
   action :create
   system true
   shell "/bin/bash"
+  not_if "getent passwd #{node[:hadoop][:mr]['user']}"
 end
 
 group node[:hadoop][:group] do
