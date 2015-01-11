@@ -1,7 +1,5 @@
 dependencies: 
   - recipe: hadoop::install
-    global:  
-      - hopshub::install
   - recipe: hadoop::nn
     local:
       - hadoop::install
