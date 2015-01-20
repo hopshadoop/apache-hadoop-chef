@@ -2,7 +2,7 @@ source "https://api.berkshelf.com"
 
 metadata
 
-cookbook 'kagent', github: 'karamelize/kagent-chef'
+cookbook 'kagent', github: 'karamelchef/kagent-chef'
 cookbook 'ark', github: 'hopshadoop/ark'
 cookbook 'java'
 
