@@ -30,7 +30,7 @@ attribute "hadoop/version",
 :display_name => "Hadoop version",
 :description => "Version of hadoop",
 :type => 'string',
-:default => "2.4.0"
+:default => "2.6.0"
 
 
 attribute "yarn/resourcemanager",
