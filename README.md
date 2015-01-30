@@ -1,6 +1,7 @@
 # Apache Hadoop cookbook
 
 [![Apache License 2.0](http://img.shields.io/badge/license-apache%202.0-green.svg)](http://opensource.org/licenses/Apache-2.0)
+        - nde::memcached
 
 # Requirements
 
@@ -20,6 +21,32 @@ This cookbook has been tested on the following versions (but may work on earlier
 * `nm.rb` - Configures and starts the NodeManager
 * `jhs.rb`- Configures and starts the JobHistoryServer
 * `ps.rb` - Configures and starts the ProxyServer
+
+
+###Karamel usage
+This cookbook is karamelized (www.karamel.io).  You can launch a Hadoop Cluster using the following yml file. 
+It will create 3 VMs, one running VM with the NameNode, a ResourceManager, and a Job history server. Two VMs will run the datanode and the node manaer.
+
+name: eu-west-1
+
+cookbooks:                                                                      
+  hadoop: 
+    github: "hopshadoop/apache-hadoop-chef"
+    branch: "master"
+    
+groups: 
+  namenodes:
+    size: 1
+    recipes: 
+        - hadoop::nn
+        - hadoop::rm
+        - hadoop::jhs                                                            
+  datanodes:
+    size: 2
+    recipes: 
+        - hadoop::dn
+        - hadoop::nm
+It will create 5 VMs on EC2, and install ndb datanodes on 4 VMs, and a management server, a MySQL Server, and a Memcached server on 1 VM.
 
 
 
