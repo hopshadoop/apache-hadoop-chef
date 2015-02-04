@@ -16,6 +16,7 @@ default[:hadoop][:protobuf_url]            = "https://protobuf.googlecode.com/fi
 default[:hadoop][:hadoop_src_url]          = "http://apache.mirror.digionline.de/hadoop/common/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}-src.tar.gz"
 default[:hadoop][:nn][:http_port]          = 50070
 default[:hadoop][:dn][:http_port]          = 50075
+default[:hadoop][:nn][:port]               = 29211
 
 default[:hadoop][:leader_check_interval_ms]= 1000
 default[:hadoop][:missed_hb]               = 1

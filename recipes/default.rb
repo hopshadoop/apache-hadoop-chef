@@ -8,7 +8,7 @@ require File.join(libpath, 'inifile')
 
 my_ip = my_private_ip()
 
-firstNN = "hdfs://" + private_recipe_ip("hadoop", "nn") + ":29211"
+firstNN = "hdfs://" + private_recipe_ip("hadoop", "nn") + ":#{node[:hadoop][:nn][:port]}"
 
 template "#{node[:hadoop][:home]}/etc/hadoop/core-site.xml" do 
   source "core-site.xml.erb"
