@@ -10,7 +10,6 @@ action :create do
      #{node[:hadoop][:home]}/bin/hadoop fs -chmod #{new_resource.mode} #{new_resource.name} 
      #{node[:hadoop][:home]}/bin/hadoop fs -chown -R #{new_resource.owner}:#{new_resource.group} #{new_resource.name} 
     EOF
-    not_if ". #{node[:hadoop][:home]}/sbin/set-env.sh"
   end
  
 end
