@@ -19,7 +19,7 @@ end
 action :put do
   Chef::Log.info "Putting file(s) into hdfs directory: #{@new_resource.name}"
 
-  bash "hdfs-put-dir-#{new_resource.name}" dbo
+  bash "hdfs-put-dir-#{new_resource.name}" do
     user node[:hdfs][:user]
     code <<-EOF
      set -e
