@@ -95,7 +95,7 @@ default[:hadoop][:ps][:private_ips]        = ['10.0.2.15']
 default[:hadoop][:nn][:addrs]              = []
 
 # build the native libraries. Is much slower, but removes warning when using services.
-default[:hadoop][:native_libraries]        = "true"
+default[:hadoop][:native_libraries]        = "false"
 
 default[:kagent][:enabled]                 = "false"
 
