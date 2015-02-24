@@ -26,18 +26,21 @@ depends 'ark'
   supports os
 end
 
+attribute "hadoop/yarn/nm/memory_mbs",
+:display_name => "Hadoop NodeManager Memory in MB",
+:type => 'integer',
+:default => 3584
+
+attribute "hadoop/yarn/vcores",
+:display_name => "Hadoop NodeManager Number of Virtual Cores",
+:type => 'integer',
+:default => 4
+
 attribute "hadoop/version",
 :display_name => "Hadoop version",
 :description => "Version of hadoop",
 :type => 'string',
 :default => "2.6.0"
-
-
-attribute "yarn/resourcemanager",
-:display_name => "Ip address",
-:description => "Ip address for the resourcemanager",
-:type => 'string',
-:default => ""
 
 attribute "hadoop/yarn/user",
 :display_name => "Username to run yarn as",
@@ -62,4 +65,3 @@ attribute "hadoop/format",
 :description => "Format HDFS, Run 'hdfs namenode -format'",
 :type => 'string',
 :default => "true"
-
