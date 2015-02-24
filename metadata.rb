@@ -29,39 +29,32 @@ end
 attribute "hadoop/yarn/nm/memory_mbs",
 :display_name => "Hadoop NodeManager Memory in MB",
 :type => 'integer',
-:default => 3584
 
 attribute "hadoop/yarn/vcores",
 :display_name => "Hadoop NodeManager Number of Virtual Cores",
 :type => 'integer',
-:default => 4
 
 attribute "hadoop/version",
 :display_name => "Hadoop version",
 :description => "Version of hadoop",
 :type => 'string',
-:default => "2.6.0"
 
 attribute "hadoop/yarn/user",
 :display_name => "Username to run yarn as",
 :description => "Username to run yarn as",
 :type => 'string',
-:default => "yarn"
 
 attribute "hadoop/mr/user",
 :display_name => "Username to run mapReduce as",
 :description => "Username to run mapReduce as",
 :type => 'string',
-:default => "mapred"
 
 attribute "hdfs/user",
 :display_name => "Username to run hdfs as",
 :description => "Username to run hdfs as",
 :type => 'string',
-:default => "hdfs"
 
 attribute "hadoop/format",
 :display_name => "Format HDFS",
 :description => "Format HDFS, Run 'hdfs namenode -format'",
 :type => 'string',
-:default => "true"
