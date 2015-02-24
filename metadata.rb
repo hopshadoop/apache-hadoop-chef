@@ -28,12 +28,12 @@ end
 
 attribute "hadoop/yarn/nm/memory_mbs",
 :display_name => "Hadoop NodeManager Memory in MB",
-:type => 'integer',
+:type => 'string',
 :default => 3584
 
 attribute "hadoop/yarn/vcores",
 :display_name => "Hadoop NodeManager Number of Virtual Cores",
-:type => 'integer',
+:type => 'string',
 :default => 4
 
 attribute "hadoop/version",
