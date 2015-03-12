@@ -7,11 +7,13 @@ libpath = File.expand_path '../../../kagent/libraries', __FILE__
 require File.join(libpath, 'inifile')
 
 my_ip = my_private_ip()
+my_public_ip = my_public_ip()
 
 firstNN = "hdfs://" + private_recipe_ip("hadoop", "nn") + ":#{node[:hadoop][:nn][:port]}"
 
 rm_private_ip = private_recipe_ip("hadoop","rm")
 Chef::Log.info "Resourcemanager IP: #{rm_private_ip}"
+
 rm_public_ip = public_recipe_ip("hadoop","rm")
 Chef::Log.info "Resourcemanager IP: #{rm_public_ip}"
 
@@ -172,7 +174,7 @@ template "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do
               :rm_public_ip => rm_public_ip,
               :available_mem_mb => node[:hadoop][:yarn][:nm][:memory_mbs],
               :my_public_ip => my_public_ip,
-              :my_private_ip => my_private_ip
+              :my_private_ip => my_ip
             })
   action :create_if_missing
 #  notifies :restart, resources(:service => "rm")

@@ -1,4 +1,4 @@
-sinclude_recipe "hadoop::yarn"
+include_recipe "hadoop::yarn"
 libpath = File.expand_path '../../../kagent/libraries', __FILE__
 require File.join(libpath, 'inifile')
 
