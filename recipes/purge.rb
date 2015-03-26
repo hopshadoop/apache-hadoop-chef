@@ -1,15 +1,29 @@
-bash 'kill_running_services' do
+daemons = %w{namenode datanode resourcemanager nodemanager historyserver proxyserver}
+daemons.each { |d| 
+
+bash 'uninstall_service_#{d}' do
 user "root"
 ignore_failure :true
 code <<-EOF
-  #{node[:hadoop][:home]}/sbin/stop-nn.sh
-  #{node[:hadoop][:home]}/sbin/stop-dn.sh
-  #{node[:hadoop][:home]}/sbin/stop-rm.sh
-  #{node[:hadoop][:home]}/sbin/stop-nm.sh
+ service stop #{d}
+ killall -9 #{d}
 EOF
 end
 
-directory node[:hadoop][:dir] do
+file "/etc/init.d/#{d}" do
+  action :delete
+  ignore_failure :true
+end
+
+}
+
+directory node[:hadoop][:home] do
+  recursive true
+  action :delete
+  ignore_failure :true
+end
+
+directory node[:hadoop][:data_dir] do
   recursive true
   action :delete
   ignore_failure :true

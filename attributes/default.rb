@@ -11,7 +11,8 @@ default[:hadoop][:data_dir]                = "/var/data/hadoop"
 default[:hadoop][:dn][:data_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/dn"
 default[:hadoop][:nn][:name_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/nn"
 
-default[:hadoop][:download_url]            = "http://193.10.67.171/hops/hadoop-#{node[:hadoop][:version]}.tgz"
+default[:hadoop][:download_url]            = "https://archive.apache.org/dist/hadoop/core/hadoop-2.4.0/hadoop-2.4.0.tar.gz"
+#default[:hadoop][:download_url]            = "http://193.10.67.171/hops/hadoop-#{node[:hadoop][:version]}.tgz"
 default[:hadoop][:protobuf_url]            = "https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz"
 default[:hadoop][:hadoop_src_url]          = "http://193.10.67.171/hops/hadoop-#{node[:hadoop][:version]}-src.tar.gz"
 default[:hadoop][:nn][:http_port]          = 50070
