@@ -24,7 +24,7 @@
 # remote nodes.
 
 # The java implementation to use.
-if [ ${JAVA_HOME} == "" ] ; then
+if [ -z "$JAVA_HOME" ] ; then
   JAVA_HOME=<%= node[:java][:java_home] %>
 fi
 
