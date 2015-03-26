@@ -101,3 +101,8 @@ default[:kagent][:enabled]                 = "false"
 
 default[:maven][:version]                  = "3.2.3"
 default[:maven][:checksum]                 = "2fcfdb327eb94b8595d97ee4181ef0a6"
+
+
+# https://github.com/caskdata/hadoop_wrapper_cookbook/blob/master/attributes/default.rb
+default['hadoop']['yarn']['yarn.nodemanager.resource.memory-mb']                   = ""
+default['hadoop']['yarn']['memory_percent']                                        = "75"

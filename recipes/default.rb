@@ -7,8 +7,15 @@ libpath = File.expand_path '../../../kagent/libraries', __FILE__
 require File.join(libpath, 'inifile')
 
 my_ip = my_private_ip()
+my_public_ip = my_public_ip()
 
 firstNN = "hdfs://" + private_recipe_ip("hadoop", "nn") + ":#{node[:hadoop][:nn][:port]}"
+
+rm_private_ip = private_recipe_ip("hadoop","rm")
+Chef::Log.info "Resourcemanager IP: #{rm_private_ip}"
+
+rm_public_ip = public_recipe_ip("hadoop","rm")
+Chef::Log.info "Resourcemanager IP: #{rm_public_ip}"
 
 template "#{node[:hadoop][:home]}/etc/hadoop/core-site.xml" do 
   source "core-site.xml.erb"
@@ -135,4 +142,72 @@ template "/conf/container-executor.cfg" do
   owner node[:hdfs][:user]
   group node[:hadoop][:group]
   mode "755"
+end
+
+
+
+file "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do 
+  owner node[:hadoop][:yarn][:user]
+  action :delete
+end
+
+
+unless node['hadoop']['yarn'].key?('yarn.nodemanager.resource.memory-mb')
+  mem = (node['memory']['total'].to_i / 1000)
+  if node['hadoop'].key?('yarn') && node['hadoop']['yarn'].key?('memory_percent')
+    pct = (node['hadoop']['yarn']['memory_percent'].to_f / 100)
+  else
+    pct = 0.50
+  end
+  node[:hadoop][:yarn][:nm][:memory_mbs] = (mem * pct).to_i
+end
+
+
+
+template "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do
+  source "yarn-site.xml.erb"
+  owner node[:hadoop][:yarn][:user]
+  group node[:hadoop][:group]
+  mode "666"
+  variables({
+              :rm_private_ip => rm_private_ip,
+              :rm_public_ip => rm_public_ip,
+              :available_mem_mb => node[:hadoop][:yarn][:nm][:memory_mbs],
+              :my_public_ip => my_public_ip,
+              :my_private_ip => my_ip
+            })
+  action :create_if_missing
+#  notifies :restart, resources(:service => "rm")
+end
+
+file "#{node[:hadoop][:home]}/etc/hadoop/mapred-site.xml" do 
+  owner node[:hadoop][:mr][:user]
+  action :delete
+end
+
+template "#{node[:hadoop][:home]}/etc/hadoop/mapred-site.xml" do
+  source "mapred-site.xml.erb"
+  owner node[:hadoop][:mr][:user]
+  group node[:hadoop][:group]
+  mode "666"
+  variables({
+              :rm_ip => rm_private_ip
+            })
+#  notifies :restart, resources(:service => "jhs")
+end
+
+file "#{node[:hadoop][:home]}/etc/hadoop/capacity-scheduler.xml" do 
+  owner node[:hadoop][:yarn][:user]
+  action :delete
+end
+
+template "#{node[:hadoop][:home]}/etc/hadoop/capacity-scheduler.xml" do
+  source "capacity-scheduler.xml.erb"
+  owner node[:hadoop][:yarn][:user]
+  group node[:hadoop][:group]
+  mode "666"
+  variables({
+              :rm_ip => rm_private_ip
+            })
+ # notifies :restart, resources(:service => "jhs")
 end

@@ -11,7 +11,7 @@ action :update do
 
 cp /home/#{username}/.bashrc /home/#{username}/.bashrc.bak
 
-# make recipe idempotent, by cleaning out old profile
+# make this resource idempotent, by cleaning out old profile
 rm /home/#{username}/.bash_profile
 
 echo export JAVA_HOME=#{node[:java][:java_home]} >> /home/#{username}/.bash_profile
@@ -28,7 +28,6 @@ echo export HADOOP_HOME=#{node[:hadoop][:dir]}/hadoop >> /home/#{username}/.bash
 
 echo export HADOOP_CONF_DIR=#{node[:hadoop][:dir]}/hadoop/etc/hadoop >> /home/#{username}/.bash_profile
 echo export YARN_CONF_DIR=#{node[:hadoop][:dir]}/hadoop/etc/hadoop >> /home/#{username}/.bash_profile
-echo export LD_LIBRARY_PATH=#{node[:ndb][:libndb]} >> /home/#{username}/.bash_profile
 
 echo export HADOOP_PID_DIR=#{node[:hadoop][:dir]}/hadoop/logs >> /home/#{username}/.bash_profile
 echo export YARN_PID_DIR=#{node[:hadoop][:dir]}/hadoop/logs >> /home/#{username}/.bash_profile
