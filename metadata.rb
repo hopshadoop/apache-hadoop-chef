@@ -62,6 +62,18 @@ attribute "hdfs/user",
 
 attribute "hadoop/format",
 :display_name => "Format HDFS",
-:description => "Format HDFS, Run 'hdfs namenode -format'",
+:description => "Format HDFS, Run 'hdfs namenode -format",
 :type => 'string',
 :default => "true"
+
+attribute "hadoop/mr/tmp_dir",
+:display_name => "Hadoop Temp Dir",
+:description => "The directory in which Hadoop stores temporary data, including container data",
+:type => 'string',
+:default => "/tmp/hadoop/mapreduce"
+
+attribute "hadoop/data_dir",
+:display_name => "HDFS Data Dir",
+:description => "The directory in which Hadoop's DataNodes store their data",
+:type => 'string',
+:default => "/var/data/hadoop"
