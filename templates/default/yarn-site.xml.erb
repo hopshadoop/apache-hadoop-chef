@@ -27,7 +27,10 @@
     <value><%= @rm_private_ip %>:8088</value>
     <description>The http address of the RM web application.</description>
   </property>
-
+  <property>
+    <name>yarn.nodemanager.delete.debug-delay-sec</name>
+    <value>86400</value>
+  </property>
   <property>
     <description>NM Webapp address.</description>
     <name>yarn.nodemanager.webapp.address</name>

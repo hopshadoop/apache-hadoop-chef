@@ -1,4 +1,4 @@
-default[:hadoop][:version]                 = "2.4.0"
+default[:hadoop][:version]                 = "2.6.0"
 default[:hdfs][:user]                      = "hdfs"
 default[:hadoop][:group]                   = "hadoop"
 default[:hadoop][:dir]                     = "/srv"
@@ -11,10 +11,9 @@ default[:hadoop][:data_dir]                = "/var/data/hadoop"
 default[:hadoop][:dn][:data_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/dn"
 default[:hadoop][:nn][:name_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/nn"
 
-default[:hadoop][:download_url]            = "https://archive.apache.org/dist/hadoop/core/hadoop-2.4.0/hadoop-2.4.0.tar.gz"
-#default[:hadoop][:download_url]            = "http://193.10.67.171/hops/hadoop-#{node[:hadoop][:version]}.tgz"
+default[:hadoop][:download_url]            = "http://apache.mirror.digionline.de/hadoop/common/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
 default[:hadoop][:protobuf_url]            = "https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz"
-default[:hadoop][:hadoop_src_url]          = "http://193.10.67.171/hops/hadoop-#{node[:hadoop][:version]}-src.tar.gz"
+default[:hadoop][:hadoop_src_url]          = "http://apache.mirror.digionline.de/hadoop/common/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}-src.tar.gz"
 default[:hadoop][:nn][:http_port]          = 50070
 default[:hadoop][:dn][:http_port]          = 50075
 default[:hadoop][:nn][:port]               = 29211
@@ -33,11 +32,11 @@ default[:hadoop][:nn][:heap_size]          = 1000
 
 default[:hadoop][:yarn][:scripts]          = %w{ start stop restart root-start }
 default[:hadoop][:yarn][:user]             = "yarn"
-default[:hadoop][:yarn][:nm][:memory_mbs]  = 3000
+default[:hadoop][:yarn][:nm][:memory_mbs]  = 3584
 default[:hadoop][:yarn][:ps_port]          = 20888
 
 default[:hadoop][:yarn][:vpmem_ratio]      = 4.1
-default[:hadoop][:yarn][:vcores]           = 2
+default[:hadoop][:yarn][:vcores]           = 4
 default[:hadoop][:yarn][:min_vcores]       = 1
 default[:hadoop][:yarn][:max_vcores]       = 4
 default[:hadoop][:yarn][:log_aggregation]  = "false"
@@ -50,7 +49,7 @@ default[:hadoop][:am][:max_retries]        = 2
 default[:hadoop][:yarn][:aux_services]     = "mapreduce_shuffle"
 default[:hadoop][:mr][:shuffle_class]      = "org.apache.hadoop.mapred.ShuffleHandler"
 
-default[:hadoop][:yarn][:app_classpath]    = "#{node[:hadoop][:home]}/etc/hadoop/, #{node[:hadoop][:home]}, #{node[:hadoop][:home]}/lib/*, #{node[:hadoop][:home]}/share/hadoop/yarn/test/*, #{node[:hadoop][:home]}/share/hadoop/yarn/*, #{node[:hadoop][:home]}/share/hadoop/yarn/lib/*, #{node[:hadoop][:home]}/share/hadoop/mapreduce/*, #{node[:hadoop][:home]}/share/hadoop/mapreduce/lib/*, , #{node[:hadoop][:home]}/share/hadoop/mapreduce/test/*, #{node[:hadoop][:home]}/share/hadoop/common/lib/*, #{node[:hadoop][:home]}/share/hadoop/hdfs/lib/*, #{node[:hadoop][:home]}/share/hadoop/tools/lib/*, #{node[:hadoop][:home]}/share/hadoop/common/*, , #{node[:hadoop][:home]}/share/hadoop/common/*, #{node[:hadoop][:home]}/share/hadoop/hdfs/*, #{node[:hadoop][:home]}/share/hadoop/mapreduce/*"
+default[:hadoop][:yarn][:app_classpath]    = "#{node[:hadoop][:home]}/etc/hadoop/, #{node[:hadoop][:home]}/share/hadoop/common/*, #{node[:hadoop][:home]}/share/hadoop/common/lib/*, #{node[:hadoop][:home]}/share/hadoop/hdfs/*, #{node[:hadoop][:home]}/share/hadoop/hdfs/lib/*, #{node[:hadoop][:home]}/share/hadoop/yarn/*, #{node[:hadoop][:home]}/share/hadoop/yarn/lib/*"#, #{node[:hadoop][:home]}, #{node[:hadoop][:home]}/lib/*, #{node[:hadoop][:home]}/share/hadoop/tools/lib/*, #{node[:hadoop][:home]}/share/hadoop/yarn/test/*, #{node[:hadoop][:home]}/share/hadoop/mapreduce/*, #{node[:hadoop][:home]}/share/hadoop/mapreduce/lib/*, #{node[:hadoop][:home]}/share/hadoop/mapreduce/test/*"
 
 default[:hadoop][:rm][:addr]               = []
 default[:hadoop][:rm][:http_port]          = 8088

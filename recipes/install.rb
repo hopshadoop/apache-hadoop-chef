@@ -191,7 +191,7 @@ remote_file cached_package_filename do
 end
 
 hin = "#{node[:hadoop][:home]}/.#{base_package_filename}_downloaded"
-base_name = File.basename(base_package_filename, ".tgz")
+base_name = File.basename(base_package_filename, ".tar.gz")
 # Extract and install hadoop
 bash 'extract-hadoop' do
   user "root"
