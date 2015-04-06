@@ -50,9 +50,9 @@ It will create 5 VMs on EC2, and install ndb datanodes on 4 VMs, and a managemen
 
 
 
-# Author
+# Authors
 
-Author:: Jim Dowling. (<jdowling@kth.se>)
+Authors:: Jim Dowling. (<jdowling@kth.se>), Marc Bux 
 
 # License
 
