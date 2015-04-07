@@ -46,11 +46,8 @@ suites:
             jhs:
                private_ips: ["10.0.2.15"]
                public_ips: ["10.0.2.15"]
-            native_libraries: "true"
+            native_libraries: "false"
          kagent:
-            private_ips: ["10.0.2.15"]
-            public_ips: ["10.0.2.15"]
-         kmon:
             private_ips: ["10.0.2.15"]
             public_ips: ["10.0.2.15"]
          private_ips: ["10.0.2.15"]

@@ -99,8 +99,8 @@ default[:hadoop][:native_libraries]        = "false"
 
 default[:kagent][:enabled]                 = "false"
 
-default[:maven][:version]                  = "3.2.3"
-default[:maven][:checksum]                 = "2fcfdb327eb94b8595d97ee4181ef0a6"
+default[:maven][:version]                  = "3.2.5"
+default[:maven][:checksum]                 = ""
 
 
 # https://github.com/caskdata/hadoop_wrapper_cookbook/blob/master/attributes/default.rb
