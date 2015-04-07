@@ -20,7 +20,6 @@ depends 'cmake'
 depends 'apt'
 depends 'yum'
 depends 'build-essential'
-depends 'ark'
 
 %w{ ubuntu debian rhel centos }.each do |os|
   supports os

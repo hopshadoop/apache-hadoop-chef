@@ -110,27 +110,38 @@ if node[:hadoop][:native_libraries].eql? "true"
 
   when "rhel"
   protobuf_lib_prefix = "/" 
-   ark "maven" do
-     url "http://apache.mirrors.spacedump.net/maven/maven-3/#{node[:maven][:version]}/binaries/apache-maven-#{node[:maven][:version]}-bin.tar.gz"
-     version "#{node[:maven][:version]}"
-     path "/usr/local/maven/"
-     home_dir "/usr/local/maven"
-#     checksum  "#{node[:maven][:checksum]}"
-     append_env_path true
-     owner "#{node[:hdfs][:user]}"
-   end
+#    ark "maven" do
+#      url "http://apache.mirrors.spacedump.net/maven/maven-3/#{node[:maven][:version]}/binaries/apache-maven-#{node[:maven][:version]}-bin.tar.gz"
+#      version "#{node[:maven][:version]}"
+#      path "/usr/local/maven/"
+#      home_dir "/usr/local/maven"
+# #     checksum  "#{node[:maven][:checksum]}"
+#      append_env_path true
+#      owner "#{node[:hdfs][:user]}"
+#    end
+   bash 'install-maven' do
+      user "root"
+      code <<-EOH
+        set -e
+        sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
+        sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
+        sudo yum install -y apache-maven
+	EOH
+     not_if { ::File.exist?("/etc/yum.repos.d/epel-apache-maven.repo") }
+    end
+
+       
   
   end
-
-   protobuf_name = "#{Chef::Config[:file_cache_path]}/.#{base_protobuf_filename}_downloaded"
-   protobuf_name = File.basename(base_protobuf_filename, ".tar.gz")
+   protobuf_name_no_extension = File.basename(base_protobuf_filename, ".tar.gz")
+   protobuf_name = "#{protobuf_lib_prefix}/.#{protobuf_name_no_extension}_downloaded"
    bash 'extract-protobuf' do
       user "root"
       code <<-EOH
         set -e
         cd #{Chef::Config[:file_cache_path]}
 	tar -zxf #{cached_protobuf_filename} 
-        cd #{protobuf_name}
+        cd #{protobuf_name_no_extension}
         ./configure --prefix=#{protobuf_lib_prefix}
         make
         make check
