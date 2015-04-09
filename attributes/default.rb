@@ -27,6 +27,7 @@ default[:hadoop][:dn][:scripts]            = %w{ start-dn.sh stop-dn.sh restart-
 default[:hadoop][:max_retries]             = 0
 default[:hadoop][:format]                  = "true"
 default[:hadoop][:io_buffer_sz]            = 131072
+default[:hadoop][:container_cleanup_delay_sec] = 0
 
 default[:hadoop][:nn][:heap_size]          = 1000
 

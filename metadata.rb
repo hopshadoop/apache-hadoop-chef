@@ -48,6 +48,12 @@ attribute "hadoop/num_replicas",
 :type => 'string',
 :default => 3
 
+attribute "hadoop/container_cleanup_delay_sec",
+:display_name => "Cleanup Delay (s)",
+:description => "The number of seconds container data is retained after termination",
+:type => 'string',
+:default => 0
+
 attribute "hadoop/yarn/user",
 :display_name => "Username to run yarn as",
 :description => "Username to run yarn as",
