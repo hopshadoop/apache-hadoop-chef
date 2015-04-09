@@ -42,6 +42,12 @@ attribute "hadoop/version",
 :type => 'string',
 :default => "2.6.0"
 
+attribute "hadoop/num_replicas",
+:display_name => "HDFS replication factor",
+:description => "Number of replicates for each file stored in HDFS",
+:type => 'string',
+:default => 3
+
 attribute "hadoop/yarn/user",
 :display_name => "Username to run yarn as",
 :description => "Username to run yarn as",
