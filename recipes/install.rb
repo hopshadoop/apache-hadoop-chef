@@ -1,6 +1,17 @@
 libpath = File.expand_path '../../../kagent/libraries', __FILE__
 require File.join(libpath, 'inifile')
 
+case node[:platform_family]
+when "debian"
+  bash "apt_update_install_build_tools" do
+    user "root"
+    code <<-EOF
+   apt-get update -y
+#   DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+ EOF
+  end
+end
+
 
 node.default['java']['jdk_version'] = 7
 include_recipe "java"
