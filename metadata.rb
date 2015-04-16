@@ -77,3 +77,8 @@ attribute "hadoop/data_dir",
 :description => "The directory in which Hadoop's DataNodes store their data",
 :type => 'string',
 :default => "/var/data/hadoop"
+
+attribute "hadoop/yarn/nodemanager_hb_ms",
+:description => "Heartbeat Interval for NodeManager->ResourceManager in ms",
+:type => 'string',
+:default => "1000"

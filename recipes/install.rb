@@ -294,3 +294,16 @@ bash 'update_permissions_etc_dir' do
     chmod 775 #{node[:hadoop][:conf_dir]}
   EOH
 end
+
+case node[:platform_family]
+when "debian"
+  package "libcgroup-dev" do
+  end
+
+when "redhat"
+
+# This doesnt work for rhel-7
+  package "libcgroup" do
+  end
+
+end
