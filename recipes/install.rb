@@ -199,7 +199,8 @@ directory node[:hadoop][:nn][:name_dir] do
 end
 
 
-package_url = node[:hadoop][:download_url]
+package_url = "#{node[:download_url]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
+#node[:hadoop][:download_url]
 Chef::Log.info "Downloading hadoop binaries from #{package_url}"
 base_package_filename = File.basename(package_url)
 cached_package_filename = "#{Chef::Config[:file_cache_path]}/#{base_package_filename}"
