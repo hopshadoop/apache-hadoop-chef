@@ -53,13 +53,21 @@
     <description>LinuxContainerExecutor uses CGroups, DefaultContainerExecutor uses Unix processes.</description>
   </property>
   <property>
+    <name>yarn.nodemanager.linux-container-executor.group</name>
+    <value><%= node[:hadoop][:group] %></value>
+  </property>
+<property>
+  <name>yarn.nodemanager.container-executor.resources-handler.class</name>
+  <value>org.apache.hadoop.yarn.server.nodemanager.util.CgroupsLCEResourcesHandler</value>
+</property>
+  <property>
     <name>yarn.nodemanager.linux-container-executor.cgroups.hierarchy</name>
-    <value>/hadoop-yarn</value>
+    <value>/yarn</value>
     <description>LinuxContainerExecutor CGroups hierarchy.</description>
   </property>
   <property>
     <name>yarn.nodemanager.linux-container-executor.cgroups.mount-path</name>
-    <value>/sys/fs/cgroup</value>
+    <value>/cgroup</value>
     <description>LinuxContainerExecutor CGroups mount-path.</description>
   </property>
   <property>
@@ -67,10 +75,14 @@
     <value>true</value>
     <description>Whether the LCE should attempt to mount cgroups if not found. Only used when the LCE resources handler is set to the CgroupsLCEResourcesHandler.</description>
   </property>
-  <property>
-    <name>yarn.nodemanager.linux-container-executor.group</name>
-    <value><%= node[:hadoop][:group] %></value>
-  </property>
+<property>
+  <name>yarn.nodemanager.resource.percentage-physical-cpu-limit</name>
+  <value>100</value>
+</property>
+<property>
+  <name>yarn.nodemanager.linux-container-executor.cgroups.strict-resource-usage</name>
+  <value>false</value>
+</property>
   <property>
     <name>yarn.resourcemanager.scheduler.client.thread-count</name>
     <value>50</value>

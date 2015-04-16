@@ -305,5 +305,12 @@ when "redhat"
 # This doesnt work for rhel-7
   package "libcgroup" do
   end
-
+end
+bash 'setup_mount_cgroups' do
+  user "root"
+  code <<-EOH
+    set -e
+    mkdir /cgroup
+    mount -t cgroup -o cpu cpu /cgroup
+  EOH
 end
