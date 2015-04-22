@@ -49,7 +49,7 @@
 
   <property>
     <name>yarn.nodemanager.container-executor.class</name>
-    <value>org.apache.hadoop.yarn.server.nodemanager.DefaultContainerExecutor</value>
+    <value><%= @container_executor %></value>
     <description>LinuxContainerExecutor uses CGroups, DefaultContainerExecutor uses Unix processes.</description>
   </property>
   <property>

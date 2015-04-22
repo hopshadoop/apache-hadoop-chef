@@ -12,15 +12,14 @@ provisioner:
 
 platforms:
   - name: centos-6.5
-  - name: ubuntu-12.04
-  - name: ubuntu-14.04
+#  - name: ubuntu-12.04
+#  - name: ubuntu-14.04
 
 suites:
   - name: default
     run_list:
       - recipe[kagent::install]
       - recipe[hadoop::install]
-      - recipe[kagent::default]
       - recipe[hadoop::nn]
       - recipe[hadoop::dn]
       - recipe[hadoop::rm]
@@ -45,6 +44,9 @@ suites:
                private_ips: ["10.0.2.15"]
                public_ips: ["10.0.2.15"]
             jhs:
+               private_ips: ["10.0.2.15"]
+               public_ips: ["10.0.2.15"]
+            ps:
                private_ips: ["10.0.2.15"]
                public_ips: ["10.0.2.15"]
             native_libraries: "false"

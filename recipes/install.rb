@@ -296,6 +296,8 @@ bash 'update_permissions_etc_dir' do
   EOH
 end
 
+if node[:hadoop][:cgroups].eql? "true" 
+
 case node[:platform_family]
 when "debian"
   package "libcgroup-dev" do
@@ -304,14 +306,18 @@ when "debian"
 when "redhat"
 
 # This doesnt work for rhel-7
-  package "libcgroup" do
+package "libcgroup" do
   end
 end
 bash 'setup_mount_cgroups' do
   user "root"
   code <<-EOH
     set -e
-    mkdir /cgroup
+    if [ ! -d "/cgroup" ] ; then
+       mkdir /cgroup
+    fi
     mount -t cgroup -o cpu cpu /cgroup
   EOH
+end
+
 end

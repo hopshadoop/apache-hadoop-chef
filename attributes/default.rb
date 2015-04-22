@@ -98,6 +98,7 @@ default[:hadoop][:nn][:addrs]              = []
 
 # build the native libraries. Is much slower, but removes warning when using services.
 default[:hadoop][:native_libraries]        = "false"
+default[:hadoop][:cgroups]                 = "false"
 
 default[:kagent][:enabled]                 = "false"
 

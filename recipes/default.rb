@@ -145,6 +145,10 @@ template "/conf/container-executor.cfg" do
 end
 
 
+container_executor="org.apache.hadoop.yarn.server.nodemanager.DefaultContainerExecutor"
+if node[:hadoop][:cgroups].eql? "true" 
+  container_executor="org.apache.hadoop.yarn.server.nodemanager.LinuxContainerExecutor"
+end
 
 file "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do 
   owner node[:hadoop][:yarn][:user]
@@ -174,7 +178,8 @@ template "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do
               :rm_public_ip => rm_public_ip,
               :available_mem_mb => node[:hadoop][:yarn][:nm][:memory_mbs],
               :my_public_ip => my_public_ip,
-              :my_private_ip => my_ip
+              :my_private_ip => my_ip,
+              :container_executor => container_executor
             })
   action :create_if_missing
 #  notifies :restart, resources(:service => "rm")
