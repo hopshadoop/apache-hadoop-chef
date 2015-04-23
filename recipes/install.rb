@@ -298,26 +298,29 @@ end
 
 if node[:hadoop][:cgroups].eql? "true" 
 
-case node[:platform_family]
-when "debian"
-  package "libcgroup-dev" do
-  end
+  case node[:platform_family]
+  when "debian"
+    package "libcgroup-dev" do
+    end
 
-when "redhat"
+  when "redhat"
 
-# This doesnt work for rhel-7
-package "libcgroup" do
+    # This doesnt work for rhel-7
+    package "libcgroup" do
+    end
   end
-end
-bash 'setup_mount_cgroups' do
-  user "root"
-  code <<-EOH
+  cgroups_mounted= "#{Chef::Config[:file_cache_path]}/.cgroups_mounted"
+  bash 'setup_mount_cgroups' do
+    user "root"
+    code <<-EOH
     set -e
     if [ ! -d "/cgroup" ] ; then
        mkdir /cgroup
     fi
     mount -t cgroup -o cpu cpu /cgroup
+    touch #{cgroups_mounted}
   EOH
-end
+     not_if { ::File.exist?("#{cgroups_mounted}") }
+  end
 
 end
