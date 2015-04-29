@@ -44,6 +44,8 @@ default[:hadoop][:yarn][:log_aggregation]  = "false"
 default[:hadoop][:yarn][:log_retain_secs]  = 10800
 default[:hadoop][:yarn][:log_retain_check] = 100
 
+default[:hadoop][:yarn][:container_cleanup_delay_sec] = 0
+
 default[:hadoop][:yarn][:nodemanager_hb_ms]= "1000"
 
 default[:hadoop][:am][:max_retries]        = 2

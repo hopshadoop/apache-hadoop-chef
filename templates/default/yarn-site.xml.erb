@@ -29,7 +29,7 @@
   </property>
   <property>
     <name>yarn.nodemanager.delete.debug-delay-sec</name>
-    <value>86400</value>
+    <value><%= node[:hadoop][:container_cleanup_delay_sec] %></value>
   </property>
   <property>
     <description>NM Webapp address.</description>

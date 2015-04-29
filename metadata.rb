@@ -82,3 +82,15 @@ attribute "hadoop/yarn/nodemanager_hb_ms",
 :description => "Heartbeat Interval for NodeManager->ResourceManager in ms",
 :type => 'string',
 :default => "1000"
+
+attribute "hadoop/num_replicas",
+:display_name => "HDFS replication factor",
+:description => "Number of replicates for each file stored in HDFS",
+:type => 'string',
+:default => 3
+
+attribute "hadoop/container_cleanup_delay_sec",
+:display_name => "Cleanup Delay (s)",
+:description => "The number of seconds container data is retained after termination",
+:type => 'string',
+:default => 0
