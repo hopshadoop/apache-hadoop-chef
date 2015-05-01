@@ -5,15 +5,18 @@ driver:
     memory: 5000
     natdnshostresolver1: "on"
     natdnsproxy1: "on"
-#    forward_port : "20888,20888"
+    nictype1: "virtio"
+  network:
+  - ["forwarded_port", {guest: 50070, host: 57070}]
+  - ["forwarded_port", {guest: 50075, host: 57075}]
 
 provisioner:
   name: chef_solo
 
 platforms:
-  - name: centos-6.5
+#  - name: centos-6.5
 #  - name: ubuntu-12.04
-#  - name: ubuntu-14.04
+  - name: ubuntu-14.04
 
 suites:
   - name: default
@@ -29,7 +32,6 @@ suites:
 
     attributes:
          hadoop:
-            version: 2.6.0
             user: glassfish
             nn:
                private_ips: ["10.0.2.15"]

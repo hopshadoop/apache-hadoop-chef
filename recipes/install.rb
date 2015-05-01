@@ -1,16 +1,16 @@
 libpath = File.expand_path '../../../kagent/libraries', __FILE__
 require File.join(libpath, 'inifile')
 
-case node[:platform_family]
-when "debian"
-  bash "apt_update_install_build_tools" do
-    user "root"
-    code <<-EOF
-   apt-get update -y
-#   DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
- EOF
-  end
-end
+# case node[:platform_family]
+# when "debian"
+#   bash "apt_update_install_build_tools" do
+#     user "root"
+#     code <<-EOF
+#    apt-get update -y
+# #   DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+#  EOF
+#   end
+# end
 
 
 node.default['java']['jdk_version'] = 7
@@ -199,8 +199,9 @@ directory node[:hadoop][:nn][:name_dir] do
 end
 
 
-package_url = "#{node[:download_url]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
-#node[:hadoop][:download_url]
+package_url = node[:hadoop][:download_url]
+  #"#{node[:download_url]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
+
 Chef::Log.info "Downloading hadoop binaries from #{package_url}"
 base_package_filename = File.basename(package_url)
 cached_package_filename = "#{Chef::Config[:file_cache_path]}/#{base_package_filename}"
