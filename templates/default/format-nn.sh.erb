@@ -13,7 +13,9 @@ $rootDir/sbin/stop-nn.sh
 # -force ensures command doesn't user to confirm for re-formatting.
 echo "$HDFS $command -format -force -nonInteractive > $log"
 
-$HDFS $command -format -force -nonInteractive > "$log"
+# -force causes us to fail
+#$HDFS $command -format -force -nonInteractive > "$log"
+$HDFS $command -format -nonInteractive > "$log"
 res=$?
 sleep 5
 cat "$log"
