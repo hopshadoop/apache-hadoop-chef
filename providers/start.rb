@@ -13,7 +13,7 @@ action :start_if_not_running do
 end
 
 
-action :format_nn
+action :format_nn do
 
     bash 'format-nn' do
       user node[:hdfs][:user]
