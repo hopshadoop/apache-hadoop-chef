@@ -23,7 +23,7 @@ if node[:hadoop][:format].eql? "true"
     # if the nn has already been formatted, re-formatting it returns error
     Chef::Log.info "Not formatting the NameNode. Remove this directory before formatting: (sudo rm -rf #{node[:hadoop][:tmp_dir]}/dfs/name/current)"
   else 
-    hops_start "format-nn" do
+    hadoop_start "format-nn" do
       action :format_nn
     end
   end
