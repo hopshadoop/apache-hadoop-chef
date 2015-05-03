@@ -14,8 +14,9 @@ $rootDir/sbin/stop-nn.sh
 echo "$HDFS $command -format -force -nonInteractive > $log"
 
 $HDFS $command -format -force -nonInteractive > "$log"
-#sleep 2; head "$log"
 res=$?
+sleep 5
+cat "$log"
 #error=`grep -i error $log`
 #if [ $error != "" ] ; then
 #  exit 1
