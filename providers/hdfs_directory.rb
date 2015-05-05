@@ -8,10 +8,11 @@ action :create do
      set -e
      . #{node[:hadoop][:home]}/sbin/set-env.sh
      #{node[:hadoop][:home]}/bin/hdfs dfs -mkdir -p #{new_resource.name}
-     if #{new_resource.mode}.empty
+     if [ "#{new_resource.mode}" != "" ] ; then
         #{node[:hadoop][:home]}/bin/hadoop fs -chmod #{new_resource.mode} #{new_resource.name} 
-     end
+     fi
     EOF
+#  not_if ". #{node[:hadoop][:home]}/sbin/set-env.sh && #{node[:hadoop][:home]}/bin/hdfs dfs -test -d #{new_resource.name}"
   end
  
 end
@@ -27,9 +28,9 @@ action :put do
      set -e
      . #{node[:hadoop][:home]}/sbin/set-env.sh
      #{node[:hadoop][:home]}/bin/hdfs dfs -put #{new_resource.name} #{new_resource.dest}
-     if #{new_resource.mode}.empty
+     if [ "#{new_resource.mode}" != "" ] ; then
         #{node[:hadoop][:home]}/bin/hadoop fs -chmod #{new_resource.mode} #{new_resource.dest} 
-     end
+     fi
     EOF
     not_if "#{node[:hadoop][:home]}/bin/hadoop dfs -test -e #{new_resource.dest}"
   end

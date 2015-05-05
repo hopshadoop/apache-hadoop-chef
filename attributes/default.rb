@@ -61,8 +61,8 @@ default[:hadoop][:nm][:http_port]          = 8042
 default[:hadoop][:jhs][:http_port]         = 19888
 
 
-default[:hadoop][:mr][:staging_dir]        = "/user"
 default[:hadoop][:mr][:tmp_dir]            = "/tmp/hadoop/mapreduce"
+default[:hadoop][:mr][:staging_dir]        = "#{node[:hadoop][:mr][:tmp_dir]}/#{node[:hadoop][:mr][:user]}/stagin"
 
 default[:hadoop][:jhs][:inter_dir]         = "/mr-history/done_intermediate"
 default[:hadoop][:jhs][:done_dir]          = "/mr-history/done"
