@@ -27,6 +27,7 @@ action :put do
      #{node[:hadoop][:home]}/bin/hadoop fs -chmod #{new_resource.mode} #{new_resource.dest} 
      #{node[:hadoop][:home]}/bin/hadoop fs -chown -R #{new_resource.owner}:#{new_resource.group} #{new_resource.dest} 
     EOF
+    not_if "#{node[:hadoop][:home]}/bin/hadoop dfs -test -e #{new_resource.dest}"
   end
  
 end

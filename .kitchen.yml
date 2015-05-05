@@ -7,8 +7,8 @@ driver:
     natdnsproxy1: "on"
     nictype1: "virtio"
   network:
-  - ["forwarded_port", {guest: 50070, host: 57070}]
-  - ["forwarded_port", {guest: 50075, host: 57075}]
+  - ["forwarded_port", {guest: 50070, host: 57777}]
+  - ["forwarded_port", {guest: 50075, host: 57775}]
 
 provisioner:
   name: chef_solo

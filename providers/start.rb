@@ -11,3 +11,16 @@ action :start_if_not_running do
   end
 
 end
+
+
+action :format_nn do
+
+    bash 'format-nn' do
+      user node[:hdfs][:user]
+      code <<-EOH
+        set -e
+        	#{node[:hadoop][:home]}/sbin/format-nn.sh
+ 	EOH
+    end
+
+end
