@@ -2,7 +2,7 @@ action :create do
   Chef::Log.info "Creating hdfs directory: #{@new_resource.name}"
 
   bash "mk-dir-#{new_resource.name}" do
-    user node[:hdfs][:user]
+    user #{new_resource.owner}
     code <<-EOF
      set -e
      . #{node[:hadoop][:home]}/sbin/set-env.sh
@@ -19,7 +19,7 @@ action :put do
   Chef::Log.info "Putting file(s) into hdfs directory: #{@new_resource.name}"
 
   bash "hdfs-put-dir-#{new_resource.name}" do
-    user node[:hdfs][:user]
+    user #{new_resource.owner}
     code <<-EOF
      set -e
      . #{node[:hadoop][:home]}/sbin/set-env.sh
