@@ -28,6 +28,7 @@ tmp_dirs   = ["/mr-history", node[:hadoop][:jhs][:inter_dir], node[:hadoop][:jhs
     action :create
     owner node[:hdfs][:user]
     mode "1777"
+    not_if ". #{node[:hadoop][:home]}/sbin/set-env.sh && #{node[:hadoop][:home]}/bin/hdfs dfs -test -d #{new_resource.name}"
    end
  end
 
@@ -38,6 +39,7 @@ node.normal[:mr][:dirs] = [node[:hadoop][:mr][:staging_dir], node[:hadoop][:mr][
     action :create
     owner node[:hadoop][:mr][:user]    
     mode "0775"
+    not_if ". #{node[:hadoop][:home]}/sbin/set-env.sh && #{node[:hadoop][:home]}/bin/hdfs dfs -test -d #{new_resource.name}"
    end
  end
 
