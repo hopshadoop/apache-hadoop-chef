@@ -20,13 +20,14 @@ service yarn_command do
 end
 
 
-tmp_dirs   = ["/mr-history", node[:hadoop][:jhs][:inter_dir], node[:hadoop][:jhs][:done_dir], "/tmp"]
+tmp_dirs   = ["/mr-history", node[:hadoop][:jhs][:inter_dir], node[:hadoop][:jhs][:done_dir], "/tmp", "/user"]
 
  for d in tmp_dirs
    Chef::Log.info "Creating hdfs directory: #{d}"
    hadoop_hdfs_directory d do
     action :create
     owner node[:hdfs][:user]
+    group node[:hdfs][:group]
     mode "1777"
     not_if ". #{node[:hadoop][:home]}/sbin/set-env.sh && #{node[:hadoop][:home]}/bin/hdfs dfs -test -d #{d}"
    end
@@ -37,7 +38,8 @@ node.normal[:mr][:dirs] = [node[:hadoop][:mr][:staging_dir], node[:hadoop][:mr][
    Chef::Log.info "Creating hdfs directory: #{d}"
    hadoop_hdfs_directory d do
     action :create
-    owner node[:hadoop][:mr][:user]    
+    owner node[:hadoop][:mr][:user]
+    group node[:hdfs][:group]
     mode "0775"
     not_if ". #{node[:hadoop][:home]}/sbin/set-env.sh && #{node[:hadoop][:home]}/bin/hdfs dfs -test -d #{d}"
    end
