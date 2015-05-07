@@ -94,3 +94,7 @@ attribute "hadoop/container_cleanup_delay_sec",
 :description => "The number of seconds container data is retained after termination",
 :type => 'string',
 :default => 0
+
+attribute "hadoop/rm/scheduler_class",
+:description => "Java Classname for the Yarn scheduler (fifo, capacity, fair)",
+:type => 'string'
