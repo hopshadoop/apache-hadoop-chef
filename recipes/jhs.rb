@@ -33,7 +33,7 @@ tmp_dirs   = ["/mr-history", node[:hadoop][:jhs][:inter_dir], node[:hadoop][:jhs
    end
  end
 
-node.normal[:mr][:dirs] = [node[:hadoop][:mr][:staging_dir], node[:hadoop][:mr][:tmp_dir]]
+node.normal[:mr][:dirs] = [node[:hadoop][:mr][:staging_dir], node[:hadoop][:mr][:tmp_dir], "/user/#{node[:hadoop][:mr][:user]}"]
  for d in node[:mr][:dirs]
    Chef::Log.info "Creating hdfs directory: #{d}"
    hadoop_hdfs_directory d do
