@@ -1,4 +1,4 @@
-default[:hadoop][:version]                 = "2.6.0"
+default[:hadoop][:version]                 = "2.7.0"
 default[:hdfs][:user]                      = "hdfs"
 default[:hadoop][:group]                   = "hadoop"
 default[:hadoop][:dir]                     = "/srv"
