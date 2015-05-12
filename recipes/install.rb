@@ -195,6 +195,7 @@ cached_package_filename = "#{Chef::Config[:file_cache_path]}/#{base_package_file
 
 remote_file cached_package_filename do
   source package_url
+  retries 2
   owner node[:hdfs][:user]
   group node[:hadoop][:group]
   mode "0755"
