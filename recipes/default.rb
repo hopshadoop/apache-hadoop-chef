@@ -4,7 +4,7 @@
 #
 
 libpath = File.expand_path '../../../kagent/libraries', __FILE__
-require File.join(libpath, 'inifile')
+
 
 my_ip = my_private_ip()
 my_public_ip = my_public_ip()
