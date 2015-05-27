@@ -1,4 +1,4 @@
-actions :create, :put
+actions :create, :put, :create_as_superuser
 
 attribute :name, :kind_of => String, :name_attribute => true
 attribute :mode, :kind_of => String, :default => ""
