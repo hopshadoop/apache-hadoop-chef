@@ -5,5 +5,6 @@ attribute :mode, :kind_of => String, :default => ""
 attribute :owner, :kind_of => String, :default => "mapred"
 attribute :group, :kind_of => String, :default => "hadoop"
 attribute :dest, :kind_of => String, :default => ""
+attribute :recursive, :kind_of => [TrueClass, FalseClass], :default => true 
 
 default_action :create
