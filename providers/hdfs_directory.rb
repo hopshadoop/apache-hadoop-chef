@@ -1,9 +1,9 @@
 action :create do
   Chef::Log.info "Creating hdfs directory: #{@new_resource.name}"
 
-  resursive="-p"
-  if new_resource.resursive == false
-      resursive=""
+  recursive="-p"
+  if new_resource.recursive == false
+      recursive=""
   end
   bash "mk-dir-#{new_resource.name}" do
     user "#{new_resource.owner}"
@@ -46,9 +46,9 @@ end
 action :create_as_superuser do
   Chef::Log.info "Creating hdfs directory: #{@new_resource.name}"
 
-  resursive="-p"
-  if new_resource.resursive == false
-      resursive=""
+  recursive="-p"
+  if new_resource.recursive == false
+      recursive=""
   end
 
   bash "mk-dir-#{new_resource.name}" do
