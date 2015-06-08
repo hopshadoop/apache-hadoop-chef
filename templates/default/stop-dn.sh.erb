@@ -1,7 +1,13 @@
 #!/bin/bash
 
 command=datanode
-pidDir=<%= node[:hadoop][:logs_dir] %>
+bin=`dirname "${BASH_SOURCE-$0}"`
+bin=`cd "$bin"; pwd`
+DEFAULT_LIBEXEC_DIR="$bin"/../libexec
+HADOOP_LIBEXEC_DIR=${HADOOP_LIBEXEC_DIR:-$DEFAULT_LIBEXEC_DIR}
+. $HADOOP_LIBEXEC_DIR/hadoop-config.sh
+
+pidDir=$HADOOP_PID_DIR
 service=hadoop
 
 <%= node[:hadoop][:home] %>/sbin/kill-process.sh $service <%= node[:hdfs][:user] %> $command $pidDir
