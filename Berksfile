@@ -14,3 +14,5 @@ cookbook 'apt', '~> 2.6.0'
 cookbook 'yum', '~> 3.4.0'
 cookbook 'magic_shell', '~> 1.0'
 cookbook 'ark'
+cookbook 'ulimit', github: 'bmhatfield/chef-ulimit'
+

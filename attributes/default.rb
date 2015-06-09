@@ -110,5 +110,8 @@ default[:maven][:checksum]                 = ""
 
 
 # https://github.com/caskdata/hadoop_wrapper_cookbook/blob/master/attributes/default.rb
-default['hadoop']['yarn']['yarn.nodemanager.resource.memory-mb']                   = ""
-default['hadoop']['yarn']['memory_percent']                                        = "75"
+default[:hadoop][:yarn]['yarn.nodemanager.resource.memory-mb']                   = ""
+default[:hadoop][:yarn]['memory_percent']                                        = "75"
+
+default[:hadoop][:limits][:nofile] = '32768'
+default[:hadoop][:limits][:nproc] = '65536'
