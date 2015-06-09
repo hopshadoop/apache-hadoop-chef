@@ -1,57 +1,61 @@
 libpath = File.expand_path '../../../kagent/libraries', __FILE__
 require File.join(libpath, 'inifile')
 
-#
-# http://www.slideshare.net/vgogate/hadoop-configuration-performance-tuning
-#
-case node[:platform_family]
- when "debian"
-   bash "configure_os" do
-     user "root"
-     code <<-EOF
+
+if node[:hadoop][:os_defaults] == "true" do
+  node.default['sysctl']['params']['vm']['swappiness'] = 0
+  node.default['sysctl']['params']['vm']['overcommit_memory'] = 1
+  node.default['sysctl']['params']['vm']['overcommit_ratio'] = 100
+  node.default['sysctl']['params']['net']['core']['somaxconn']= 1024
+  include_recipe 'sysctl::apply'
+
+    #
+    # http://www.slideshare.net/vgogate/hadoop-configuration-performance-tuning
+    #
+    case node[:platform_family]
+    when "debian"
+      bash "configure_os" do
+        user "root"
+        code <<-EOF
    EOF
-   end
- when "redhat"
-   bash "configure_os" do
-     user "root"
-     code <<-EOF
-      echo "never" > /sys/kernel/mm/redhat_transparent_hugepages/defrag
-#vm.swappiness=0
-#vm.overcommit_memory=1
-#vm.overcommit_ratio=100
-#net.core.somaxconn=1024
-     EOF
-   end
-   
- end
-
-# limits.d settings
-%w(hdfs mapred yarn).each do |u|
-  ulimit_domain u do
-    node['hadoop']['limits'].each do |k, v|
-      rule do
-        item k
-        type '-'
-        value v
       end
+    when "redhat"
+      bash "configure_os" do
+        user "root"
+        code <<-EOF
+      echo "never" > /sys/kernel/mm/redhat_transparent_hugepages/defrag
+     EOF
+      end
+      
     end
-    only_if { node['hadoop'].key?('limits') && !node['hadoop']['limits'].empty? }
+
+    # limits.d settings
+    %w(hdfs mapred yarn).each do |u|
+      ulimit_domain u do
+        node['hadoop']['limits'].each do |k, v|
+          rule do
+            item k
+            type '-'
+            value v
+          end
+        end
+        only_if { node['hadoop'].key?('limits') && !node['hadoop']['limits'].empty? }
+      end
+    end # End limits.d
+
+    # Remove extra mapreduce file, if it exists
+    file '/etc/security/limits.d/mapreduce.conf' do
+      action :delete
+    end
+
   end
-end # End limits.d
-
-# Remove extra mapreduce file, if it exists
-file '/etc/security/limits.d/mapreduce.conf' do
-  action :delete
-end
-
-
 
 node.default['java']['jdk_version'] = 7
 include_recipe "java"
 
 kagent_bouncycastle "jar" do
 end
-
+ 
 group node[:hadoop][:group] do
   action :create
 end
