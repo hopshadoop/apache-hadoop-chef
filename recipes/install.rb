@@ -2,7 +2,7 @@ libpath = File.expand_path '../../../kagent/libraries', __FILE__
 require File.join(libpath, 'inifile')
 
 
-if node[:hadoop][:os_defaults] == "true" do
+if node[:hadoop][:os_defaults] == "true" then
   node.default['sysctl']['allow_sysctl_conf'] = true
   node.default['sysctl']['params']['vm']['swappiness'] = 0
   node.default['sysctl']['params']['vm']['overcommit_memory'] = 1
