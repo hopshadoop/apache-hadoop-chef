@@ -3,6 +3,7 @@ require File.join(libpath, 'inifile')
 
 
 if node[:hadoop][:os_defaults] == "true" do
+  node.default['sysctl']['allow_sysctl_conf'] = true
   node.default['sysctl']['params']['vm']['swappiness'] = 0
   node.default['sysctl']['params']['vm']['overcommit_memory'] = 1
   node.default['sysctl']['params']['vm']['overcommit_ratio'] = 100
