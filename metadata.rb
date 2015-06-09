@@ -6,10 +6,14 @@ description      'Installs/Configures the Apache Hadoop distribution'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "1.0"
 
-recipe            "hadoop::nn", "Installs a Hadoop Namenode"
-recipe            "hadoop::dn", "Installs a Hadoop Namenode"
+#link:<a target='_blank' href='http://%host%:50070/'>Launch the WebUI for the NameNode</a>
+recipe            "hadoop::nn", "Installs a Hadoop NameNode"
+recipe            "hadoop::dn", "Installs a Hadoop DataNode"
+#link:<a target='_blank' href='http://%host%:50088/'>Launch the WebUI for the ResourceManager</a>
 recipe            "hadoop::rm", "Installs a YARN ResourceManager"
 recipe            "hadoop::nm", "Installs a YARN NodeManager"
+#link:<a target='_blank' href='http://%host%:50030/'>Launch the WebUI for the JobTracker</a>
+#link:<a target='_blank' href='http://%host%:51111/'>Launch the WebUI for the HistoryServer</a>
 recipe            "hadoop::jhs", "Installs a MapReduce History Server for YARN"
 recipe            "hadoop::ps", "Installs a WebProxy Server for YARN"
 
