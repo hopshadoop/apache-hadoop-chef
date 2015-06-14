@@ -3,9 +3,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-libpath = File.expand_path '../../../kagent/libraries', __FILE__
-
-
 my_ip = my_private_ip()
 my_public_ip = my_public_ip()
 
