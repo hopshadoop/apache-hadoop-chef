@@ -101,6 +101,11 @@
     <description>The maximum allocation for every container request at the RM, in terms of virtual CPU cores. Requests higher than this won't take effect, and will get capped to this value.</description>
   </property>
   <property>
+    <name>yarn.scheduler.maximum-allocation-mb</name>
+    <value><%= node[:hadoop][:yarn][:nm][:memory_mbs] %></value>
+    <description>The maximum allocation for every container request at the RM, in MBs. Memory requests higher than this won't take effect, and will get capped to this value.</description>
+  </property>
+  <property>
     <name>yarn.nodemanager.log.retain-seconds</name>
     <value><%= node[:hadoop][:yarn][:log_retain_secs] %></value>
     <description>Default time (in seconds) to retain log files on the NodeManager Only applicable if log-aggregation is disabled.</description>

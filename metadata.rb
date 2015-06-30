@@ -36,6 +36,11 @@ attribute "hadoop/yarn/vcores",
 :type => 'string',
 :default => 4
 
+attribute "hadoop/yarn/max_vcores",
+:display_name => "Hadoop NodeManager Maximum Virtual Cores per container",
+:type => 'string',
+:default => 4
+
 attribute "hadoop/version",
 :display_name => "Hadoop version",
 :description => "Version of hadoop",
@@ -78,11 +83,11 @@ attribute "hadoop/format",
 :type => 'string',
 :default => "true"
 
-attribute "hadoop/mr/tmp_dir",
+attribute "hadoop/tmp_dir",
 :display_name => "Hadoop Temp Dir",
 :description => "The directory in which Hadoop stores temporary data, including container data",
 :type => 'string',
-:default => "/tmp/hadoop/mapreduce"
+:default => "/tmp/hadoop"
 
 attribute "hadoop/data_dir",
 :display_name => "HDFS Data Dir",
