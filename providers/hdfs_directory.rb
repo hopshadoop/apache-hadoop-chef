@@ -22,7 +22,6 @@ action :create do
  
 end
 
-
 action :put do
   Chef::Log.info "Putting file(s) into hdfs directory: #{@new_resource.name}"
 
@@ -33,6 +32,28 @@ action :put do
      set -e
      . #{node[:hadoop][:home]}/sbin/set-env.sh
      #{node[:hadoop][:home]}/bin/hdfs dfs -put #{new_resource.name} #{new_resource.dest}
+     #{node[:hadoop][:home]}/bin/hdfs dfs -chgrp #{new_resource.group} #{new_resource.dest}
+     if [ "#{new_resource.mode}" != "" ] ; then
+        #{node[:hadoop][:home]}/bin/hadoop fs -chmod #{new_resource.mode} #{new_resource.dest} 
+     fi
+    EOF
+#    not_if "#{node[:hadoop][:home]}/bin/hadoop dfs -test -e #{new_resource.dest}"
+  end
+ 
+end
+
+
+action :put_as_superuser do
+  Chef::Log.info "Putting file(s) into hdfs directory: #{@new_resource.name}"
+
+  bash "hdfs-put-dir-#{new_resource.name}" do
+    user node[:hdfs][:user]
+    group node[:hadoop][:group]
+    code <<-EOF
+     set -e
+     . #{node[:hadoop][:home]}/sbin/set-env.sh
+     #{node[:hadoop][:home]}/bin/hdfs dfs -put #{new_resource.name} #{new_resource.dest}
+     #{node[:hadoop][:home]}/bin/hdfs dfs -chown #{new_resource.owner} #{new_resource.dest}
      #{node[:hadoop][:home]}/bin/hdfs dfs -chgrp #{new_resource.group} #{new_resource.dest}
      if [ "#{new_resource.mode}" != "" ] ; then
         #{node[:hadoop][:home]}/bin/hadoop fs -chmod #{new_resource.mode} #{new_resource.dest} 
