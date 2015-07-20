@@ -24,9 +24,10 @@ This cookbook has been tested on the following versions (but may work on earlier
 
 
 ###Karamel usage
-This cookbook is karamelized (www.karamel.io).  You can launch a Hadoop Cluster using the following yml file. 
-It will create 3 VMs, one running VM with the NameNode, a ResourceManager, and a Job history server. Two VMs will run the datanode and the node manaer.
 
+This cookbook is karamelized (www.karamel.io).  You can launch a Hadoop Cluster using the following yml file. It will create 3 VMs, where one is the master running NameNode, ResourceManager, and Job history server. The two other VMs are workers and will run the DataNode and NodeManager.
+
+```
 name: eu-west-1
 
 cookbooks:                                                                      
@@ -46,8 +47,7 @@ groups:
     recipes: 
         - hadoop::dn
         - hadoop::nm
-It will create 5 VMs on EC2, and install ndb datanodes on 4 VMs, and a management server, a MySQL Server, and a Memcached server on 1 VM.
-
+```
 
 
 # Authors
