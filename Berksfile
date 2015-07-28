@@ -15,4 +15,5 @@ cookbook 'yum', '~> 3.4.0'
 cookbook 'magic_shell', '~> 1.0'
 cookbook 'ark'
 cookbook 'ulimit', github: 'bmhatfield/chef-ulimit'
-
+#cookbook 'sysctl', github: 'svanzoest-cookbooks/sysctl', version: 'v0.6.2'
+cookbook 'sysctl', '~> 0.6.2'

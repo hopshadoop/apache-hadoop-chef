@@ -113,5 +113,6 @@ default[:maven][:checksum]                 = ""
 default[:hadoop][:yarn]['yarn.nodemanager.resource.memory-mb']                   = ""
 default[:hadoop][:yarn]['memory_percent']                                        = "75"
 
-default[:hadoop][:limits][:nofile] = '32768'
-default[:hadoop][:limits][:nproc] = '65536'
+default[:hadoop][:limits][:nofile]         = '32768'
+default[:hadoop][:limits][:nproc]          = '65536'
+default[:hadoop][:os_defaults]             = "true"
