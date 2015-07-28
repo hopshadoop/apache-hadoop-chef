@@ -20,10 +20,10 @@ recipe            "hadoop::ps", "Installs a WebProxy Server for YARN"
 
 depends 'kagent'
 depends 'java'
-depends 'cmake'
+#depends 'cmake'
 depends 'apt'
 depends 'yum'
-depends 'build-essential'
+#depends 'build-essential'
 depends 'ark'
 
 %w{ ubuntu debian rhel centos }.each do |os|
