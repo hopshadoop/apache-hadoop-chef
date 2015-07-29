@@ -63,7 +63,7 @@ default[:hadoop][:jhs][:http_port]         = 19888
 default[:hadoop][:rm][:scheduler_class]    = "org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler"
 
 default[:hadoop][:mr][:tmp_dir]            = "/tmp/hadoop/mapreduce"
-default[:hadoop][:mr][:staging_dir]        = "#{node[:hadoop][:mr][:tmp_dir]}/#{node[:hadoop][:mr][:user]}/stagin"
+default[:hadoop][:mr][:staging_dir]        = "#{node[:hadoop][:mr][:tmp_dir]}/#{node[:hadoop][:mr][:user]}/staging"
 
 default[:hadoop][:jhs][:inter_dir]         = "/mr-history/done_intermediate"
 default[:hadoop][:jhs][:done_dir]          = "/mr-history/done"
