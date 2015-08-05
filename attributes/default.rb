@@ -1,4 +1,3 @@
-#default[:hadoop][:version]                 = "2.4.0"
 default[:hadoop][:version]                 = "2.7.1"
 default[:hdfs][:user]                      = "hdfs"
 default[:hadoop][:group]                   = "hadoop"
