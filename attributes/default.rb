@@ -116,3 +116,5 @@ default[:hadoop][:yarn]['memory_percent']                                       
 default[:hadoop][:limits][:nofile]         = '32768'
 default[:hadoop][:limits][:nproc]          = '65536'
 default[:hadoop][:os_defaults]             = "true"
+
+default[:hadoop][:user_envs]               = "true"

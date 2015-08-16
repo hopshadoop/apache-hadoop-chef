@@ -113,16 +113,18 @@ if node[:hadoop][:install_protobuf]
 end
 
 
-hadoop_user_envs node[:hdfs][:user] do
-  action :update
-end
+if "#{node[:hadoop][:user_envs]}".eql? "true"
+  hadoop_user_envs node[:hdfs][:user] do
+    action :update
+  end
 
-hadoop_user_envs node[:hadoop][:yarn][:user] do
-  action :update
-end
+  hadoop_user_envs node[:hadoop][:yarn][:user] do
+    action :update
+  end
 
-hadoop_user_envs node[:hadoop][:mr][:user] do
-  action :update
+  hadoop_user_envs node[:hadoop][:mr][:user] do
+    action :update
+  end
 end
 
 directory "/conf" do

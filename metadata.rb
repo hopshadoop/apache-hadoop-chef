@@ -34,73 +34,66 @@ end
 
 attribute "hadoop/yarn/nm/memory_mbs",
 :display_name => "Hadoop NodeManager Memory in MB",
-:type => 'string',
-:default => 3584
+:type => 'string'
 
 attribute "hadoop/yarn/vcores",
 :display_name => "Hadoop NodeManager Number of Virtual Cores",
-:type => 'string',
-:default => 4
+:type => 'string'
 
 attribute "hadoop/version",
 :display_name => "Hadoop version",
 :description => "Version of hadoop",
-:type => 'string',
-:default => "2.6.0"
+:type => 'string'
 
 attribute "hadoop/yarn/user",
 :display_name => "Username to run yarn as",
 :description => "Username to run yarn as",
-:type => 'string',
-:default => "yarn"
+:type => 'string'
 
 attribute "hadoop/mr/user",
 :display_name => "Username to run mapReduce as",
 :description => "Username to run mapReduce as",
-:type => 'string',
-:default => "mapred"
+:type => 'string'
 
 attribute "hdfs/user",
 :display_name => "Username to run hdfs as",
 :description => "Username to run hdfs as",
-:type => 'string',
-:default => "hdfs"
+:type => 'string'
 
 attribute "hadoop/format",
 :display_name => "Format HDFS",
 :description => "Format HDFS, Run 'hdfs namenode -format",
-:type => 'string',
-:default => "true"
+:type => 'string'
 
 attribute "hadoop/mr/tmp_dir",
 :display_name => "Hadoop Temp Dir",
 :description => "The directory in which Hadoop stores temporary data, including container data",
-:type => 'string',
-:default => "/tmp/hadoop/mapreduce"
+:type => 'string'
 
 attribute "hadoop/data_dir",
 :display_name => "HDFS Data Dir",
 :description => "The directory in which Hadoop's DataNodes store their data",
-:type => 'string',
-:default => "/var/data/hadoop"
+:type => 'string'
 
 attribute "hadoop/yarn/nodemanager_hb_ms",
 :description => "Heartbeat Interval for NodeManager->ResourceManager in ms",
-:type => 'string',
-:default => "1000"
+:type => 'string'
 
 attribute "hadoop/num_replicas",
 :display_name => "HDFS replication factor",
 :description => "Number of replicates for each file stored in HDFS",
-:type => 'string',
-:default => 3
+:type => 'string'
+
 
 attribute "hadoop/container_cleanup_delay_sec",
 :display_name => "Cleanup Delay (s)",
 :description => "The number of seconds container data is retained after termination",
-:type => 'string',
-:default => 0
+:type => 'string'
 
 attribute "hadoop/rm/scheduler_class",
 :description => "Java Classname for the Yarn scheduler (fifo, capacity, fair)",
+:type => 'string'
+
+attribute "hadoop/user_envs",
+:description => "Update the PATH environment variable for the hdfs and yarn users to include hadoop/bin in the PATH ",
 :type => 'string'
