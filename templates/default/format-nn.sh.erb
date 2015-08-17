@@ -1,9 +1,17 @@
 #!/bin/bash
 
+# set -e
+
 command=namenode
 
+bin=`dirname "${BASH_SOURCE-$0}"`
+bin=`cd "$bin"; pwd`
+
+DEFAULT_LIBEXEC_DIR="$bin"/../libexec
+HADOOP_LIBEXEC_DIR=${HADOOP_LIBEXEC_DIR:-$DEFAULT_LIBEXEC_DIR}
+. $HADOOP_LIBEXEC_DIR/hadoop-config.sh
+
 rootDir=<%= node[:hadoop][:home] %>
-source /home/<%= node[:hdfs][:user] %>/.bash_profile
 
 HDFS=$rootDir/bin/hdfs
 log=$rootDir/logs/hadoop-<%= node[:hdfs][:user] %>-$command.log
