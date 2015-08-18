@@ -3,6 +3,12 @@
 command=historyserver
 pidDir=/tmp
 service=mapred
+bin=`dirname "${BASH_SOURCE-$0}"`
+bin=`cd "$bin"; pwd`
+DEFAULT_LIBEXEC_DIR="$bin"/../libexec
+HADOOP_LIBEXEC_DIR=${HADOOP_LIBEXEC_DIR:-$DEFAULT_LIBEXEC_DIR}
+. $HADOOP_LIBEXEC_DIR/hadoop-config.sh
+. set-env.sh
 
 <%= node[:hadoop][:home] %>/sbin/kill-process.sh $service <%= node[:hadoop][:yarn][:user] %> $command $pidDir
 

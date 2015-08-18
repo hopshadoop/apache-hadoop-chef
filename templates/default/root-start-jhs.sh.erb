@@ -12,7 +12,7 @@ MRJH=$rootDir/sbin/mr-jobhistory-daemon.sh
 
 echo "Starting $command on ..."
 
-$EXEC_WITH_USER "cd ${bin}/..; . ${bin}/../libexec/yarn-config.sh ; $MRJH --config \$HADOOP_CONF_DIR start $command"
+$EXEC_WITH_USER "cd ${bin}/..; . ${bin}/../libexec/yarn-config.sh ; . ${bin}/set-env.sh ; $MRJH --config \$HADOOP_CONF_DIR start $command"
 
 sleep 2
 head <%= node[:hadoop][:logs_dir] %>/mapred-<%= node[:hadoop][:yarn][:user] %>-historyserver-<%= node['hostname'] %>.log

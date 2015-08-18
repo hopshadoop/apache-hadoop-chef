@@ -6,6 +6,7 @@ bin=`cd "$bin"; pwd`
 DEFAULT_LIBEXEC_DIR="$bin"/../libexec
 HADOOP_LIBEXEC_DIR=${HADOOP_LIBEXEC_DIR:-$DEFAULT_LIBEXEC_DIR}
 . $HADOOP_LIBEXEC_DIR/hadoop-config.sh
+. set-env.sh
 
 pidDir=$HADOOP_PID_DIR
 service=hadoop

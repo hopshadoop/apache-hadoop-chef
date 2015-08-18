@@ -5,10 +5,14 @@ bin=`cd "$bin"; pwd`
 DEFAULT_LIBEXEC_DIR="$bin"/../libexec
 HADOOP_LIBEXEC_DIR=${HADOOP_LIBEXEC_DIR:-$DEFAULT_LIBEXEC_DIR}
 . $HADOOP_LIBEXEC_DIR/hadoop-config.sh
-
+. set-env.sh
 
 command=namenode
 pidDir=$HADOOP_PID_DIR
+
+if [ $pidDir == "" ] ; then
+  pidDir = "${HADOOP_DEV_HOME}/logs"
+fi
 service=hadoop
 
 <%= node[:hadoop][:home] %>/sbin/kill-process.sh $service <%= node[:hdfs][:user] %> $command $pidDir
