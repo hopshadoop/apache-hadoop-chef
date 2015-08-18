@@ -8,7 +8,7 @@ bin=`cd "$bin"; pwd`
 
 log=<%= node[:hadoop][:logs_dir] %>/yarn-<%= node[:hadoop][:yarn][:user] %>-$command-<%= node['hostname'] %>.log
 
-$EXEC_WITH_USER "cd ${bin}/..; . ${bin}/../libexec/yarn-config.sh ; . ${bin}/set-env.sh ; ${bin}/yarn-daemon.sh --config \$YARN_CONF_DIR  start $command"
+$EXEC_WITH_USER "cd ${bin}/..; . ${bin}/../libexec/hadoop-config.sh ; . ${bin}/set-env.sh ; ${bin}/yarn-daemon.sh --config \$YARN_CONF_DIR  start $command"
 sleep 2; head "$log"
 
 PID_FILE=<%= node[:hadoop][:logs_dir] %>/yarn-<%= node[:hadoop][:yarn][:user] %>-$command.pid
