@@ -9,10 +9,6 @@ HADOOP_LIBEXEC_DIR=${HADOOP_LIBEXEC_DIR:-$DEFAULT_LIBEXEC_DIR}
 
 command=namenode
 pidDir=$HADOOP_PID_DIR
-
-if [ $pidDir == "" ] ; then
-  pidDir = "${HADOOP_DEV_HOME}/logs"
-fi
 service=hadoop
 
 <%= node[:hadoop][:home] %>/sbin/kill-process.sh $service <%= node[:hdfs][:user] %> $command $pidDir
