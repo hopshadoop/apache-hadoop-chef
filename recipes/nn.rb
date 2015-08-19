@@ -15,18 +15,14 @@ end
 
 
 # it is ok if all namenodes format the fs. Unless you add a new one later..
-
-if node[:hadoop][:format].eql? "true"
-
+# if the nn has already been formatted, re-formatting it returns error
 # TODO: test if the NameNode is running
-  if ::File.directory?("#{node[:hadoop][:nn][:name_dir]}/current")
-    # if the nn has already been formatted, re-formatting it returns error
-    Chef::Log.info "Not formatting the NameNode. Remove this directory before formatting: (sudo rm -rf #{node[:hadoop][:tmp_dir]}/dfs/name/current)"
-  else 
-    hadoop_start "format-nn" do
-      action :format_nn
-    end
+if ::File.directory?("#{node[:hadoop][:nn][:name_dir]}/current") === false || node[:hadoop][:reformat].eql? "true"
+  hadoop_start "format-nn" do
+    action :format_nn
   end
+else 
+  Chef::Log.info "Not formatting the NameNode. Remove this directory before formatting: (sudo rm -rf #{node[:hadoop][:nn][:name_dir]}/current) and set node[:hadoop][:reformat] to true"
 end
 
 service "namenode" do

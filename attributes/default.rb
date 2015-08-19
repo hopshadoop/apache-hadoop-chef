@@ -26,7 +26,7 @@ default[:hadoop][:db]                      = "hadoop"
 default[:hadoop][:nn][:scripts]            = %w{ format-nn.sh start-nn.sh stop-nn.sh restart-nn.sh root-start-nn.sh hdfs.sh yarn.sh hadoop.sh } 
 default[:hadoop][:dn][:scripts]            = %w{ start-dn.sh stop-dn.sh restart-dn.sh root-start-dn.sh hdfs.sh yarn.sh hadoop.sh } 
 default[:hadoop][:max_retries]             = 0
-default[:hadoop][:format]                  = "true"
+default[:hadoop][:reformat]                = "false"
 default[:hadoop][:io_buffer_sz]            = 131072
 
 default[:hadoop][:nn][:heap_size]          = 1000
