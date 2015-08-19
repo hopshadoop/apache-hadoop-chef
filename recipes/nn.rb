@@ -17,7 +17,7 @@ end
 # it is ok if all namenodes format the fs. Unless you add a new one later..
 # if the nn has already been formatted, re-formatting it returns error
 # TODO: test if the NameNode is running
-if ::File.directory?("#{node[:hadoop][:nn][:name_dir]}/current") === false || node[:hadoop][:reformat].eql? "true"
+if ::File.directory?("#{node[:hadoop][:nn][:name_dir]}/current") === false || "#{node[:hadoop][:reformat]}" === "true"
   hadoop_start "format-nn" do
     action :format_nn
   end
