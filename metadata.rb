@@ -80,10 +80,8 @@ attribute "hadoop/yarn/nodemanager_hb_ms",
 :type => 'string'
 
 attribute "hadoop/num_replicas",
-:display_name => "HDFS replication factor",
 :description => "Number of replicates for each file stored in HDFS",
 :type => 'string'
-
 
 attribute "hadoop/container_cleanup_delay_sec",
 :display_name => "Cleanup Delay (s)",
@@ -96,4 +94,16 @@ attribute "hadoop/rm/scheduler_class",
 
 attribute "hadoop/user_envs",
 :description => "Update the PATH environment variable for the hdfs and yarn users to include hadoop/bin in the PATH ",
+:type => 'string'
+
+attribute "hadoop/logging_level",
+:description => "Log levels are: TRACE, DEBUG, INFO, WARN",
+:type => 'string'
+
+attribute "hadoop/nn/heap_size",
+:description => "Size of the NameNode heap in MBs",
+:type => 'string'
+
+attribute "hadoop/nn/direct_memory_size",
+:description => "Size of the direct memory size for the NameNode in MBs",
 :type => 'string'

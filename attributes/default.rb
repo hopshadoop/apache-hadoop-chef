@@ -118,3 +118,6 @@ default[:hadoop][:limits][:nproc]          = '65536'
 default[:hadoop][:os_defaults]             = "true"
 
 default[:hadoop][:user_envs]               = "true"
+
+default[:hadoop][:logging_level]           = "WARN"
+default[:hadoop][:nn][:direct_memory_size] = 50
