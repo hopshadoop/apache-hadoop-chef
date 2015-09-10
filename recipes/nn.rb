@@ -36,7 +36,7 @@ template "/etc/init.d/namenode" do
   group node[:hadoop][:group]
   mode 0754
   notifies :enable, resources(:service => "namenode")
-  notifies :restart, resources(:service => "namenode")
+  notifies :restart, resources(:service => "namenode"), :immediately
 end
 
 if node[:kagent][:enabled] == "true" 
