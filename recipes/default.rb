@@ -7,6 +7,7 @@ my_ip = my_private_ip()
 my_public_ip = my_public_ip()
 
 firstNN = "hdfs://" + private_recipe_ip("hadoop", "nn") + ":#{node[:hadoop][:nn][:port]}"
+Chef::Log.info "NameNode private IP: #{firstNN}"
 
 rm_private_ip = private_recipe_ip("hadoop","rm")
 Chef::Log.info "Resourcemanager IP: #{rm_private_ip}"
@@ -20,7 +21,7 @@ template "#{node[:hadoop][:home]}/etc/hadoop/core-site.xml" do
   group node[:hadoop][:group]
   mode "755"
   variables({
-              :firstNN => firstNN
+              :myNN => firstNN
             })
   action :create_if_missing
 end
