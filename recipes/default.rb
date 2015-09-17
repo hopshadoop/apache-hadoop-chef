@@ -6,7 +6,7 @@
 my_ip = my_private_ip()
 my_public_ip = my_public_ip()
 
-firstNN = "hdfs://" + private_recipe_ip("hadoop", "nn") + ":#{node[:hadoop][:nn][:port]}"
+firstNN = private_recipe_ip("hadoop", "nn") + ":#{node[:hadoop][:nn][:port]}"
 Chef::Log.info "NameNode private IP: #{firstNN}"
 
 rm_private_ip = private_recipe_ip("hadoop","rm")
@@ -21,22 +21,47 @@ template "#{node[:hadoop][:home]}/etc/hadoop/core-site.xml" do
   group node[:hadoop][:group]
   mode "755"
   variables({
-              :myNN => firstNN
+              :myNN => "hdfs://" + firstNN
             })
   action :create_if_missing
 end
 
+journal_urls=""
+
+ha_enabled = "false"
+if node[:hadoop][:ha_enabled].eql? "true" 
+  ha_enabled = "true"
+end
+
+zk_nodes=node[:kzookeeper][:default][:private_ips].join(":2181,")
+zk_nodes = zk_nodes.chomp(":2181,")
+
+secondNN = ""
+
+if node[:hadoop][:nn][:private_ips].length > 1
+   secondNN = "#{node[:hadoop][:nn][:private_ips][1]}" + ":#{node[:hadoop][:nn][:port]}"
+end
+
 template "#{node[:hadoop][:home]}/etc/hadoop/hdfs-site.xml" do
+     case ha_enabled
+     when 'true'
+  source "hdfs-site-ha.xml.erb"
+     when 'false'
   source "hdfs-site.xml.erb"
+     end
   owner node[:hdfs][:user]
   group node[:hadoop][:group]
   mode "755"
   variables({
+              :firstNN => firstNN,
+              :secondNN => secondNN,
               :addr1 => my_ip + ":40100",
               :addr2 => my_ip + ":40101",
               :addr3 => my_ip + ":40102",
               :addr4 => my_ip + ":40103",
               :addr5 => my_ip + ":40104",
+              :journal_urls => journal_urls,
+              :zk_nodes => zk_nodes
             })
   action :create_if_missing
 end
@@ -136,6 +161,14 @@ directory "/conf" do
   action :create
 end
 
+
+directory "#{node[:hadoop][:home]}/journal" do
+  owner node[:hdfs][:user]
+  group node[:hadoop][:group]
+  mode "0755"
+  recursive true
+  action :create
+end
 
 template "/conf/container-executor.cfg" do
   source "container-executor.cfg.erb"

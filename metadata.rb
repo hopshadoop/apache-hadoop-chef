@@ -107,3 +107,7 @@ attribute "hadoop/nn/heap_size",
 attribute "hadoop/nn/direct_memory_size",
 :description => "Size of the direct memory size for the NameNode in MBs",
 :type => 'string'
+
+attribute "hadoop/ha_enabled",
+:description => "'true' to enable HA, else 'false'",
+:type => 'string'

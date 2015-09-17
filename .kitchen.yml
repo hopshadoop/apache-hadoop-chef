@@ -31,10 +31,12 @@ suites:
       - recipe[hadoop::nm]
       - recipe[hadoop::jhs]
       - recipe[hadoop::ps]
+      - recipe[hadoop::jn]
 
     attributes:
          hadoop:
             user: glassfish
+            ha_enabled: "true"
             nn:
                private_ips: ["10.0.2.15"]
                public_ips: ["10.0.2.15"]
@@ -54,6 +56,10 @@ suites:
                private_ips: ["10.0.2.15"]
                public_ips: ["10.0.2.15"]
             native_libraries: "false"
+         kzookeeper:
+            default:
+               private_ips: ["10.0.2.15"]
+               public_ips: ["10.0.2.15"]
          kagent:
             private_ips: ["10.0.2.15"]
             public_ips: ["10.0.2.15"]

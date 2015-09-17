@@ -360,3 +360,10 @@ if node[:hadoop][:cgroups].eql? "true"
   end
 
 end
+
+ directory "#{node[:hadoop][:home]}/journal" do
+   owner node[:hdfs][:user]
+   group node[:hadoop][:group]
+   mode "0775"
+   action :create
+ end

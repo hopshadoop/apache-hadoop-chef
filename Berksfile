@@ -2,7 +2,7 @@ Encoding.default_external = "UTF-8"
 source 'https://supermarket.chef.io'
 metadata
 
-cookbook 'kagent', github: 'karamelchef/kagent-chef'
+cookbook 'kagent', github: 'karamelchef/kagent-chef', branch: 'master'
 cookbook 'java'
 
 # Need to include these versions, or we get a 'chef-sugar' berks vendor error
@@ -17,3 +17,8 @@ cookbook 'ark'
 cookbook 'ulimit', github: 'bmhatfield/chef-ulimit'
 #cookbook 'sysctl', github: 'svanzoest-cookbooks/sysctl', version: 'v0.6.2'
 #cookbook 'sysctl', '~> 0.6.2'
+
+group :test do
+  cookbook 'kzookeeper', github: 'hopshadoop/kzookeeper', branch: 'master'
+  cookbook 'zookeeper', github: 'biobankcloud/chef-zookeeper', branch: 'master'
+end
