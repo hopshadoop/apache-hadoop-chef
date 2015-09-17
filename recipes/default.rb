@@ -26,8 +26,8 @@ template "#{node[:hadoop][:home]}/etc/hadoop/core-site.xml" do
   action :create_if_missing
 end
 
-journal_urls="qjournal://" + node[:hadoop][:jn][:private_ips].join(":8485;qjournal://")
-journal_urls = journal_urls.chomp(";qjournal://")
+journal_urls="qjournal://" + node[:hadoop][:jn][:private_ips].join(":8485;")
+journal_urls = journal_urls.chomp(";")
 
 ha_enabled = "false"
 if node[:hadoop][:ha_enabled].eql? "true" 
