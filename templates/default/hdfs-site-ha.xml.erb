@@ -45,7 +45,7 @@
 
 <property>
   <name>dfs.namenode.shared.edits.dir</name>
-  <value> <%= @journal_urls %> </value>
+  <value><%= @journal_urls %>/hopsbench</value>
 </property>
 
 <property>
@@ -85,6 +85,11 @@
 <property>
   <name>dfs.client.failover.proxy.provider.hopsbench</name>
   <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+</property>
+
+<property>
+  <name>dfs.ha.fencing.methods</name>
+  <value>shell(/bin/true)</value>
 </property>
 
 </configuration>
