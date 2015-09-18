@@ -16,7 +16,7 @@ rm_public_ip = public_recipe_ip("hadoop","rm")
 Chef::Log.info "Resourcemanager IP: #{rm_public_ip}"
 
 ha_enabled = false
-if node[:hadoop][:ha_enabled].eql? "true" 
+if node[:hadoop][:ha_enabled].eql? "true" || node[:hadoop][:ha_enabled] == true
   ha_enabled = true
 end
 
@@ -49,9 +49,9 @@ end
 
 template "#{node[:hadoop][:home]}/etc/hadoop/hdfs-site.xml" do
      case ha_enabled
-     when 'true'
+     when true
   source "hdfs-site-ha.xml.erb"
-     when 'false'
+     when false
   source "hdfs-site.xml.erb"
      end
   owner node[:hdfs][:user]

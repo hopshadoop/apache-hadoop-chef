@@ -55,6 +55,9 @@ suites:
             ps:
                private_ips: ["10.0.2.15"]
                public_ips: ["10.0.2.15"]
+            jn:
+               private_ips: ["10.0.2.15"]
+               public_ips: ["10.0.2.15"]
             native_libraries: "false"
          kzookeeper:
             default:
