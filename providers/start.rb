@@ -14,13 +14,45 @@ end
 
 
 action :format_nn do
-
+  if  "#{new_resource.ha_enabled}".eql? "true"
+    bash 'format-nn-ha' do
+      user node[:hdfs][:user]
+      code <<-EOH
+        set -e
+        #{node[:hadoop][:home]}/bin/hdfs zkfc -formatZK -force
+ 	EOH
+    end
+  end
     bash 'format-nn' do
       user node[:hdfs][:user]
       code <<-EOH
         set -e
-        	#{node[:hadoop][:home]}/sbin/format-nn.sh
+        #{node[:hadoop][:home]}/sbin/format-nn.sh
  	EOH
     end
 
+end
+
+action :zkfc do
+  if  "#{new_resource.ha_enabled}".eql? "true"
+    bash 'zookeeper-format' do
+      user node[:hdfs][:user]
+      code <<-EOH
+        set -e
+        #{node[:hadoop][:home]}/bin/hdfs zkfc -formatZK -force
+ 	EOH
+    end
+  end
+end
+
+action :standby do
+  if  "#{new_resource.ha_enabled}".eql? "true"
+    bash 'standby' do
+      user node[:hdfs][:user]
+      code <<-EOH
+        set -e
+        #{node[:hadoop][:home]}/sbin/start-standby-nn.sh
+ 	EOH
+    end
+  end
 end
