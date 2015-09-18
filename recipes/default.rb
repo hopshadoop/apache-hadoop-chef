@@ -26,16 +26,14 @@ template "#{node[:hadoop][:home]}/etc/hadoop/core-site.xml" do
   action :create_if_missing
 end
 
-journal_urls="qjournal://" + node[:hadoop][:jn][:private_ips].join(":8485;")
-journal_urls = journal_urls.chomp(";")
+journal_urls="qjournal://" + node[:hadoop][:jn][:private_ips].join(":8485;") + ":8485"
 
 ha_enabled = "false"
 if node[:hadoop][:ha_enabled].eql? "true" 
   ha_enabled = "true"
 end
 
-zk_nodes=node[:kzookeeper][:default][:private_ips].join(":2181,")
-zk_nodes = zk_nodes.chomp(":2181,")
+zk_nodes=node[:kzookeeper][:default][:private_ips].join(":2181,") + ":2181"
 
 secondNN = ""
 
