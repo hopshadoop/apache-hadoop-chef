@@ -15,13 +15,13 @@ end
 
 activeNN = true
 ha_enabled = false
-if node[:hadoop][:ha_enabled].eql? "true" 
+if node[:hadoop][:ha_enabled].eql? "true" || node[:hadoop][:ha_enabled] == true
   ha_enabled = true
 end
 
 if ha_enabled == true
   if node[:hadoop][:nn][:private_ips].size > 1
-    if "#{node[:hadoop][:nn][:private_ips]}".eql "#{private_ip}"
+    if "#{node[:hadoop][:nn][:private_ips][1]}".eql "#{private_ip}"
        activeNN = false
     end
   end
@@ -42,6 +42,22 @@ else
 end
 
 if ha_enabled == true
+
+template "#{node[:hadoop][:home]}/sbin/start-zkfc.sh" do
+  source "start-zkfc.sh.erb"
+  owner node[:hdfs][:user]
+  group node[:hadoop][:group]
+  mode 0754
+end
+
+template "#{node[:hadoop][:home]}/sbin/start-standby-nn.sh" do
+  source "start-standby-nn.sh.erb"
+  owner node[:hdfs][:user]
+  group node[:hadoop][:group]
+  mode 0754
+end
+
+
   hadoop_start "zookeeper-format" do
     action :zkfc
     ha_enabled ha_enabled

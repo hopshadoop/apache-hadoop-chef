@@ -15,6 +15,12 @@ Chef::Log.info "Resourcemanager IP: #{rm_private_ip}"
 rm_public_ip = public_recipe_ip("hadoop","rm")
 Chef::Log.info "Resourcemanager IP: #{rm_public_ip}"
 
+ha_enabled = false
+if node[:hadoop][:ha_enabled].eql? "true" 
+  ha_enabled = true
+end
+
+
 template "#{node[:hadoop][:home]}/etc/hadoop/core-site.xml" do 
   source "core-site.xml.erb"
   owner node[:hdfs][:user]
@@ -26,14 +32,14 @@ template "#{node[:hadoop][:home]}/etc/hadoop/core-site.xml" do
   action :create_if_missing
 end
 
-journal_urls="qjournal://" + node[:hadoop][:jn][:private_ips].join(":8485;") + ":8485"
-
-ha_enabled = "false"
-if node[:hadoop][:ha_enabled].eql? "true" 
-  ha_enabled = "true"
+journal_urls=""
+zk_nodes=""
+if ha_enabled == true
+  journal_urls="qjournal://" + node[:hadoop][:jn][:private_ips].join(":8485;") + ":8485"
+  zk_nodes=node[:kzookeeper][:default][:private_ips].join(":2181,") + ":2181"
 end
 
-zk_nodes=node[:kzookeeper][:default][:private_ips].join(":2181,") + ":2181"
+
 
 secondNN = ""
 

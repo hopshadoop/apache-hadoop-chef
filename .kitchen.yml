@@ -35,6 +35,7 @@ suites:
 
     attributes:
          hadoop:
+            ha_enabled: "true"
             user: glassfish
             nn:
                private_ips: ["10.0.2.15"]
