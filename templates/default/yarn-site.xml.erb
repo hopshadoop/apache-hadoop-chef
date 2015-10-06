@@ -150,6 +150,10 @@
     <value>128</value>
   </property>
   <property>
+    <name>yarn.scheduler.maximum-allocation-mb</name>
+    <value><%= node[:hadoop][:yarn][:nm][:memory_mbs] %></value>
+  </property>
+  <property>
     <name>yarn.nodemanager.resource.cpu-vcores</name>
     <value><%= node[:hadoop][:yarn][:vcores] %></value>
     <description>Number of CPU cores that can be allocated for containers.</description>

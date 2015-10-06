@@ -40,6 +40,10 @@ attribute "hadoop/yarn/vcores",
 :display_name => "Hadoop NodeManager Number of Virtual Cores",
 :type => 'string'
 
+attribute "hadoop/yarn/max_vcores",
+:display_name => "Hadoop NodeManager Maximum Number of Virtual Cores",
+:type => 'string'
+
 attribute "hadoop/version",
 :display_name => "Hadoop version",
 :description => "Version of hadoop",
@@ -65,7 +69,7 @@ attribute "hadoop/format",
 :description => "Format HDFS, Run 'hdfs namenode -format",
 :type => 'string'
 
-attribute "hadoop/mr/tmp_dir",
+attribute "hadoop/tmp_dir",
 :display_name => "Hadoop Temp Dir",
 :description => "The directory in which Hadoop stores temporary data, including container data",
 :type => 'string'

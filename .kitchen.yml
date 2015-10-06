@@ -2,7 +2,7 @@
 driver:
   name: vagrant
   customize:
-    memory: 5000
+    memory: 3000
     natdnshostresolver1: "on"
     natdnsproxy1: "on"
     nictype1: "virtio"
@@ -35,7 +35,7 @@ suites:
 
     attributes:
          hadoop:
-            ha_enabled: "true"
+#            ha_enabled: "true"
             user: glassfish
             nn:
                private_ips: ["10.0.2.15"]
