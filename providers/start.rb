@@ -28,6 +28,7 @@ action :format_nn do
       code <<-EOH
         set -e
         #{node[:hadoop][:home]}/sbin/format-nn.sh
+        touch #{node[:hadoop][:home]}/.nn_formatted
  	EOH
     end
 
