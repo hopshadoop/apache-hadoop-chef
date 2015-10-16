@@ -115,3 +115,7 @@ attribute "hadoop/nn/direct_memory_size",
 attribute "hadoop/ha_enabled",
 :description => "'true' to enable HA, else 'false'",
 :type => 'string'
+
+attribute "hadoop/yarn/rt",
+:display_name => "Hadoop Resource Tracker enabled on this nodegroup",
+:type => 'string'

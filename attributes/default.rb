@@ -1,3 +1,7 @@
+include_attribute "hops"
+include_attribute "hadoop"
+
+
 default[:hadoop][:version]                 = "2.4.0"
 default[:hdfs][:user]                      = "hdfs"
 default[:hadoop][:group]                   = "hadoop"
@@ -48,6 +52,8 @@ default[:hadoop][:yarn][:log_retain_check] = 100
 default[:hadoop][:yarn][:container_cleanup_delay_sec] = 0
 
 default[:hadoop][:yarn][:nodemanager_hb_ms]= "1000"
+
+default[:hadoop][:yarn][:rt]               = "false"
 
 default[:hadoop][:am][:max_retries]        = 2
 

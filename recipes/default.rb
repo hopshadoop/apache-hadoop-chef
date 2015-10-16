@@ -204,7 +204,11 @@ unless node['hadoop']['yarn'].key?('yarn.nodemanager.resource.memory-mb')
   node[:hadoop][:yarn][:nm][:memory_mbs] = (mem * pct).to_i
 end
 
+rm_dest_ip = rm_private_ip
 
+if node[:hadoop][:yarn][:rt].eql? "true" 
+  rm_dest_ip = my_ip
+end
 
 template "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do
   source "yarn-site.xml.erb"
@@ -212,7 +216,7 @@ template "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do
   group node[:hadoop][:group]
   mode "666"
   variables({
-              :rm_private_ip => rm_private_ip,
+              :rm_private_ip => rm_dest_ip,
               :rm_public_ip => rm_public_ip,
               :available_mem_mb => node[:hadoop][:yarn][:nm][:memory_mbs],
               :my_public_ip => my_public_ip,
