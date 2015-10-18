@@ -1,4 +1,3 @@
-include_attribute "hops"
 include_attribute "hadoop"
 
 
