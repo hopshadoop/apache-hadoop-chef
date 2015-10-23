@@ -9,7 +9,7 @@ version          "1.0"
 #link:<a target='_blank' href='http://%host%:50070/'>Launch the WebUI for the NameNode</a>
 recipe            "hadoop::nn", "Installs a Hadoop NameNode"
 recipe            "hadoop::dn", "Installs a Hadoop DataNode"
-#link:<a target='_blank' href='http://%host%:50088/'>Launch the WebUI for the ResourceManager</a>
+#link:<a target='_blank' href='http://%host%:8088/'>Launch the WebUI for the ResourceManager</a>
 recipe            "hadoop::rm", "Installs a YARN ResourceManager"
 recipe            "hadoop::nm", "Installs a YARN NodeManager"
 #link:<a target='_blank' href='http://%host%:50030/'>Launch the WebUI for the JobTracker</a>
