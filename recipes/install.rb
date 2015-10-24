@@ -206,6 +206,7 @@ directory node[:hadoop][:dir] do
   mode "0774"
   recursive true
   action :create
+  not_if { File.directory?("#{node[:hadoop][:dir]}") }
 end
 
 directory node[:hadoop][:data_dir] do
@@ -318,9 +319,10 @@ end
    action :create
  end
 
-link "#{node[:hadoop][:dir]}/hadoop" do
+link node[:hadoop][:base_dir] do
   to node[:hadoop][:home]
 end
+
 include_recipe "hadoop"
 
 
