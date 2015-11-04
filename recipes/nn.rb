@@ -13,31 +13,69 @@ for script in node[:hadoop][:nn][:scripts]
   end
 end 
 
+activeNN = true
+ha_enabled = false
+if node[:hadoop][:ha_enabled].eql? "true" || node[:hadoop][:ha_enabled] == true
+  ha_enabled = true
+end
 
-# it is ok if all namenodes format the fs. Unless you add a new one later..
-
-if node[:hadoop][:format].eql? "true"
-
-# TODO: test if the NameNode is running
-  if ::File.directory?("#{node[:hadoop][:nn][:name_dir]}/current")
-    # if the nn has already been formatted, re-formatting it returns error
-    Chef::Log.info "Not formatting the NameNode. Remove this directory before formatting: (sudo rm -rf #{node[:hadoop][:tmp_dir]}/dfs/name/current)"
-  else 
-    bash 'format-nn' do
-      user node[:hdfs][:user]
-      code <<-EOH
-        set -e
-#        if [ `service namenode status` -ne 0 ] ; then
-        	#{node[:hadoop][:home]}/sbin/format-nn.sh
-#        fi 
- 	EOH
+if ha_enabled == true
+  if node[:hadoop][:nn][:private_ips].size > 1
+    if "#{node[:hadoop][:nn][:private_ips][1]}".eql "#{private_ip}"
+       activeNN = false
     end
   end
 end
 
+# it is ok if all namenodes format the fs. Unless you add a new one later..
+# if the nn has already been formatted, re-formatting it returns error
+# TODO: test if the NameNode is running
+if ::File.exist?("#{node[:hadoop][:home]}/.nn_formatted") === false || "#{node[:hadoop][:reformat]}" === "true"
+  if activeNN == true
+    hadoop_start "format-nn" do
+      action :format_nn
+      ha_enabled ha_enabled
+    end
+  end
+else 
+  Chef::Log.info "Not formatting the NameNode. Remove this directory before formatting: (sudo rm -rf #{node[:hadoop][:nn][:name_dir]}/current) and set node[:hadoop][:reformat] to true"
+end
+
+if ha_enabled == true
+
+template "#{node[:hadoop][:home]}/sbin/start-zkfc.sh" do
+  source "start-zkfc.sh.erb"
+  owner node[:hdfs][:user]
+  group node[:hadoop][:group]
+  mode 0754
+end
+
+template "#{node[:hadoop][:home]}/sbin/start-standby-nn.sh" do
+  source "start-standby-nn.sh.erb"
+  owner node[:hdfs][:user]
+  group node[:hadoop][:group]
+  mode 0754
+end
+
+
+  hadoop_start "zookeeper-format" do
+    action :zkfc
+    ha_enabled ha_enabled
+  end
+
+  if activeNN == false
+    hadoop_start "standby-nn" do
+      action :standby
+      ha_enabled ha_enabled
+    end
+  end
+end
+
+
+
 service "namenode" do
   supports :restart => true, :stop => true, :start => true, :status => true
-  action :nothing
+  action :nothing 
 end
 
 template "/etc/init.d/namenode" do
@@ -46,7 +84,7 @@ template "/etc/init.d/namenode" do
   group node[:hadoop][:group]
   mode 0754
   notifies :enable, resources(:service => "namenode")
-  notifies :restart, resources(:service => "namenode"), :immediately
+  notifies :restart, resources(:service => "namenode")
 end
 
 if node[:kagent][:enabled] == "true" 

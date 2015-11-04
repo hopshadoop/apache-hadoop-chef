@@ -1,13 +1,59 @@
-libpath = File.expand_path '../../../kagent/libraries', __FILE__
-require File.join(libpath, 'inifile')
 
+if node[:hadoop][:os_defaults] == "true" then
+  node.default['sysctl']['allow_sysctl_conf'] = true
+  node.default['sysctl']['params']['vm']['swappiness'] = 0
+  node.default['sysctl']['params']['vm']['overcommit_memory'] = 1
+  node.default['sysctl']['params']['vm']['overcommit_ratio'] = 100
+  node.default['sysctl']['params']['net']['core']['somaxconn']= 1024
+  include_recipe 'sysctl::apply'
+
+    #
+    # http://www.slideshare.net/vgogate/hadoop-configuration-performance-tuning
+    #
+    case node[:platform_family]
+    when "debian"
+      bash "configure_os" do
+        user "root"
+        code <<-EOF
+   EOF
+      end
+    when "redhat"
+      bash "configure_os" do
+        user "root"
+        code <<-EOF
+      echo "never" > /sys/kernel/mm/redhat_transparent_hugepages/defrag
+     EOF
+      end
+      
+    end
+
+    # limits.d settings
+    %w(hdfs mapred yarn).each do |u|
+      ulimit_domain u do
+        node['hadoop']['limits'].each do |k, v|
+          rule do
+            item k
+            type '-'
+            value v
+          end
+        end
+        only_if { node['hadoop'].key?('limits') && !node['hadoop']['limits'].empty? }
+      end
+    end # End limits.d
+
+    # Remove extra mapreduce file, if it exists
+    file '/etc/security/limits.d/mapreduce.conf' do
+      action :delete
+    end
+
+  end
 
 node.default['java']['jdk_version'] = 7
 include_recipe "java"
 
 kagent_bouncycastle "jar" do
 end
-
+ 
 group node[:hadoop][:group] do
   action :create
 end
@@ -160,6 +206,7 @@ directory node[:hadoop][:dir] do
   mode "0774"
   recursive true
   action :create
+  not_if { File.directory?("#{node[:hadoop][:dir]}") }
 end
 
 directory node[:hadoop][:data_dir] do
@@ -189,6 +236,8 @@ end
 
 
 package_url = node[:hadoop][:download_url]
+  #"#{node[:download_url]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
+
 Chef::Log.info "Downloading hadoop binaries from #{package_url}"
 base_package_filename = File.basename(package_url)
 cached_package_filename = "#{Chef::Config[:file_cache_path]}/#{base_package_filename}"
@@ -271,9 +320,10 @@ end
    action :create
  end
 
-link "#{node[:hadoop][:dir]}/hadoop" do
+link node[:hadoop][:base_dir] do
   to node[:hadoop][:home]
 end
+
 include_recipe "hadoop"
 
 
@@ -284,3 +334,39 @@ bash 'update_permissions_etc_dir' do
     chmod 775 #{node[:hadoop][:conf_dir]}
   EOH
 end
+
+if node[:hadoop][:cgroups].eql? "true" 
+
+  case node[:platform_family]
+  when "debian"
+    package "libcgroup-dev" do
+    end
+
+  when "redhat"
+
+    # This doesnt work for rhel-7
+    package "libcgroup" do
+    end
+  end
+  cgroups_mounted= "#{Chef::Config[:file_cache_path]}/.cgroups_mounted"
+  bash 'setup_mount_cgroups' do
+    user "root"
+    code <<-EOH
+    set -e
+    if [ ! -d "/cgroup" ] ; then
+       mkdir /cgroup
+    fi
+    mount -t cgroup -o cpu cpu /cgroup
+    touch #{cgroups_mounted}
+  EOH
+     not_if { ::File.exist?("#{cgroups_mounted}") }
+  end
+
+end
+
+ directory "#{node[:hadoop][:home]}/journal" do
+   owner node[:hdfs][:user]
+   group node[:hadoop][:group]
+   mode "0775"
+   action :create
+ end

@@ -1,24 +1,27 @@
 daemons = %w{namenode datanode resourcemanager nodemanager historyserver proxyserver}
 daemons.each { |d| 
-
-bash 'uninstall_service_#{d}' do
-user "root"
-ignore_failure :true
-code <<-EOF
+  bash 'uninstall_service_#{d}' do
+    user "root"
+    ignore_failure :true
+    code <<-EOF
  service stop #{d}
- killall -9 #{d}
+ pkillall -9 #{d}
 EOF
-end
+  end
 
-file "/etc/init.d/#{d}" do
+  file "/etc/init.d/#{d}" do
+    action :delete
+    ignore_failure :true
+  end
+}
+
+directory "#{node[:hadoop][:dir]}/hadoop-#{node[:hadoop][:version]}" do
+  recursive true
   action :delete
   ignore_failure :true
 end
 
-}
-
-directory node[:hadoop][:home] do
-  recursive true
+link node[:hadoop][:home] do
   action :delete
   ignore_failure :true
 end
@@ -33,4 +36,15 @@ directory Chef::Config[:file_cache_path] do
   recursive true
   action :delete
   ignore_failure :true
+end
+
+package "Bouncy Castle Remove" do
+  case node[:platform]
+  when 'redhat', 'centos'
+    package_name 'bouncycastle'
+  when 'ubuntu', 'debian'
+    package_name 'bouncycastle'
+  end
+ ignore_failure :true
+ action :purge
 end

@@ -3,13 +3,11 @@
 # All rights reserved - Do Not Redistribute
 #
 
-libpath = File.expand_path '../../../kagent/libraries', __FILE__
-require File.join(libpath, 'inifile')
-
 my_ip = my_private_ip()
 my_public_ip = my_public_ip()
 
-firstNN = "hdfs://" + private_recipe_ip("hadoop", "nn") + ":#{node[:hadoop][:nn][:port]}"
+firstNN = private_recipe_ip("hadoop", "nn") + ":#{node[:hadoop][:nn][:port]}"
+Chef::Log.info "NameNode private IP: #{firstNN}"
 
 rm_private_ip = private_recipe_ip("hadoop","rm")
 Chef::Log.info "Resourcemanager IP: #{rm_private_ip}"
@@ -17,28 +15,58 @@ Chef::Log.info "Resourcemanager IP: #{rm_private_ip}"
 rm_public_ip = public_recipe_ip("hadoop","rm")
 Chef::Log.info "Resourcemanager IP: #{rm_public_ip}"
 
+ha_enabled = false
+if node[:hadoop][:ha_enabled].eql? "true" || node[:hadoop][:ha_enabled] == true
+  ha_enabled = true
+end
+
+
 template "#{node[:hadoop][:home]}/etc/hadoop/core-site.xml" do 
   source "core-site.xml.erb"
   owner node[:hdfs][:user]
   group node[:hadoop][:group]
   mode "755"
   variables({
-              :firstNN => firstNN
+              :myNN => "hdfs://" + firstNN
             })
   action :create_if_missing
 end
 
+journal_urls=""
+zk_nodes=""
+if ha_enabled == true
+  journal_urls="qjournal://" + node[:hadoop][:jn][:private_ips].join(":8485;") + ":8485"
+  zk_nodes=node[:kzookeeper][:default][:private_ips].join(":2181,") + ":2181"
+end
+
+
+
+secondNN = ""
+
+if node[:hadoop][:nn][:private_ips].length > 1
+   secondNN = "#{node[:hadoop][:nn][:private_ips][1]}" + ":#{node[:hadoop][:nn][:port]}"
+end
+
 template "#{node[:hadoop][:home]}/etc/hadoop/hdfs-site.xml" do
+     case ha_enabled
+     when true
+  source "hdfs-site-ha.xml.erb"
+     when false
   source "hdfs-site.xml.erb"
+     end
   owner node[:hdfs][:user]
   group node[:hadoop][:group]
   mode "755"
   variables({
+              :firstNN => firstNN,
+              :secondNN => secondNN,
               :addr1 => my_ip + ":40100",
               :addr2 => my_ip + ":40101",
               :addr3 => my_ip + ":40102",
               :addr4 => my_ip + ":40103",
               :addr5 => my_ip + ":40104",
+              :journal_urls => journal_urls,
+              :zk_nodes => zk_nodes
             })
   action :create_if_missing
 end
@@ -116,16 +144,18 @@ if node[:hadoop][:install_protobuf]
 end
 
 
-hadoop_user_envs node[:hdfs][:user] do
-  action :update
-end
+if "#{node[:hadoop][:user_envs]}".eql? "true"
+  hadoop_user_envs node[:hdfs][:user] do
+    action :update
+  end
 
-hadoop_user_envs node[:hadoop][:yarn][:user] do
-  action :update
-end
+  hadoop_user_envs node[:hadoop][:yarn][:user] do
+    action :update
+  end
 
-hadoop_user_envs node[:hadoop][:mr][:user] do
-  action :update
+  hadoop_user_envs node[:hadoop][:mr][:user] do
+    action :update
+  end
 end
 
 directory "/conf" do
@@ -137,6 +167,14 @@ directory "/conf" do
 end
 
 
+directory "#{node[:hadoop][:home]}/journal" do
+  owner node[:hdfs][:user]
+  group node[:hadoop][:group]
+  mode "0755"
+  recursive true
+  action :create
+end
+
 template "/conf/container-executor.cfg" do
   source "container-executor.cfg.erb"
   owner node[:hdfs][:user]
@@ -145,6 +183,10 @@ template "/conf/container-executor.cfg" do
 end
 
 
+container_executor="org.apache.hadoop.yarn.server.nodemanager.DefaultContainerExecutor"
+if node[:hadoop][:cgroups].eql? "true" 
+  container_executor="org.apache.hadoop.yarn.server.nodemanager.LinuxContainerExecutor"
+end
 
 file "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do 
   owner node[:hadoop][:yarn][:user]
@@ -162,7 +204,11 @@ unless node['hadoop']['yarn'].key?('yarn.nodemanager.resource.memory-mb')
   node[:hadoop][:yarn][:nm][:memory_mbs] = (mem * pct).to_i
 end
 
+rm_dest_ip = rm_private_ip
 
+if node[:hadoop][:yarn][:rt].eql? "true" 
+  rm_dest_ip = my_ip
+end
 
 template "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do
   source "yarn-site.xml.erb"
@@ -170,11 +216,12 @@ template "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do
   group node[:hadoop][:group]
   mode "666"
   variables({
-              :rm_private_ip => rm_private_ip,
+              :rm_private_ip => rm_dest_ip,
               :rm_public_ip => rm_public_ip,
               :available_mem_mb => node[:hadoop][:yarn][:nm][:memory_mbs],
               :my_public_ip => my_public_ip,
-              :my_private_ip => my_ip
+              :my_private_ip => my_ip,
+              :container_executor => container_executor
             })
   action :create_if_missing
 #  notifies :restart, resources(:service => "rm")
@@ -191,7 +238,7 @@ template "#{node[:hadoop][:home]}/etc/hadoop/mapred-site.xml" do
   group node[:hadoop][:group]
   mode "666"
   variables({
-              :rm_ip => rm_private_ip
+              :rm_private_ip => rm_private_ip
             })
 #  notifies :restart, resources(:service => "jhs")
 end

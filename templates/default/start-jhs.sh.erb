@@ -3,6 +3,12 @@
 command=historyserver
 h=`hostname`
 rootDir=<%= node[:hadoop][:home] %>
+bin=`dirname "${BASH_SOURCE-$0}"`
+bin=`cd "$bin"; pwd`
+DEFAULT_LIBEXEC_DIR="$bin"/../libexec
+HADOOP_LIBEXEC_DIR=${HADOOP_LIBEXEC_DIR:-$DEFAULT_LIBEXEC_DIR}
+. $HADOOP_LIBEXEC_DIR/hadoop-config.sh
+. ${bin}/set-env.sh
 
 MRJH=$rootDir/sbin/mr-jobhistory-daemon.sh
 

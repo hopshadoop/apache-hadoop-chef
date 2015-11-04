@@ -2,17 +2,22 @@
 driver:
   name: vagrant
   customize:
-    memory: 5000
+    memory: 3000
     natdnshostresolver1: "on"
     natdnsproxy1: "on"
-#    forward_port : "20888,20888"
+    nictype1: "virtio"
+  network:
+#  - ["forwarded_port", {guest: 50070, host: 57777}]
+#  - ["forwarded_port", {guest: 50075, host: 57775}]
+  - ["private_network", ip: "192.168.0.2"]
+
 
 provisioner:
   name: chef_solo
 
 platforms:
-  - name: centos-6.5
-  - name: ubuntu-12.04
+#  - name: centos-6.5
+#  - name: ubuntu-12.04
   - name: ubuntu-14.04
 
 suites:
@@ -20,16 +25,17 @@ suites:
     run_list:
       - recipe[kagent::install]
       - recipe[hadoop::install]
-      - recipe[kagent::default]
       - recipe[hadoop::nn]
       - recipe[hadoop::dn]
       - recipe[hadoop::rm]
       - recipe[hadoop::nm]
       - recipe[hadoop::jhs]
       - recipe[hadoop::ps]
+      - recipe[hadoop::jn]
 
     attributes:
          hadoop:
+            dir: "/tmp"
             user: glassfish
             nn:
                private_ips: ["10.0.2.15"]
@@ -46,7 +52,17 @@ suites:
             jhs:
                private_ips: ["10.0.2.15"]
                public_ips: ["10.0.2.15"]
+            ps:
+               private_ips: ["10.0.2.15"]
+               public_ips: ["10.0.2.15"]
+            jn:
+               private_ips: ["10.0.2.15"]
+               public_ips: ["10.0.2.15"]
             native_libraries: "false"
+         kzookeeper:
+            default:
+               private_ips: ["10.0.2.15"]
+               public_ips: ["10.0.2.15"]
          kagent:
             private_ips: ["10.0.2.15"]
             public_ips: ["10.0.2.15"]

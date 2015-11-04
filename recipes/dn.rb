@@ -23,7 +23,7 @@ template "/etc/init.d/datanode" do
   group node[:hadoop][:group]
   mode 0754
   notifies :enable, resources(:service => "datanode")
-  notifies :restart, resources(:service => "datanode"), :immediately
+  notifies :restart, resources(:service => "datanode")
 end
 
 

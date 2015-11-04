@@ -1,7 +1,8 @@
 #!/bin/bash
 
-command=proxyserver
+command=zkfc
 h=`hostname`
+
 bin=`dirname "${BASH_SOURCE-$0}"`
 bin=`cd "$bin"; pwd`
 
@@ -10,13 +11,14 @@ HADOOP_LIBEXEC_DIR=${HADOOP_LIBEXEC_DIR:-$DEFAULT_LIBEXEC_DIR}
 . $HADOOP_LIBEXEC_DIR/hadoop-config.sh
 . ${bin}/set-env.sh
 
-log=<%= node[:hadoop][:logs_dir] %>/yarn-<%= node[:hadoop][:yarn][:user] %>-$command-$h.log
+log=<%= node[:hadoop][:logs_dir] %>/zkfc-<%= node[:hdfs][:user] %>-$command-$h.log
 
-"$bin"/yarn-daemon.sh --config $YARN_CONF_DIR  start $command
-sleep 2; head "$log"
+"$bin"/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script start $command
+sleep 1; head "$log"
 
-PID_FILE=<%= node[:hadoop][:logs_dir] %>/yarn-<%= node[:hadoop][:yarn][:user] %>-$command.pid
+PID_FILE=$HADOOP_PID_DIR/hadoop-<%= node[:hdfs][:user] %>-$command.pid
 PID=`cat $PID_FILE` 
 kill -0 $PID 
 
 exit $?
+
