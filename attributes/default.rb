@@ -17,8 +17,9 @@ default[:hadoop][:dn][:data_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/d
 default[:hadoop][:nn][:name_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/nn"
 
 default[:hadoop][:download_url]            = "ftp://ftp.fu-berlin.de/unix/www/apache/hadoop/common/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
-version = "#{node[:hadoop][:version]}".sub! '.' ''
-if version < 251
+version = "#{node[:hadoop][:version]}"
+version.gsub!('.', '')
+if version.to_i < 251
   default[:hadoop][:download_url]            = "https://archive.apache.org/dist/hadoop/core/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
 end
 
