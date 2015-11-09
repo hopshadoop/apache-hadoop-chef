@@ -11,12 +11,17 @@ default[:hadoop][:logs_dir]                = "#{node[:hadoop][:home]}/logs"
 default[:hadoop][:tmp_dir]                 = "#{node[:hadoop][:home]}/tmp"
 default[:hadoop][:conf_dir]                = "#{node[:hadoop][:home]}/etc/hadoop"
 default[:hadoop][:sbin_dir]                = "#{node[:hadoop][:home]}/sbin"
-default[:hadoop][:bin_dir]                = "#{node[:hadoop][:home]}/bin"
+default[:hadoop][:bin_dir]                 = "#{node[:hadoop][:home]}/bin"
 default[:hadoop][:data_dir]                = "/var/data/hadoop"
 default[:hadoop][:dn][:data_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/dn"
 default[:hadoop][:nn][:name_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/nn"
 
 default[:hadoop][:download_url]            = "ftp://ftp.fu-berlin.de/unix/www/apache/hadoop/common/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
+version = "#{node[:hadoop][:version]}".sub! '.' ''
+if version < 251
+  default[:hadoop][:download_url]            = "https://archive.apache.org/dist/hadoop/core/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
+end
+
 default[:hadoop][:protobuf_url]            = "https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz"
 default[:hadoop][:hadoop_src_url]          = "https://archive.apache.org/dist/hadoop/core/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}-src.tar.gz"
 default[:hadoop][:nn][:http_port]          = 50070
