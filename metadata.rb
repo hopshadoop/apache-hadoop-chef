@@ -112,13 +112,13 @@ attribute "hadoop/container_cleanup_delay_sec",
 attribute "hadoop/rm/scheduler_class",
 :display_name => "YARN scheduler class",
 :description => "Java Classname for the Yarn scheduler (fifo, capacity, fair)",
-:type => 'string'
+:type => 'string',
 :default => "org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler"
 
 attribute "hadoop/rm/scheduler_capacity/calculator_class",
 :display_name => "YARN resource calculator class",
 :description => "Switch to DominantResourseCalculator for multiple resource scheduling",
-:type => 'string'
+:type => 'string',
 :default => "org.apache.hadoop.yarn.util.resource.DefaultResourseCalculator"
 
 attribute "hadoop/user_envs",
