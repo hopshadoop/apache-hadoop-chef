@@ -234,21 +234,36 @@ directory node[:hadoop][:nn][:name_dir] do
   action :create
 end
 
+primary_url = node[:hadoop][:download_url][:primary]
+secondary_url = node[:hadoop][:download_url][:secondary]
+Chef::Log.info "Attempting to download hadoop binaries from #{primary_url} or, alternatively, #{secondary_url}"
 
-package_url = node[:hadoop][:download_url]
-  #"#{node[:download_url]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
-
-Chef::Log.info "Downloading hadoop binaries from #{package_url}"
-base_package_filename = File.basename(package_url)
+base_package_filename = File.basename(primary_url)
 cached_package_filename = "#{Chef::Config[:file_cache_path]}/#{base_package_filename}"
 
 remote_file cached_package_filename do
-  source package_url
+  source primary_url
+  retries 2
+  owner node[:hdfs][:user]
+  group node[:hadoop][:group]
+  mode "0755"
+  ignore_failure true
+  # TODO - checksum
+  action :create_if_missing
+end
+
+base_package_filename = File.basename(secondary_url)
+cached_package_filename = "#{Chef::Config[:file_cache_path]}/#{base_package_filename}"
+
+remote_file cached_package_filename do
+  source secondary_url
+  retries 2
   owner node[:hdfs][:user]
   group node[:hadoop][:group]
   mode "0755"
   # TODO - checksum
   action :create_if_missing
+  not_if { ::File.exist?(cached_package_filename) }
 end
 
 hin = "#{node[:hadoop][:home]}/.#{base_package_filename}_downloaded"

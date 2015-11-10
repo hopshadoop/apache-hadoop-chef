@@ -44,10 +44,27 @@ attribute "hadoop/yarn/max_vcores",
 :display_name => "Hadoop NodeManager Maximum Number of Virtual Cores",
 :type => 'string'
 
+attribute "hadoop/yarn/max_vcores",
+:display_name => "Hadoop NodeManager Maximum Virtual Cores per container",
+:type => 'string',
+:default => 4
+
 attribute "hadoop/version",
 :display_name => "Hadoop version",
 :description => "Version of hadoop",
 :type => 'string'
+
+attribute "hadoop/num_replicas",
+:display_name => "HDFS replication factor",
+:description => "Number of replicates for each file stored in HDFS",
+:type => 'string',
+:default => 3
+
+attribute "hadoop/container_cleanup_delay_sec",
+:display_name => "Cleanup Delay (s)",
+:description => "The number of seconds container data is retained after termination",
+:type => 'string',
+:default => 0
 
 attribute "hadoop/yarn/user",
 :display_name => "Username to run yarn as",
@@ -93,8 +110,16 @@ attribute "hadoop/container_cleanup_delay_sec",
 :type => 'string'
 
 attribute "hadoop/rm/scheduler_class",
+:display_name => "YARN scheduler class",
 :description => "Java Classname for the Yarn scheduler (fifo, capacity, fair)",
-:type => 'string'
+:type => 'string',
+:default => "org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler"
+
+attribute "hadoop/rm/scheduler_capacity/calculator_class",
+:display_name => "YARN resource calculator class",
+:description => "Switch to DominantResourseCalculator for multiple resource scheduling",
+:type => 'string',
+:default => "org.apache.hadoop.yarn.util.resource.DefaultResourseCalculator"
 
 attribute "hadoop/user_envs",
 :description => "Update the PATH environment variable for the hdfs and yarn users to include hadoop/bin in the PATH ",

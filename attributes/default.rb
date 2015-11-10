@@ -1,7 +1,6 @@
 include_attribute "hadoop"
 
-
-default[:hadoop][:version]                 = "2.4.0"
+default[:hadoop][:version]                 = "2.7.1"
 default[:hdfs][:user]                      = "hdfs"
 default[:hadoop][:group]                   = "hadoop"
 default[:hadoop][:dir]                     = "/srv"
@@ -11,13 +10,14 @@ default[:hadoop][:logs_dir]                = "#{node[:hadoop][:home]}/logs"
 default[:hadoop][:tmp_dir]                 = "#{node[:hadoop][:home]}/tmp"
 default[:hadoop][:conf_dir]                = "#{node[:hadoop][:home]}/etc/hadoop"
 default[:hadoop][:sbin_dir]                = "#{node[:hadoop][:home]}/sbin"
-default[:hadoop][:bin_dir]                = "#{node[:hadoop][:home]}/bin"
+default[:hadoop][:bin_dir]                 = "#{node[:hadoop][:home]}/bin"
 default[:hadoop][:data_dir]                = "/var/data/hadoop"
 default[:hadoop][:dn][:data_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/dn"
 default[:hadoop][:nn][:name_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/nn"
 
-default[:hadoop][:download_url]            = "https://archive.apache.org/dist/hadoop/core/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
-#default[:hadoop][:download_url]            = "#{node[:download_url]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
+default[:hadoop][:download_url][:primary]   = "ftp://ftp.fu-berlin.de/unix/www/apache/hadoop/common/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
+default[:hadoop][:download_url][:secondary] = "https://archive.apache.org/dist/hadoop/core/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
+
 default[:hadoop][:protobuf_url]            = "https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz"
 default[:hadoop][:hadoop_src_url]          = "https://archive.apache.org/dist/hadoop/core/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}-src.tar.gz"
 default[:hadoop][:nn][:http_port]          = 50070
@@ -33,6 +33,7 @@ default[:hadoop][:dn][:scripts]            = %w{ start-dn.sh stop-dn.sh restart-
 default[:hadoop][:max_retries]             = 0
 default[:hadoop][:reformat]                = "false"
 default[:hadoop][:io_buffer_sz]            = 131072
+default[:hadoop][:container_cleanup_delay_sec] = 0
 
 default[:hadoop][:nn][:heap_size]          = 1000
 
@@ -46,7 +47,7 @@ default[:hadoop][:yarn][:vcores]           = 4
 default[:hadoop][:yarn][:min_vcores]       = 1
 default[:hadoop][:yarn][:max_vcores]       = 4
 default[:hadoop][:yarn][:log_aggregation]  = "false"
-default[:hadoop][:yarn][:log_retain_secs]  = 10800
+default[:hadoop][:yarn][:log_retain_secs]  = 86400
 default[:hadoop][:yarn][:log_retain_check] = 100
 
 default[:hadoop][:yarn][:container_cleanup_delay_sec] = 0
@@ -68,6 +69,7 @@ default[:hadoop][:nm][:http_port]          = 8042
 default[:hadoop][:jhs][:http_port]         = 19888
 
 default[:hadoop][:rm][:scheduler_class]    = "org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler"
+default[:hadoop][:rm][:scheduler_capacity][:calculator_class] = "org.apache.hadoop.yarn.util.resource.DefaultResourseCalculator"
 
 default[:hadoop][:mr][:tmp_dir]            = "#{node[:hadoop][:mr][:tmp_dir]}/mapreduce"
 default[:hadoop][:mr][:staging_dir]        = "#{node[:hadoop][:mr][:tmp_dir]}/#{node[:hadoop][:mr][:user]}/staging"

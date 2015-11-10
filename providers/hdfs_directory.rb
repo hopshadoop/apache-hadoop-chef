@@ -23,7 +23,7 @@ action :create do
 end
 
 action :put do
-  Chef::Log.info "Putting file(s) into hdfs directory: #{@new_resource.name}"
+  Chef::Log.info "Putting file(s) from directory #{@new_resource.name} into hdfs directory #{@new_resource.dest}"
 
   bash "hdfs-put-dir-#{new_resource.name}" do
     user "#{new_resource.owner}"
@@ -46,7 +46,7 @@ end
 
 
 action :put_as_superuser do
-  Chef::Log.info "Putting file(s) into hdfs directory: #{@new_resource.name}"
+  Chef::Log.info "Putting file(s) from directory #{@new_resource.name} into hdfs directory #{@new_resource.dest}"
 
   bash "hdfs-put-dir-#{new_resource.name}" do
     user node[:hdfs][:user]
