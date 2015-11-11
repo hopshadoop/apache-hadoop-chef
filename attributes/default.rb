@@ -1,6 +1,6 @@
 include_attribute "hadoop"
 
-default[:hadoop][:version]                 = "2.7.1"
+default[:hadoop][:version]                 = "2.4.0"
 default[:hdfs][:user]                      = "hdfs"
 default[:hadoop][:group]                   = "hadoop"
 default[:hadoop][:dir]                     = "/srv"
