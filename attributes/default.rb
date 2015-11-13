@@ -70,7 +70,7 @@ default[:hadoop][:jhs][:http_port]         = 19888
 
 #default[:hadoop][:rm][:scheduler_class]    = "org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler"
 default[:hadoop][:rm][:scheduler_class]    = "org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler"
-default[:hadoop][:rm][:scheduler_capacity][:calculator_class] = "org.apache.hadoop.yarn.util.resource.DefaultResourseCalculator"
+default[:hadoop][:rm][:scheduler_capacity][:calculator_class] = "org.apache.hadoop.yarn.util.resource.DominantResourceCalculator"
 
 default[:hadoop][:mr][:tmp_dir]            = "#{node[:hadoop][:mr][:tmp_dir]}/mapreduce"
 default[:hadoop][:mr][:staging_dir]        = "#{node[:hadoop][:mr][:tmp_dir]}/#{node[:hadoop][:mr][:user]}/staging"

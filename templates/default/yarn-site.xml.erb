@@ -91,15 +91,6 @@
   <value>false</value>
 </property>
   <property>
-    <name>yarn.scheduler.capacity.resource-calculator</name>
-    <value>org.apache.hadoop.yarn.util.resource.DominantResourceCalculator</value>
-    <description> ResourceCalculator used to compare Resources in the scheduler.
-      The default i.e. DefaultResourceCalculator only uses Memory while
-      DominantResourceCalculator uses dominant-resource to compare 
-      multi-dimensional resources such as Memory, CPU etc.
-    </description>
-  </property>
-  <property>
     <name>yarn.resourcemanager.scheduler.client.thread-count</name>
     <value>50</value>
     <description>Number of ResourceManager threads for decoding and handling client RPCs for apps.</description>
