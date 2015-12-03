@@ -30,7 +30,6 @@ action :put do
     group "#{new_resource.group}"    
     code <<-EOF
      set -e
-     . #{node[:hadoop][:home]}/sbin/set-env.sh
      #{node[:hadoop][:home]}/bin/hdfs dfs -test -e #{new_resource.dest}
      if [ $? -ne 0 ] ; then
         #{node[:hadoop][:home]}/bin/hdfs dfs -put #{new_resource.name} #{new_resource.dest}
@@ -53,7 +52,6 @@ action :put_as_superuser do
     group node[:hadoop][:group]
     code <<-EOF
      set -e
-     . #{node[:hadoop][:home]}/sbin/set-env.sh
      #{node[:hadoop][:home]}/bin/hdfs dfs -test -e #{new_resource.dest}
      if [ $? -ne 0 ] ; then
         #{node[:hadoop][:home]}/bin/hdfs dfs -put #{new_resource.name} #{new_resource.dest}
