@@ -31,8 +31,8 @@ action :put do
     code <<-EOF
      set -e
      . #{node[:hadoop][:home]}/sbin/set-env.sh
-     exists = $(#{node[:hadoop][:home]}/bin/hdfs dfs -test -e #{new_resource.dest})
-     if [ $exists -ne 0 ] ; then
+     #{node[:hadoop][:home]}/bin/hdfs dfs -test -e #{new_resource.dest}
+     if [ $? -ne 0 ] ; then
         #{node[:hadoop][:home]}/bin/hdfs dfs -put #{new_resource.name} #{new_resource.dest}
         #{node[:hadoop][:home]}/bin/hdfs dfs -chgrp #{new_resource.group} #{new_resource.dest}
         if [ "#{new_resource.mode}" != "" ] ; then
@@ -54,8 +54,8 @@ action :put_as_superuser do
     code <<-EOF
      set -e
      . #{node[:hadoop][:home]}/sbin/set-env.sh
-     exists = $(#{node[:hadoop][:home]}/bin/hdfs dfs -test -e #{new_resource.dest})
-     if [ $exists -ne 0 ] ; then
+     #{node[:hadoop][:home]}/bin/hdfs dfs -test -e #{new_resource.dest}
+     if [ $? -ne 0 ] ; then
         #{node[:hadoop][:home]}/bin/hdfs dfs -put #{new_resource.name} #{new_resource.dest}
         #{node[:hadoop][:home]}/bin/hdfs dfs -chown #{new_resource.owner} #{new_resource.dest}
         #{node[:hadoop][:home]}/bin/hdfs dfs -chgrp #{new_resource.group} #{new_resource.dest}
