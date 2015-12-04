@@ -15,7 +15,8 @@ default[:hadoop][:data_dir]                = "/var/data/hadoop"
 default[:hadoop][:dn][:data_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/dn"
 default[:hadoop][:nn][:name_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/nn"
 
-default[:hadoop][:download_url][:primary]   = "ftp://ftp.fu-berlin.de/unix/www/apache/hadoop/common/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
+#default[:hadoop][:download_url][:primary]   = "ftp://ftp.fu-berlin.de/unix/www/apache/hadoop/common/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
+default[:hadoop][:download_url][:primary]   = "#{download_url}/hadoop-#{node[:hadoop][:version]}.tar.gz"
 default[:hadoop][:download_url][:secondary] = "https://archive.apache.org/dist/hadoop/core/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
 
 default[:hadoop][:protobuf_url]            = "https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz"
