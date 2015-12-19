@@ -48,7 +48,7 @@ if node[:hadoop][:os_defaults] == "true" then
 
   end
 
-#node.default['java']['jdk_version'] = 7
+node.default['java']['jdk_version'] = 7
 include_recipe "java"
 
 kagent_bouncycastle "jar" do
