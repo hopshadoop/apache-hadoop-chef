@@ -3,7 +3,8 @@ source 'https://supermarket.chef.io'
 metadata
 
 cookbook 'kagent', github: 'karamelchef/kagent-chef', branch: 'master'
-cookbook 'java'
+cookbook 'java', github: 'jimdowling/java'
+
 
 # Need to include these versions, or we get a 'chef-sugar' berks vendor error
 cookbook 'openssh', "~> 1.3.4"
