@@ -15,7 +15,7 @@ default[:hadoop][:data_dir]                = "/var/data/hadoop"
 default[:hadoop][:dn][:data_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/dn"
 default[:hadoop][:nn][:name_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/nn"
 
-default[:hdfs][:user_home]                 = "/User"
+default[:hdfs][:user_home]                 = "/user"
 
 #default[:hadoop][:download_url][:primary]   = "ftp://ftp.fu-berlin.de/unix/www/apache/hadoop/common/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
 default[:hadoop][:download_url][:primary]   = "#{download_url}/hadoop-#{node[:hadoop][:version]}.tar.gz"
@@ -78,7 +78,7 @@ default[:hadoop][:rm][:scheduler_class]    = "org.apache.hadoop.yarn.server.reso
 default[:hadoop][:rm][:scheduler_capacity][:calculator_class] = "org.apache.hadoop.yarn.util.resource.DominantResourceCalculator"
 
 default[:hadoop][:mr][:tmp_dir]            = "/mapreduce"
-default[:hadoop][:mr][:staging_dir]        = "#{node[:hadoop][:mr][:tmp_dir]}/staging"
+default[:hadoop][:mr][:staging_dir]        = "#{default[:hadoop][:mr][:tmp_dir]}/#{default[:hadoop][:mr][:user]}/staging"
 
 default[:hadoop][:jhs][:inter_dir]         = "/mr-history/done_intermediate"
 default[:hadoop][:jhs][:done_dir]          = "/mr-history/done"
