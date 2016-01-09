@@ -115,6 +115,7 @@
     <value><%= node[:hadoop][:tmp_dir] %>/nm-local-dir</value>
     <description>the local directories used by the nodemanager to store its localized files</description>
   </property>
+<!--
   <property>
     <name>yarn.nodemanager.log-dirs</name>
     <value></value>
@@ -125,6 +126,7 @@
     <value></value>
     <description>the directory where the logs are aggregated</description>
   </property>
+-->
   <property>
     <name>yarn.nodemanager.aux-services</name>
     <value><%= node[:hadoop][:yarn][:aux_services] %></value>

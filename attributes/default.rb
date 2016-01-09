@@ -62,6 +62,8 @@ default[:hadoop][:yarn][:rt]               = "false"
 default[:hadoop][:am][:max_retries]        = 2
 
 default[:hadoop][:yarn][:aux_services]     = "mapreduce_shuffle"
+
+default[:hadoop][:mr][:user]               = "mapred"
 default[:hadoop][:mr][:shuffle_class]      = "org.apache.hadoop.mapred.ShuffleHandler"
 
 default[:hadoop][:yarn][:app_classpath]    = "#{node[:hadoop][:home]}/etc/hadoop/, #{node[:hadoop][:home]}/share/hadoop/common/*, #{node[:hadoop][:home]}/share/hadoop/common/lib/*, #{node[:hadoop][:home]}/share/hadoop/hdfs/*, #{node[:hadoop][:home]}/share/hadoop/hdfs/lib/*, #{node[:hadoop][:home]}/share/hadoop/yarn/*, #{node[:hadoop][:home]}/share/hadoop/yarn/lib/*"#, #{node[:hadoop][:home]}, #{node[:hadoop][:home]}/lib/*, #{node[:hadoop][:home]}/share/hadoop/tools/lib/*, #{node[:hadoop][:home]}/share/hadoop/yarn/test/*, #{node[:hadoop][:home]}/share/hadoop/mapreduce/*, #{node[:hadoop][:home]}/share/hadoop/mapreduce/lib/*, #{node[:hadoop][:home]}/share/hadoop/mapreduce/test/*"
@@ -75,8 +77,8 @@ default[:hadoop][:rm][:scheduler_class]    = "org.apache.hadoop.yarn.server.reso
 #default[:hadoop][:rm][:scheduler_class]    = "org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler"
 default[:hadoop][:rm][:scheduler_capacity][:calculator_class] = "org.apache.hadoop.yarn.util.resource.DominantResourceCalculator"
 
-default[:hadoop][:mr][:tmp_dir]            = "#{node[:hadoop][:mr][:tmp_dir]}/mapreduce"
-default[:hadoop][:mr][:staging_dir]        = "#{node[:hadoop][:mr][:tmp_dir]}/#{node[:hadoop][:mr][:user]}/staging"
+default[:hadoop][:mr][:tmp_dir]            = "/mapreduce"
+default[:hadoop][:mr][:staging_dir]        = "#{node[:hadoop][:mr][:tmp_dir]}/staging"
 
 default[:hadoop][:jhs][:inter_dir]         = "/mr-history/done_intermediate"
 default[:hadoop][:jhs][:done_dir]          = "/mr-history/done"
@@ -94,7 +96,6 @@ default[:hadoop][:nm][:jmxport]            = "8083"
 default[:hadoop][:jmx][:username]          = "monitorRole"
 default[:hadoop][:jmx][:password]          = "hadoop"
 
-default[:hadoop][:mr][:user]               = "mapred"
 
 default[:hadoop][:nn][:public_ips]         = ['10.0.2.15']
 default[:hadoop][:nn][:private_ips]        = ['10.0.2.15']
