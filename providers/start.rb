@@ -57,3 +57,17 @@ action :standby do
     end
   end
 end
+
+action :jn do
+
+bash "start_journal_node" do
+  user node[:hdfs][:user]
+  group node[:hadoop][:group]  
+ code <<-EOF
+    cd #{node[:hadoop][:sbin_dir]}
+     ./start-jn.sh
+  EOF
+  not_if { "ps -aux | grep journalnode" }
+end
+
+end
