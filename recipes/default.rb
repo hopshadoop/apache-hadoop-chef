@@ -34,8 +34,9 @@ end
 
 journal_urls=""
 zk_nodes=""
+journal_port = node[:hdfs][:journal_port]
 if ha_enabled == true
-  journal_urls="qjournal://" + node[:hadoop][:jn][:private_ips].join(":8485;") + ":8485"
+  journal_urls="qjournal://" + node[:hadoop][:jn][:private_ips].join(":#{journal_port};") + ":#{journal_port}"
   zk_nodes=node[:kzookeeper][:default][:private_ips].join(":2181,") + ":2181"
 end
 

@@ -83,6 +83,7 @@ default[:hadoop][:mr][:staging_dir]        = "#{default[:hadoop][:mr][:tmp_dir]}
 default[:hadoop][:jhs][:inter_dir]         = "/mr-history/done_intermediate"
 default[:hadoop][:jhs][:done_dir]          = "/mr-history/done"
 
+default[:hdfs][:journal_port]              = 3888
 # YARN CONFIG VARIABLES
 # http://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-common/yarn-default.xml
 # If you need mapreduce, mapreduce.shuffle should be included here.
