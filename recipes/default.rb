@@ -16,7 +16,7 @@ rm_public_ip = public_recipe_ip("hadoop","rm")
 Chef::Log.info "Resourcemanager IP: #{rm_public_ip}"
 
 ha_enabled = false
-if node[:hadoop][:ha_enabled].eql? "true" || node[:hadoop][:ha_enabled] == true
+if "#{node[:hadoop][:ha_enabled]}".eql? "true"
   ha_enabled = true
 end
 
