@@ -1,7 +1,5 @@
-libpath = File.expand_path '../../../kagent/libraries', __FILE__
-require File.join(libpath, 'inifile')
 
-private_ip = my_private_ip()
+my_ip = my_private_ip()
 public_ip = my_public_ip()
 
 for script in node[:hadoop][:nn][:scripts]
@@ -21,7 +19,7 @@ end
 
 if ha_enabled == true
   if node[:hadoop][:nn][:private_ips].size > 1
-    if "#{node[:hadoop][:nn][:private_ips][1]}".eql "#{private_ip}"
+    if node[:hadoop][:nn][:private_ips][1].eql? my_ip
        activeNN = false
     end
   end
@@ -48,6 +46,7 @@ template "#{node[:hadoop][:home]}/sbin/start-zkfc.sh" do
   owner node[:hdfs][:user]
   group node[:hadoop][:group]
   mode 0754
+  cookbook "kzookeeper"
 end
 
 template "#{node[:hadoop][:home]}/sbin/start-standby-nn.sh" do
