@@ -46,7 +46,6 @@ template "#{node[:hadoop][:home]}/sbin/start-zkfc.sh" do
   owner node[:hdfs][:user]
   group node[:hadoop][:group]
   mode 0754
-  cookbook "kzookeeper"
 end
 
 template "#{node[:hadoop][:home]}/sbin/start-standby-nn.sh" do
