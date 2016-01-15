@@ -68,6 +68,6 @@ bash "start_journal_node" do
     ./start-jn.sh
   EOF
  not_if { "jps | grep -i journalnode" }
+end
 
-  
 end
