@@ -24,10 +24,15 @@ end
 # TODO: test if the NameNode is running
 if ::File.exist?("#{node[:hadoop][:home]}/.nn_formatted") === false || "#{node[:hadoop][:reformat]}" === "true"
   if activeNN == true
+    sleep 10
     hadoop_start "format-nn" do
       action :format_nn
       ha_enabled ha_enabled
     end
+  else
+    # wait for the active nn to come up
+    # TODO - copy fsimage over from the active nn
+    sleep 100
   end
 else 
   Chef::Log.info "Not formatting the NameNode. Remove this directory before formatting: (sudo rm -rf #{node[:hadoop][:nn][:name_dir]}/current) and set node[:hadoop][:reformat] to true"
