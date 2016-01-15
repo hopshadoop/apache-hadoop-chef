@@ -13,7 +13,7 @@ for script in node[:hadoop][:nn][:scripts]
   end
 end 
 
-activeNN = node[:hdfs][:active_nn]
+activeNN = true
 ha_enabled = false
 if node[:hadoop][:ha_enabled].eql? "true" || node[:hadoop][:ha_enabled] == true
   ha_enabled = true
