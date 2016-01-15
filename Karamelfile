@@ -4,8 +4,6 @@ dependencies:
     global:  
       - hadoop::nn
   - recipe: hadoop::dn
-    global:  
-      - hadoop::nn
   - recipe: hadoop::nm
     global:  
       - hadoop::rm
