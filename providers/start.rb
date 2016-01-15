@@ -71,3 +71,5 @@ bash "start_journal_node" do
  not_if { "jps | grep -i journalnode" }
 
 end
+
+end

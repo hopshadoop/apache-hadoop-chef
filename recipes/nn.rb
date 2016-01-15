@@ -15,6 +15,8 @@ activeNN = true
 ha_enabled = false
 if "#{node[:hadoop][:ha_enabled]}".eql? "true" 
   ha_enabled = true
+  # Format the nn fails if we don't wait at least 10 seconds
+  sleep 10
 end
 
 
