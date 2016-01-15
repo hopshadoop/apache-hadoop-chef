@@ -17,6 +17,8 @@ default[:hadoop][:nn][:name_dir]           = "#{node[:hadoop][:data_dir]}/hdfs/n
 
 default[:hdfs][:user_home]                 = "/user"
 
+default[:hdfs][:active_nn]                 = true
+
 #default[:hadoop][:download_url][:primary]   = "ftp://ftp.fu-berlin.de/unix/www/apache/hadoop/common/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}.tar.gz"
 default[:hadoop][:download_url][:primary]   = "#{download_url}/hadoop-#{node[:hadoop][:version]}.tar.gz"
 default[:hadoop][:download_url][:secondary] = "https://archive.apache.org/dist/hadoop/core/hadoop-#{node[:hadoop][:version]}/hadoop-#{node[:hadoop][:version]}.tar.gz"

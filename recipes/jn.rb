@@ -11,6 +11,7 @@ template "#{node[:hadoop][:home]}/sbin/start-jn.sh" do
 end
 
 
+
 hadoop_start "start-jn" do
   action :jn
 end

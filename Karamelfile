@@ -1,5 +1,5 @@
 dependencies: 
-  - recipe: hadoop::nn
+  - recipe: hadoop::jn
     global:  
       - kzookeeper::default
   - recipe: hadoop::nn
@@ -16,5 +16,4 @@ dependencies:
       - hadoop::rm
   - recipe: hadoop::jhs
     global:  
-      - hadoop::nn
       - hadoop::dn

@@ -61,13 +61,13 @@ end
 action :jn do
 
 bash "start_journal_node" do
-  user node[:hdfs][:user]
-  group node[:hadoop][:group]  
+
+ user node[:hdfs][:user]
  code <<-EOF
     cd #{node[:hadoop][:sbin_dir]}
-     ./start-jn.sh
+    . ./set-env.sh
+    ./start-jn.sh
   EOF
-  not_if { "ps -aux | grep journalnode" }
-end
+ not_if { "jps | grep -i journalnode" }
 
 end

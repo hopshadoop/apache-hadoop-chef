@@ -17,6 +17,7 @@ if "#{node[:hadoop][:ha_enabled]}".eql? "true"
   ha_enabled = true
 end
 
+
 if ha_enabled == true
   if node[:hadoop][:nn][:private_ips].size > 1
     if node[:hadoop][:nn][:private_ips][1].eql? my_ip
@@ -68,8 +69,6 @@ end
     end
   end
 end
-
-
 
 service "namenode" do
   supports :restart => true, :stop => true, :start => true, :status => true
