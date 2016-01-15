@@ -13,18 +13,10 @@ for script in node[:hadoop][:nn][:scripts]
   end
 end 
 
-activeNN = true
+activeNN = node[:hdfs][:active_nn]
 ha_enabled = false
 if node[:hadoop][:ha_enabled].eql? "true" || node[:hadoop][:ha_enabled] == true
   ha_enabled = true
-end
-
-if ha_enabled == true
-  if node[:hadoop][:nn][:private_ips].size > 1
-    if "#{node[:hadoop][:nn][:private_ips][1]}".eql "#{private_ip}"
-       activeNN = false
-    end
-  end
 end
 
 # it is ok if all namenodes format the fs. Unless you add a new one later..
@@ -70,8 +62,6 @@ end
     end
   end
 end
-
-
 
 service "namenode" do
   supports :restart => true, :stop => true, :start => true, :status => true
