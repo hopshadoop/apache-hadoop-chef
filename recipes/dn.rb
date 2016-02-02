@@ -23,15 +23,6 @@ service "#{service_name}" do
 end
 
 template "/etc/init.d/#{service_name}" do
-  source "#{service_name}.erb"
-  owner node[:hdfs][:user]
-  group node[:hadoop][:group]
-  mode 0754
-  notifies :enable, resources(:service => "#{service_name}")
-  notifies :restart, resources(:service => "#{service_name}")
-end
-
-template "/etc/init.d/#{service_name}" do
   not_if { node[:hadoop][:use_systemd] == "true" }
   source "#{service_name}.erb"
   owner "root"
