@@ -1,0 +1,16 @@
+[Unit]
+Description = ResourceManager. The scheduler for YARN.
+After = syslog.target network.target remote-fs.target
+
+[Service]
+User = <%= node.hadoop.yarn.user %>
+
+PIDFile = <%= node.hadoop.logs_dir %>/yarn-<%= node.hadoop.yarn.user %>-resourcemanager.pid
+ExecStart = <%= node.hadoop.home %>/sbin/start-rm.sh
+ExecStop = <%= node.hadoop.home %>/sbin/stop-rm.sh
+ExecReload = <%= node[:hadoop][:home] %>/sbin/restart-nn.sh
+
+Type = forking
+
+[Install]
+WantedBy = multi-user.target

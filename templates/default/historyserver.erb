@@ -39,7 +39,7 @@ restart() {
 }
 
 status() {
-  PID_FILE=<%= "#{node[:hadoop][:logs_dir]}" %>/mapred-<%= "#{node[:hadoop][:mr][:user]}" %>-historyserver.pid
+  PID_FILE=/tmp/mapred-<%= "#{node[:hadoop][:yarn][:user]}" %>-historyserver.pid
   if [ -f $PID_FILE ] ; then
      PID=`cat $PID_FILE`
      kill -0 $PID

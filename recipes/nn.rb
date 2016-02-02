@@ -40,19 +40,19 @@ end
 
 if ha_enabled == true
 
-template "#{node[:hadoop][:home]}/sbin/start-zkfc.sh" do
-  source "start-zkfc.sh.erb"
-  owner node[:hdfs][:user]
-  group node[:hadoop][:group]
-  mode 0754
-end
+  template "#{node[:hadoop][:home]}/sbin/start-zkfc.sh" do
+    source "start-zkfc.sh.erb"
+    owner node[:hdfs][:user]
+    group node[:hadoop][:group]
+    mode 0754
+  end
 
-template "#{node[:hadoop][:home]}/sbin/start-standby-nn.sh" do
-  source "start-standby-nn.sh.erb"
-  owner node[:hdfs][:user]
-  group node[:hadoop][:group]
-  mode 0754
-end
+  template "#{node[:hadoop][:home]}/sbin/start-standby-nn.sh" do
+    source "start-standby-nn.sh.erb"
+    owner node[:hdfs][:user]
+    group node[:hadoop][:group]
+    mode 0754
+  end
 
 
   hadoop_start "zookeeper-format" do
@@ -68,33 +68,60 @@ end
   end
 end
 
-service "namenode" do
+service_name="namenode"
+
+service "#{service_name}" do
+  case node[:hadoop][:use_systemd]
+    when "true"
+    provider Chef::Provider::Service::Systemd
+  end
   supports :restart => true, :stop => true, :start => true, :status => true
   action :nothing 
 end
 
-template "/etc/init.d/namenode" do
-  source "namenode.erb"
+template "/etc/init.d/#{service_name}" do
+  not_if { node[:hadoop][:use_systemd] == "true" }
+  source "#{service_name}.erb"
   owner node[:hdfs][:user]
   group node[:hadoop][:group]
   mode 0754
-  notifies :enable, resources(:service => "namenode")
-  notifies :restart, resources(:service => "namenode")
+  notifies :enable, resources(:service => "#{service_name}")
+  notifies :restart, resources(:service => "#{service_name}")
 end
 
+case node[:platform_family]
+  when "debian"
+systemd_script = "/lib/systemd/system/#{service_name}.service"
+  when "rhel"
+systemd_script = "/usr/lib/systemd/system/#{service_name}.service" 
+end
+
+template systemd_script do
+    only_if { node[:hadoop][:use_systemd] == "true" }
+    source "#{service_name}.service.erb"
+    owner "root"
+    group "root"
+    mode 0754
+    notifies :enable, "service[#{service_name}]"
+    notifies :restart, "service[#{service_name}]", :immediately
+end
+
+
+
+
 if node[:kagent][:enabled] == "true" 
-  kagent_config "namenode" do
+  kagent_config "#{service_name}" do
     service "HDFS"
     start_script "#{node[:hadoop][:home]}/sbin/root-start-nn.sh"
     stop_script "#{node[:hadoop][:home]}/sbin/stop-nn.sh"
     init_script "#{node[:hadoop][:home]}/sbin/format-nn.sh"
     config_file "#{node[:hadoop][:conf_dir]}/core-site.xml"
-    log_file "#{node[:hadoop][:logs_dir]}/hadoop-#{node[:hdfs][:user]}-namenode-#{node['hostname']}.log"
-    pid_file "#{node[:hadoop][:logs_dir]}/hadoop-#{node[:hdfs][:user]}-namenode.pid"
+    log_file "#{node[:hadoop][:logs_dir]}/hadoop-#{node[:hdfs][:user]}-#{service_name}-#{node['hostname']}.log"
+    pid_file "#{node[:hadoop][:logs_dir]}/hadoop-#{node[:hdfs][:user]}-#{service_name}.pid"
     web_port node[:hadoop][:nn][:http_port]
   end
 end
 
-hadoop_start "namenode" do
+hadoop_start "#{service_name}" do
 end
 

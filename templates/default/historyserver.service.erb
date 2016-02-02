@@ -1,0 +1,16 @@
+[Unit]
+Description = MapReduce JobHistoryServer.
+After = syslog.target network.target remote-fs.target
+
+[Service]
+User = <%= node.hadoop.yarn.user %>
+
+PIDFile = /tmp/mapred-<%= node.hadoop.yarn.user %>-historyserver.pid
+ExecStart = <%= node[:hadoop][:home] %>/sbin/start-jhs.sh
+ExecStop = <%= node[:hadoop][:home] %>/sbin/stop-jhs.sh
+ExecReload = <%= node[:hadoop][:home] %>/sbin/restart-jhs.sh
+
+Type = forking
+
+[Install]
+WantedBy = multi-user.target
