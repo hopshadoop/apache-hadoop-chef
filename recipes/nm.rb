@@ -65,5 +65,6 @@ if node[:kagent][:enabled] == "true"
   end
 end
 
-hadoop_start "#{service_name}" do
-end
+#hadoop_start "#{service_name}" do
+#end
+

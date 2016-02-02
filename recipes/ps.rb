@@ -19,6 +19,10 @@ end
 # end
 
 service service_name do
+  case node[:hadoop][:use_systemd]
+    when "true"
+    provider Chef::Provider::Service::Systemd
+  end
   supports :restart => true, :stop => true, :start => true, :status => true
   action :nothing
 end
@@ -46,7 +50,7 @@ template systemd_script do
     group "root"
     mode 0754
     notifies :enable, "service[#{service_name}]"
-    notifies :restart, "service[#{service_name}]", :immediately
+    notifies :restart, "service[#{service_name}]"
 end
 
 
@@ -62,5 +66,5 @@ if node[:kagent][:enabled] == "true"
   end
 end
 
-hadoop_start "#{service_name}" do
-end
+#hadoop_start "#{service_name}" do
+#end

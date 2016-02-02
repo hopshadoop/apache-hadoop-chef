@@ -30,7 +30,7 @@ suites:
       - recipe[hadoop::rm]
       - recipe[hadoop::nm]
       - recipe[hadoop::jhs]
-      - recipe[hadoop::ps]
+#      - recipe[hadoop::ps]
 #      - recipe[hadoop::jn]
 
     attributes:
