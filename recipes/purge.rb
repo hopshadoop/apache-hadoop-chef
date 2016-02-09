@@ -4,12 +4,21 @@ daemons.each { |d|
     user "root"
     ignore_failure :true
     code <<-EOF
- service stop #{d}
+ service #{d} stop
+ systemctl stop #{d}
  pkillall -9 #{d}
 EOF
   end
 
   file "/etc/init.d/#{d}" do
+    action :delete
+    ignore_failure :true
+  end
+  file "/usr/lib/systemd/systemd/#{d}.service" do
+    action :delete
+    ignore_failure :true
+  end
+  file "/lib/systemd/systemd/#{d}.service" do
     action :delete
     ignore_failure :true
   end
