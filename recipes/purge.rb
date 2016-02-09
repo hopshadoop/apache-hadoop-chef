@@ -2,7 +2,7 @@ daemons = %w{namenode datanode resourcemanager nodemanager historyserver proxyse
 daemons.each { |d| 
   bash 'uninstall_service_#{d}' do
     user "root"
-    ignore_failure :true
+    ignore_failure true
     code <<-EOF
  service #{d} stop
  systemctl stop #{d}
@@ -12,39 +12,39 @@ EOF
 
   file "/etc/init.d/#{d}" do
     action :delete
-    ignore_failure :true
+    ignore_failure true
   end
   file "/usr/lib/systemd/systemd/#{d}.service" do
     action :delete
-    ignore_failure :true
+    ignore_failure true
   end
   file "/lib/systemd/systemd/#{d}.service" do
     action :delete
-    ignore_failure :true
+    ignore_failure true
   end
 }
 
 directory "#{node[:hadoop][:dir]}/hadoop-#{node[:hadoop][:version]}" do
   recursive true
   action :delete
-  ignore_failure :true
+  ignore_failure true
 end
 
 link node[:hadoop][:home] do
   action :delete
-  ignore_failure :true
+  ignore_failure true
 end
 
 directory node[:hadoop][:data_dir] do
   recursive true
   action :delete
-  ignore_failure :true
+  ignore_failure true
 end
 
 directory Chef::Config[:file_cache_path] do
   recursive true
   action :delete
-  ignore_failure :true
+  ignore_failure true
 end
 
 package "Bouncy Castle Remove" do
@@ -54,6 +54,6 @@ package "Bouncy Castle Remove" do
   when 'ubuntu', 'debian'
     package_name 'bouncycastle'
   end
- ignore_failure :true
+ ignore_failure true
  action :purge
 end
