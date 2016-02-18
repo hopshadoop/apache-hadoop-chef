@@ -143,6 +143,16 @@
     <description>The virtual memory (physical + paged memory) upper limit for each Map and Reduce task is determined by the virtual memory ratio each YARN Container is allowed.</description>
   </property>
   <property>
+    <name>yarn.nodemanager.vmem-check-enabled</name>
+    <value><%= node[:hadoop][:yarn][:vmem_check] %></value>
+    <description></description>
+  </property>
+  <property>
+    <name>yarn.nodemanager.pmem-check-enabled</name>
+    <value><%= node[:hadoop][:yarn][:pmem_check] %></value>
+    <description></description>
+  </property>
+  <property>
     <name>yarn.nodemanager.resource.memory-mb</name>
     <value><%= @available_mem_mb %></value>
     <description>the amount of memory on the NodeManager in MB</description>

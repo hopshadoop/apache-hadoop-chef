@@ -188,11 +188,6 @@ if node[:hadoop][:cgroups].eql? "true"
   container_executor="org.apache.hadoop.yarn.server.nodemanager.LinuxContainerExecutor"
 end
 
-file "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do 
-  owner node[:hadoop][:yarn][:user]
-  action :delete
-end
-
 
 unless node['hadoop']['yarn'].key?('yarn.nodemanager.resource.memory-mb')
   mem = (node['memory']['total'].to_i / 1000)
@@ -206,8 +201,9 @@ end
 
 rm_dest_ip = rm_private_ip
 
-if node[:hadoop][:yarn][:rt].eql? "true" 
-  rm_dest_ip = my_ip
+file "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do 
+  owner node[:hadoop][:yarn][:user]
+  action :delete
 end
 
 template "#{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml" do
