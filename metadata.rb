@@ -144,3 +144,7 @@ attribute "hadoop/ha_enabled",
 attribute "hadoop/yarn/rt",
 :display_name => "Hadoop Resource Tracker enabled on this nodegroup",
 :type => 'string'
+
+attribute "hadoop/dir",
+:display_name => "Hadoop installation directory",
+:type => 'string'
