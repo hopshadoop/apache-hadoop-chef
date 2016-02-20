@@ -47,7 +47,7 @@ default[:hadoop][:yarn][:user]             = "yarn"
 default[:hadoop][:yarn][:nm][:memory_mbs]  = 3584
 default[:hadoop][:yarn][:ps_port]          = 20888
 
-default[:hadoop][:yarn][:vpmem_ratio]      = 2.1
+default[:hadoop][:yarn][:vpmem_ratio]      = 4.1
 default[:hadoop][:yarn][:vmem_check]       = false
 default[:hadoop][:yarn][:pmem_check]       = true
 default[:hadoop][:yarn][:vcores]           = 4
