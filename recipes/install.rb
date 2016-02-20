@@ -274,14 +274,17 @@ bash 'extract-hadoop' do
   user "root"
   code <<-EOH
 	tar -zxf #{cached_package_filename} -C #{node[:hadoop][:dir]}
+        ln -s #{node[:hadoop][:dir]}/#{node.hadoop.version} #{node.hadoop.base_dir}
         # chown -L : traverse symbolic links
         chown -RL #{node[:hdfs][:user]}:#{node[:hadoop][:group]} #{node[:hadoop][:home]}
+        chown -RL #{node[:hdfs][:user]}:#{node[:hadoop][:group]} #{node[:hadoop][:base_dir]}
         # remove the config files that we would otherwise overwrite
-        rm #{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml
-        rm #{node[:hadoop][:home]}/etc/hadoop/core-site.xml
-        rm #{node[:hadoop][:home]}/etc/hadoop/hdfs-site.xml
-        rm #{node[:hadoop][:home]}/etc/hadoop/mapred-site.xml
+        rm -f #{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml
+        rm -f #{node[:hadoop][:home]}/etc/hadoop/core-site.xml
+        rm -f #{node[:hadoop][:home]}/etc/hadoop/hdfs-site.xml
+        rm -f #{node[:hadoop][:home]}/etc/hadoop/mapred-site.xml
         touch #{hin}
+        chown -RL #{node[:hdfs][:user]}:#{node[:hadoop][:group]} #{node[:hadoop][:home]}
 	EOH
   not_if { ::File.exist?("#{hin}") }
 end
