@@ -41,10 +41,6 @@ attribute "hadoop/yarn/vcores",
 :type => 'string'
 
 attribute "hadoop/yarn/max_vcores",
-:display_name => "Hadoop NodeManager Maximum Number of Virtual Cores",
-:type => 'string'
-
-attribute "hadoop/yarn/max_vcores",
 :display_name => "Hadoop NodeManager Maximum Virtual Cores per container",
 :type => 'string',
 :default => 4
