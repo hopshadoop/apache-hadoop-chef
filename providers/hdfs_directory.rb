@@ -76,6 +76,7 @@ action :create_as_superuser do
     user node[:hdfs][:user]
     group node[:hadoop][:group]
     code <<-EOF
+     . #{node[:hadoop][:home]}/sbin/set-env.sh
      #{node[:hadoop][:home]}/bin/hdfs dfs -mkdir #{recursive} #{new_resource.name}
      #{node[:hadoop][:home]}/bin/hdfs dfs -chown #{new_resource.owner} #{new_resource.name}
      #{node[:hadoop][:home]}/bin/hdfs dfs -chgrp #{new_resource.group} #{new_resource.name}
