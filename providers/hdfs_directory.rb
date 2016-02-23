@@ -50,6 +50,7 @@ action :put_as_superuser do
     user node[:hdfs][:user]
     group node[:hadoop][:group]
     code <<-EOF
+     . #{node[:hadoop][:home]}/sbin/set-env.sh
      #{node[:hadoop][:home]}/bin/hdfs dfs -test -e #{new_resource.dest}
      if [ $? -ne 0 ] ; then
         #{node[:hadoop][:home]}/bin/hdfs dfs -put #{new_resource.name} #{new_resource.dest}
