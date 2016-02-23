@@ -50,7 +50,7 @@ if node[:hadoop][:os_defaults] == "true" then
   end
 
 node.default['java']['jdk_version'] = 7
-node['java']['set_etc_environment'] = true
+node.default['java']['set_etc_environment'] = true
 include_recipe "java"
 
 kagent_bouncycastle "jar" do
