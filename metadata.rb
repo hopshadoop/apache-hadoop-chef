@@ -21,13 +21,13 @@ recipe            "hadoop::ps", "Installs a WebProxy Server for YARN"
 depends 'kagent'
 depends 'java'
 depends 'ulimit'
+depends 'sysctl'
 
-#depends 'cmake'
+depends 'cmake'
 #depends 'apt'
 #depends 'yum'
 #depends 'build-essential'
 #depends 'ark'
-#depends 'sysctl'
 
 %w{ ubuntu debian rhel centos }.each do |os|
   supports os

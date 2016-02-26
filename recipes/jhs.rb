@@ -2,9 +2,9 @@ include_recipe "hadoop::yarn"
 libpath = File.expand_path '../../../kagent/libraries', __FILE__
 require File.join(libpath, 'inifile')
 
-install.rb:node.default['java']['jdk_version'] = 7
-install.rb:node.default['java']['set_etc_environment'] = true
-install.rb:include_recipe "java"
+#install.rb:node.default['java']['jdk_version'] = 7
+#install.rb:node.default['java']['set_etc_environment'] = true
+#install.rb:include_recipe "java"
 
 
 case node.platform
