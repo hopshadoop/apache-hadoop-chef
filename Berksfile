@@ -7,7 +7,7 @@ metadata
 
 cookbook 'kagent', '~> 0.1.0'
 cookbook 'java', '~> 1.39.0'
-cookbook 'ulimit', github: 'bmhatfield/chef-ulimit'
+cookbook 'ulimit', '~> 0.3.3'
 cookbook 'sysctl', '~> 0.7.0'
 cookbook 'cmake', '~> 0.3.0'
 
