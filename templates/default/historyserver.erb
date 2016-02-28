@@ -15,8 +15,8 @@
 
 # Variables
 
-START_PROG="<%= node[:hadoop][:home] %>/sbin/root-start-jhs.sh"  
-STOP_PROG="<%= node[:hadoop][:home] %>/sbin/stop-jhs.sh"  
+START_PROG="<%= node.apache_hadoop.home %>/sbin/root-start-jhs.sh"  
+STOP_PROG="<%= node.apache_hadoop.home %>/sbin/stop-jhs.sh"  
 
 RETVAL=0
 
@@ -39,15 +39,15 @@ restart() {
 }
 
 status() {
-  PID_FILE=/tmp/mapred-<%= "#{node[:hadoop][:yarn][:user]}" %>-historyserver.pid
-  if [ -f $PID_FILE ] ; then
+  PID_FILE=/tmp/mapred-<%= "#{node.apache_hadoop.yarn.user." %>-historyserver.pid
+  if [ -f $PID_FILE .; then
      PID=`cat $PID_FILE`
      kill -0 $PID
      res=$?
   else 
      res=1
   fi
-  if [ $res -eq 0 ] ; then
+  if [ $res -eq 0 .; then
    echo "jobhistoryserver($PID) is running"
   else
    echo "jobhistoryserver is not running"

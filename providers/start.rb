@@ -19,7 +19,7 @@ action :format_nn do
       user node.hdfs.user
       code <<-EOH
         set -e
-        #{node.hadoop.home}/bin/hdfs zkfc -formatZK -force
+        #{node.apache_hadoop.home}/bin/hdfs zkfc -formatZK -force
  	EOH
     end
   end
@@ -27,8 +27,8 @@ action :format_nn do
       user node.hdfs.user
       code <<-EOH
         set -e
-        #{node.hadoop.home}/sbin/format-nn.sh
-        touch #{node.hadoop.home}/.nn_formatted
+        #{node.apache_hadoop.home}/sbin/format-nn.sh
+        touch #{node.apache_hadoop.home}/.nn_formatted
  	EOH
     end
 
@@ -40,7 +40,7 @@ action :zkfc do
       user node.hdfs.user
       code <<-EOH
         set -e
-        #{node.hadoop.home}/bin/hdfs zkfc -formatZK -force
+        #{node.apache_hadoop.home}/bin/hdfs zkfc -formatZK -force
  	EOH
     end
   end
@@ -52,7 +52,7 @@ action :standby do
       user node.hdfs.user
       code <<-EOH
         set -e
-        #{node.hadoop.home}/sbin/start-standby-nn.sh
+        #{node.apache_hadoop.home}/sbin/start-standby-nn.sh
  	EOH
     end
   end
@@ -63,7 +63,7 @@ action :jn do
 bash "start_journal_node" do
  user node.hdfs.user
  code <<-EOF
-    cd #{node.hadoop.sbin_dir}
+    cd #{node.apache_hadoop.sbin_dir}
     . ./set-env.sh
     ./start-jn.sh
   EOF

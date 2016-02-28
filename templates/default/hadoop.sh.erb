@@ -1,8 +1,8 @@
 #!/bin/bash
 
-EXEC_WITH_USER="su <%= node[:hdfs][:user] %> -c"
+EXEC_WITH_USER="su <%= node.hdfs.user %> -c"
 
-$EXEC_WITH_USER "<%= node[:hadoop][:home] %>/bin/hadoop $@"
+$EXEC_WITH_USER "<%= node.apache_hadoop.home %>/bin/hadoop $@"
 
 
 exit $?

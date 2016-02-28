@@ -1,1 +1,1 @@
-include_recipe "hadoop"
+include_recipe "apache_hadoop"

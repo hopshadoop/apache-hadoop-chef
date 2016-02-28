@@ -2,8 +2,8 @@
 
 command=yarn
 
-sudo -u <%= node[:hdfs][:user] %> bash -l <<EOF
-<%= node[:hadoop][:home] %>/bin/$command $@
+sudo -u <%= node.hdfs.user %> bash -l <<EOF
+<%= node.apache_hadoop.home %>/bin/$command $@
 EOF
 
 exit $?

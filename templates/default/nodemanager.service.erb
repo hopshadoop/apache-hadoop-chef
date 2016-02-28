@@ -3,12 +3,12 @@ Description = NodeManager. The Processing Nodes for YARN.
 After = syslog.target network.target remote-fs.target
 
 [Service]
-User = <%= node.hadoop.yarn.user %>
+User = <%= node.apache_hadoop.yarn.user %>
 
-PIDFile = <%= node.hadoop.logs_dir %>/yarn-<%= node.hadoop.yarn.user %>-nodemanager.pid
-ExecStart = <%= node.hadoop.home %>/sbin/start-nm.sh
-ExecStop = <%= node.hadoop.home %>/sbin/stop-nm.sh
-ExecReload = <%= node[:hadoop][:home] %>/sbin/restart-nm.sh
+PIDFile = <%= node.apache_hadoop.logs_dir %>/yarn-<%= node.apache_hadoop.yarn.user %>-nodemanager.pid
+ExecStart = <%= node.apache_hadoop.home %>/sbin/start-nm.sh
+ExecStop = <%= node.apache_hadoop.home %>/sbin/stop-nm.sh
+ExecReload = <%= node.apache_hadoop.home %>/sbin/restart-nm.sh
 
 Type = forking
 

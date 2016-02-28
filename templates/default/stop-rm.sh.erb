@@ -7,10 +7,10 @@ HADOOP_LIBEXEC_DIR=${HADOOP_LIBEXEC_DIR:-$DEFAULT_LIBEXEC_DIR}
 . ${bin}/set-env.sh
 
 command=resourcemanager
-#pidDir=<%= node[:hadoop][:logs_dir] %>
+#pidDir=<%= node.apache_hadoop.logs_dir %>
 pidDir=$YARN_PID_DIR
 service=yarn
 
-<%= node[:hadoop][:home] %>/sbin/kill-process.sh $service <%= node[:hadoop][:yarn][:user] %> $command $pidDir
+<%= node.apache_hadoop.home %>/sbin/kill-process.sh $service <%= node.apache_hadoop.yarn.user %> $command $pidDir
 
 exit $?

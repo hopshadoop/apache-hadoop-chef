@@ -24,17 +24,17 @@ suites:
   - name: default
     run_list:
       - recipe[kagent::install]
-      - recipe[hadoop::install]
-      - recipe[hadoop::nn]
-      - recipe[hadoop::dn]
-      - recipe[hadoop::rm]
-      - recipe[hadoop::nm]
-      - recipe[hadoop::jhs]
-#      - recipe[hadoop::ps]
-#      - recipe[hadoop::jn]
+      - recipe[apache_hadoop::install]
+      - recipe[apache_hadoop::nn]
+      - recipe[apache_hadoop::dn]
+      - recipe[apache_hadoop::rm]
+      - recipe[apache_hadoop::nm]
+      - recipe[apache_hadoop::jhs]
+#      - recipe[apache_hadoop::ps]
+#      - recipe[apache_hadoop::jn]
 
     attributes:
-         hadoop:
+         apache_hadoop:
 #            use_systemd: "true"
             nn:
                private_ips: ["10.0.2.15"]

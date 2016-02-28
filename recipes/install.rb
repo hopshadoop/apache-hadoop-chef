@@ -31,14 +31,14 @@ if node.apache_hadoop.os_defaults == "true" then
     # limits.d settings
     %w(hdfs mapred yarn).each do |u|
       ulimit_domain u do
-        node.hadoop.limits.each do |k, v|
+        node.apache_hadoop.limits.each do |k, v|
           rule do
             item k
             type '-'
             value v
           end
         end
-        only_if { node.hadoop.key?('limits') && !node.hadoop.limits.empty? }
+        only_if { node.apache_hadoop.key?('limits') && !node.apache_hadoop.limits.empty? }
       end
     end # End limits.d
 
@@ -275,7 +275,7 @@ bash 'extract-hadoop' do
   user "root"
   code <<-EOH
 	tar -zxf #{cached_package_filename} -C #{node.apache_hadoop.dir}
-        ln -s #{node.apache_hadoop.dir}/#{node.hadoop.version} #{node.hadoop.base_dir}
+        ln -s #{node.apache_hadoop.dir}/#{node.apache_hadoop.version} #{node.apache_hadoop.base_dir}
         # chown -L : traverse symbolic links
         chown -RL #{node.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.home}
         chown -RL #{node.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.base_dir}
@@ -343,7 +343,7 @@ link node.apache_hadoop.base_dir do
   to node.apache_hadoop.home
 end
 
-include_recipe "hadoop"
+include_recipe "apache_hadoop"
 
 
 bash 'update_permissions_etc_dir' do
