@@ -7,9 +7,9 @@
 
 This cookbook has been tested on the following versions (but may work on earlier ones):
 
-* Chef 11.4.0+
-* CentOS 6.5+
-* Ubuntu 12.04+
+* Chef 12.3.0+
+* CentOS 7.0+
+* Ubuntu 14.04+
 
 
 ####Recipes
@@ -31,22 +31,22 @@ This cookbook is karamelized (www.karamel.io).  You can launch a Hadoop Cluster 
 name: eu-west-1
 
 cookbooks:                                                                      
-  hadoop: 
+  apache_hadoop: 
     github: "hopshadoop/apache-hadoop-chef"
-    branch: "master"
+    tag: "v0.1.0"
     
 groups: 
   namenodes:
     size: 1
     recipes: 
-        - hadoop::nn
-        - hadoop::rm
-        - hadoop::jhs                                                            
+        - apache_hadoop::nn
+        - apache_hadoop::rm
+        - apache_hadoop::jhs                                                            
   datanodes:
     size: 2
     recipes: 
-        - hadoop::dn
-        - hadoop::nm
+        - apache_hadoop::dn
+        - apache_hadoop::nm
 ```
 
 
