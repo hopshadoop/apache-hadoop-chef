@@ -6,13 +6,13 @@
 my_ip = my_private_ip()
 my_public_ip = my_public_ip()
 
-firstNN = private_recipe_ip("hadoop", "nn") + ":#{node.hadoop.nn.port}"
+firstNN = private_recipe_ip("apache_hadoop", "nn") + ":#{node.hadoop.nn.port}"
 Chef::Log.info "NameNode private IP: #{firstNN}"
 
-rm_private_ip = private_recipe_ip("hadoop","rm")
+rm_private_ip = private_recipe_ip("apache_hadoop","rm")
 Chef::Log.info "Resourcemanager IP: #{rm_private_ip}"
 
-rm_public_ip = public_recipe_ip("hadoop","rm")
+rm_public_ip = public_recipe_ip("apache_hadoop","rm")
 Chef::Log.info "Resourcemanager IP: #{rm_public_ip}"
 
 ha_enabled = false
@@ -23,7 +23,7 @@ end
 
 template "#{node.hadoop.home}/etc/hadoop/core-site.xml" do 
   source "core-site.xml.erb"
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.hadoop.group
   mode "755"
   variables({
@@ -54,7 +54,7 @@ template "#{node.hadoop.home}/etc/hadoop/hdfs-site.xml" do
      when false
   source "hdfs-site.xml.erb"
      end
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.hadoop.group
   mode "755"
   variables({
@@ -72,8 +72,8 @@ template "#{node.hadoop.home}/etc/hadoop/hdfs-site.xml" do
 end
 
 template "#{node.hadoop.home}/etc/hadoop/hadoop-env.sh" do
-  source "hadoop-env.sh.erb"
-  owner node.hdfs.user
+  source "apache_hadoop-env.sh.erb"
+  owner node.apache_hadoop.hdfs.user
   group node.hadoop.group
   mode "755"
 end
@@ -81,7 +81,7 @@ end
 
 template "#{node.hadoop.home}/etc/hadoop/jmxremote.password" do 
   source "jmxremote.password.erb"
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.hadoop.group
   mode "600"
 end
@@ -96,14 +96,14 @@ end
 
 template "#{node.hadoop.home}/sbin/kill-process.sh" do 
   source "kill-process.sh.erb"
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.hadoop.group
   mode "754"
 end
 
 template "#{node.hadoop.home}/sbin/set-env.sh" do 
   source "set-env.sh.erb"
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.hadoop.group
   mode "774"
 end
@@ -121,7 +121,7 @@ if node.hadoop.install_protobuf
 
   remote_file proto_filename do
     source proto_url
-    owner node.hdfs.user
+    owner node.apache_hadoop.hdfs.user
     group node.hadoop.group
     mode "0755"
     # TODO - checksum
@@ -129,7 +129,7 @@ if node.hadoop.install_protobuf
   end
 
   bash "install_protobuf_2_5" do
-    user node.hdfs.user
+    user node.apache_hadoop.hdfs.user
     code <<-EOF
     apt-get -y remove protobuf-compiler
     tar -xzf #{proto_filename} -C #{Chef::Config.file_cache_path}
@@ -145,7 +145,7 @@ end
 
 
 if "#{node.hadoop.user_envs}".eql? "true"
-  hadoop_user_envs node.hdfs.user do
+  hadoop_user_envs node.apache_hadoop.hdfs.user do
     action :update
   end
 
@@ -168,7 +168,7 @@ end
 
 
 directory "#{node.hadoop.home}/journal" do
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.hadoop.group
   mode "0755"
   recursive true
@@ -177,7 +177,7 @@ end
 
 template "/conf/container-executor.cfg" do
   source "container-executor.cfg.erb"
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.hadoop.group
   mode "755"
 end

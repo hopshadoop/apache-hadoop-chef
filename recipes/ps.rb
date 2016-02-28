@@ -1,4 +1,4 @@
-include_recipe "hadoop::yarn"
+include_recipe "apache_hadoop::yarn"
 
 yarn_service="ps"
 service_name="proxyserver"
@@ -58,8 +58,8 @@ if node.kagent.enabled == "true"
     service "YARN"
     start_script "#{node.hadoop.home}/sbin/root-start-#{yarn_service}.sh"
     stop_script "#{node.hadoop.home}/sbin/stop-#{yarn_service}.sh"
-    log_file "#{node.hadoop.logs_dir}/yarn-#{node.hdfs.user}-#{service_name}-#{node.hostname}.log"
-    pid_file "#{node.hadoop.logs_dir}/yarn-#{node.hdfs.user}-#{service_name}.pid"
+    log_file "#{node.hadoop.logs_dir}/yarn-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.log"
+    pid_file "#{node.hadoop.logs_dir}/yarn-#{node.apache_hadoop.hdfs.user}-#{service_name}.pid"
     web_port node.hadoop["#{yarn_service}"][:http_port]
   end
 end

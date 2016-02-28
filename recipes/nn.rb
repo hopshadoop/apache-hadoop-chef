@@ -12,7 +12,7 @@ public_ip = my_public_ip()
 for script in node.hadoop.nn.scripts
   template "#{node.hadoop.home}/sbin/#{script}" do
     source "#{script}.erb"
-    owner node.hdfs.user
+    owner node.apache_hadoop.hdfs.user
     group node.hadoop.group
     mode 0775
   end
@@ -47,14 +47,14 @@ if ha_enabled == true
 
   template "#{node.hadoop.home}/sbin/start-zkfc.sh" do
     source "start-zkfc.sh.erb"
-    owner node.hdfs.user
+    owner node.apache_hadoop.hdfs.user
     group node.hadoop.group
     mode 0754
   end
 
   template "#{node.hadoop.home}/sbin/start-standby-nn.sh" do
     source "start-standby-nn.sh.erb"
-    owner node.hdfs.user
+    owner node.apache_hadoop.hdfs.user
     group node.hadoop.group
     mode 0754
   end
@@ -89,7 +89,7 @@ end
 template "/etc/init.d/#{service_name}" do
   not_if { node.hadoop.systemd == "true" }
   source "#{service_name}.erb"
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.hadoop.group
   mode 0754
   notifies :enable, resources(:service => "#{service_name}")
@@ -123,8 +123,8 @@ if node.kagent.enabled == "true"
     stop_script "#{node.hadoop.home}/sbin/stop-nn.sh"
     init_script "#{node.hadoop.home}/sbin/format-nn.sh"
     config_file "#{node.hadoop.conf_dir}/core-site.xml"
-    log_file "#{node.hadoop.logs_dir}/hadoop-#{node.hdfs.user}-#{service_name}-#{node.hostname}.log"
-    pid_file "#{node.hadoop.logs_dir}/hadoop-#{node.hdfs.user}-#{service_name}.pid"
+    log_file "#{node.hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.log"
+    pid_file "#{node.hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}.pid"
     web_port node.hadoop.nn.http_port
   end
 end

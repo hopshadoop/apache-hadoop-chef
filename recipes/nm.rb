@@ -1,4 +1,4 @@
-include_recipe "hadoop::yarn"
+include_recipe "apache_hadoop::yarn"
 
 case node.platform
 when "ubuntu"

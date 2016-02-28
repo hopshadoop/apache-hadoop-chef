@@ -9,7 +9,7 @@ end
 for script in node.hadoop.dn.scripts
   template "#{node.hadoop.home}/sbin/#{script}" do
     source "#{script}.erb"
-    owner node.hdfs.user
+    owner node.apache_hadoop.hdfs.user
     group node.hadoop.group
     mode 0775
   end
@@ -48,7 +48,7 @@ end
 template systemd_script do
     only_if { node.hadoop.systemd == "true" }
     source "#{service_name}.service.erb"
-    owner node.hdfs.user
+    owner node.apache_hadoop.hdfs.user
     group node.hadoop.group
     mode 0754
     notifies :enable, "service[#{service_name}]"
@@ -61,12 +61,12 @@ if node.kagent.enabled == "true"
     service "HDFS"
     start_script "#{node.hadoop.home}/sbin/root-start-dn.sh"
     stop_script "#{node.hadoop.home}/sbin/stop-dn.sh"
-    log_file "#{node.hadoop.logs_dir}/hadoop-#{node.hdfs.user}-#{service_name}-#{node.hostname}.log"
-    pid_file "#{node.hadoop.logs_dir}/hadoop-#{node.hdfs.user}-#{service_name}.pid"
+    log_file "#{node.hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.log"
+    pid_file "#{node.hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}.pid"
     config_file "#{node.hadoop.conf_dir}/hdfs-site.xml"
     web_port node.hadoop.dn.http_port
     command "hdfs"
-    command_user node.hdfs.user
+    command_user node.apache_hadoop.hdfs.user
     command_script "#{node.hadoop.home}/bin/hdfs"
   end
 end
