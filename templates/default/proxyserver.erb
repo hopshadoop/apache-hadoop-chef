@@ -41,14 +41,14 @@ restart() {
 
 status() {
   PID_FILE=<%= "#{node.apache_hadoop.logs_dir}" %>/yarn-<%= "#{node.apache_hadoop.yarn.user}" %>-proxyserver.pid
-  if [ -f $PID_FILE .; then
+  if [ -f $PID_FILE ] ; then
      PID=`cat $PID_FILE`
      kill -0 $PID
      res=$?
   else 
      res=1
   fi
-  if [ $res -eq 0 .; then
+  if [ $res -eq 0 ] ; then
    echo "proxyserver($PID) is running"
   else
    echo "proxyserver is not running"

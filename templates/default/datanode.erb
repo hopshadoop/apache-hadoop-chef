@@ -42,14 +42,14 @@ restart() {
 
 status() {
   PID_FILE=<%= "#{node.apache_hadoop.logs_dir}" %>/hadoop-<%= "#{node.apache_hadoop.hdfs.user}" %>-datanode.pid
-  if [ -f $PID_FILE .; then
+  if [ -f $PID_FILE ] ; then
      PID=`cat $PID_FILE`
      kill -0 $PID
      res=$?
   else 
      res=1
   fi
-  if [ $res -eq 0 .; then
+  if [ $res -eq 0 ] ; then
    echo "datanode($PID) is running"
   else
    echo "datanode is not running"
