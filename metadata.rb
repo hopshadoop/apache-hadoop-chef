@@ -66,7 +66,7 @@ attribute "apache_hadoop/mr/user",
 :description => "Username to run mapReduce as",
 :type => 'string'
 
-attribute "hdfs/user",
+attribute "apache_hadoop/hdfs/user",
 :display_name => "Username to run hdfs as",
 :description => "Username to run hdfs as",
 :type => 'string'
