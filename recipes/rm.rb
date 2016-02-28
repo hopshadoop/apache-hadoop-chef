@@ -43,7 +43,7 @@ for script in node.apache_hadoop.yarn.scripts
   template "#{node.apache_hadoop.home}/sbin/#{script}-#{yarn_service}.sh" do
     source "#{script}-#{yarn_service}.sh.erb"
     owner node.apache_hadoop.yarn.user
-    group node.apache_hadoop.hadoop
+    group node.apache_hadoop.group
     mode 0775
   end
 end 
@@ -51,7 +51,7 @@ end
 template "#{node.apache_hadoop.home}/sbin/yarn.sh" do
   source "yarn.sh.erb"
   owner node.apache_hadoop.yarn.user
-  group node.apache_hadoop.hadoop
+  group node.apache_hadoop.group
   mode 0775
 end
 
@@ -71,7 +71,7 @@ template "/etc/init.d/#{service_name}" do
   not_if { node.apache_hadoop.systemd == "true" }
   source "#{service_name}.erb"
   owner node.apache_hadoop.yarn.user
-  group node.apache_hadoop.hadoop
+  group node.apache_hadoop.group
   mode 0754
   notifies :enable, resources(:service => service_name)
   notifies :restart, resources(:service => service_name), :immediately
@@ -105,7 +105,7 @@ if node.kagent.enabled == "true"
     log_file "#{node.apache_hadoop.logs_dir}/yarn-#{node.apache_hadoop.yarn.user}-#{service_name}-#{node.hostname}.log"
     pid_file "#{node.apache_hadoop.logs_dir}/yarn-#{node.apache_hadoop.yarn.user}-#{service_name}.pid"
     config_file "#{node.apache_hadoop.conf_dir}/yarn-site.xml"
-    web_port node.apache_hadoop["#{yarn_service}".http_port
+    web_port node.apache_hadoop["#{yarn_service}"][:http_port]
     command "yarn"
     command_user node.apache_hadoop.yarn.user
     command_script "#{node.apache_hadoop.home}/bin/yarn"

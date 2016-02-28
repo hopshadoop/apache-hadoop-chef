@@ -3,9 +3,9 @@ Description = DataNode, blocks server for HDFS.
 After = syslog.target network.target remote-fs.target
 
 [Service]
-User = <%= node.hdfs.user %>
+User = <%= node.apache_hadoop.hdfs.user %>
 
-PIDFile = <%= node.apache_hadoop.logs_dir %>/hadoop-<%= node.hdfs.user %>-datanode.pid
+PIDFile = <%= node.apache_hadoop.logs_dir %>/hadoop-<%= node.apache_hadoop.hdfs.user %>-datanode.pid
 ExecStart = <%= node.apache_hadoop.home %>/sbin/start-dn.sh
 ExecStop = <%= node.apache_hadoop.home %>/sbin/stop-dn.sh
 ExecReload = <%= node.apache_hadoop.home %>/sbin/restart-dn.sh

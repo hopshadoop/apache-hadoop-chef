@@ -1,7 +1,7 @@
 include_attribute "kagent"
 
 default.apache_hadoop.version                  = "2.4.0"
-default.apache_hadoop.hdfs.user                              = "hdfs"
+default.apache_hadoop.hdfs.user                = "hdfs"
 default.apache_hadoop.group                    = "hadoop"
 default.apache_hadoop.dir                      = "/srv"
 default.apache_hadoop.base_dir                 = "#{node.apache_hadoop.dir}/hadoop"
@@ -15,8 +15,8 @@ default.apache_hadoop.data_dir                 = "/var/data/hadoop"
 default.apache_hadoop.dn.data_dir              = "#{node.apache_hadoop.data_dir}/hdfs/dn"
 default.apache_hadoop.nn.name_dir              = "#{node.apache_hadoop.data_dir}/hdfs/nn"
 
-default.apache_hadoop.hdfs.user_home                         = "/user"
-default.apache_hadoop.hdfs.active_nn                         = true
+default.apache_hadoop.hdfs.user_home           = "/user"
+default.apache_hadoop.hdfs.active_nn           = true
 
 
 default.apache_hadoop.download_url.primary     = "#{download_url}/hadoop-#{node.apache_hadoop.version}.tar.gz"
@@ -138,4 +138,4 @@ default.apache_hadoop.logging_level            = "WARN"
 default.apache_hadoop.nn.direct_memory_size    = 50
 default.apache_hadoop.ha_enabled               = "false"
 
-default.apache_hadoop.systemd                  = "true"
+default.apache_hadoop.systemd                  = "false"

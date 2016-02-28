@@ -60,13 +60,13 @@ group node.apache_hadoop.group do
   action :create
 end
 
-user node.hdfs.user do
+user node.apache_hadoop.hdfs.user do
   supports :manage_home => true
   action :create
-  home "/home/#{node.hdfs.user}"
+  home "/home/#{node.apache_hadoop.hdfs.user}"
   system true
   shell "/bin/bash"
-  not_if "getent passwd #{node.hdfs.user}"
+  not_if "getent passwd #{node.apache_hadoop.hdfs.user}"
 end
 
 user node.apache_hadoop.yarn.user do
@@ -89,7 +89,7 @@ end
 
 group node.apache_hadoop.group do
   action :modify
-  members ["#{node.hdfs.user}", "#{node.apache_hadoop.yarn.user}", "#{node.apache_hadoop.mr.user}"]
+  members ["#{node.apache_hadoop.hdfs.user}", "#{node.apache_hadoop.yarn.user}", "#{node.apache_hadoop.mr.user}"]
   append true
 end
 
@@ -122,7 +122,7 @@ if node.apache_hadoop.native_libraries.eql? "true"
 
     remote_file cached_protobuf_filename do
       source protobuf_url
-      owner node.hdfs.user
+      owner node.apache_hadoop.hdfs.user
       group node.apache_hadoop.group
       mode "0775"
       action :create_if_missing
@@ -167,7 +167,7 @@ if node.apache_hadoop.native_libraries.eql? "true"
       home_dir "/usr/local/maven"
  #     checksum  "#{node.maven.checksum}"
       append_env_path true
-      owner "#{node.hdfs.user}"
+      owner "#{node.apache_hadoop.hdfs.user}"
     end
 #    bash 'install-maven' do
 #       user "root"
@@ -203,7 +203,7 @@ if node.apache_hadoop.native_libraries.eql? "true"
 end
 
 directory node.apache_hadoop.dir do
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode "0774"
   recursive true
@@ -212,7 +212,7 @@ directory node.apache_hadoop.dir do
 end
 
 directory node.apache_hadoop.data_dir do
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode "0774"
   recursive true
@@ -221,7 +221,7 @@ end
 
 
 directory node.apache_hadoop.dn.data_dir do
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode "0774"
   recursive true
@@ -229,7 +229,7 @@ directory node.apache_hadoop.dn.data_dir do
 end
 
 directory node.apache_hadoop.nn.name_dir do
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode "0774"
   recursive true
@@ -246,7 +246,7 @@ cached_package_filename = "#{Chef::Config.file_cache_path}/#{base_package_filena
 remote_file cached_package_filename do
   source primary_url
   retries 2
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode "0755"
   ignore_failure true
@@ -260,7 +260,7 @@ cached_package_filename = "#{Chef::Config.file_cache_path}/#{base_package_filena
 remote_file cached_package_filename do
   source secondary_url
   retries 2
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode "0755"
   # TODO - checksum
@@ -277,15 +277,15 @@ bash 'extract-hadoop' do
 	tar -zxf #{cached_package_filename} -C #{node.apache_hadoop.dir}
         ln -s #{node.apache_hadoop.dir}/#{node.apache_hadoop.version} #{node.apache_hadoop.base_dir}
         # chown -L : traverse symbolic links
-        chown -RL #{node.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.home}
-        chown -RL #{node.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.base_dir}
+        chown -RL #{node.apache_hadoop.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.home}
+        chown -RL #{node.apache_hadoop.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.base_dir}
         # remove the config files that we would otherwise overwrite
         rm -f #{node.apache_hadoop.home}/etc/hadoop/yarn-site.xml
         rm -f #{node.apache_hadoop.home}/etc/hadoop/core-site.xml
         rm -f #{node.apache_hadoop.home}/etc/hadoop/hdfs-site.xml
         rm -f #{node.apache_hadoop.home}/etc/hadoop/mapred-site.xml
         touch #{hin}
-        chown -RL #{node.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.home}
+        chown -RL #{node.apache_hadoop.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.home}
 	EOH
   not_if { ::File.exist?("#{hin}") }
 end
@@ -299,7 +299,7 @@ if node.apache_hadoop.native_libraries == "true"
 
   remote_file cached_hadoop_src_filename do
     source hadoop_src_url
-    owner node.hdfs.user
+    owner node.apache_hadoop.hdfs.user
     group node.apache_hadoop.group
     mode "0755"
     action :create_if_missing
@@ -309,7 +309,7 @@ if node.apache_hadoop.native_libraries == "true"
   natives="#{node.apache_hadoop.dir}/.downloaded_#{hadoop_src_name}"
 
   bash 'build-hadoop-from-src-with-native-libraries' do
-    user node.hdfs.user
+    user node.apache_hadoop.hdfs.user
     code <<-EOH
         set -e
         cd /tmp
@@ -317,7 +317,7 @@ if node.apache_hadoop.native_libraries == "true"
         cd #{hadoop_src_name}
         mvn package -Pdist,native -DskipTests -Dtar
         cp -r hadoop-dist/target/hadoop-#{node.apache_hadoop.version}/lib/native/* #{node.apache_hadoop.home}/lib/native/
-        chown -R #{node.hdfs.user} #{node.apache_hadoop.home}/lib/native/
+        chown -R #{node.apache_hadoop.hdfs.user} #{node.apache_hadoop.home}/lib/native/
         touch #{natives}
 	EOH
     not_if { ::File.exist?("#{natives}") }
@@ -326,14 +326,14 @@ if node.apache_hadoop.native_libraries == "true"
 end
 
  directory node.apache_hadoop.logs_dir do
-   owner node.hdfs.user
+   owner node.apache_hadoop.hdfs.user
    group node.apache_hadoop.group
    mode "0775"
    action :create
  end
 
  directory node.apache_hadoop.tmp_dir do
-   owner node.hdfs.user
+   owner node.apache_hadoop.hdfs.user
    group node.apache_hadoop.group
    mode "1777"
    action :create
@@ -384,7 +384,7 @@ if node.apache_hadoop.cgroups.eql? "true"
 end
 
  directory "#{node.apache_hadoop.home}/journal" do
-   owner node.hdfs.user
+   owner node.apache_hadoop.hdfs.user
    group node.apache_hadoop.group
    mode "0775"
    action :create

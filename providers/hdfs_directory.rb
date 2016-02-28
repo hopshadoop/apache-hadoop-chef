@@ -47,7 +47,7 @@ action :put_as_superuser do
   Chef::Log.info "Putting file(s) from directory #{@new_resource.name} into hdfs directory #{@new_resource.dest}"
 
   bash "hdfs-put-dir-#{new_resource.name}" do
-    user node.hdfs.user
+    user node.apache_hadoop.hdfs.user
     group node.apache_hadoop.group
     code <<-EOF
      . #{node.apache_hadoop.home}/sbin/set-env.sh
@@ -74,7 +74,7 @@ action :create_as_superuser do
   end
 
   bash "mk-dir-#{new_resource.name}" do
-    user node.hdfs.user
+    user node.apache_hadoop.hdfs.user
     group node.apache_hadoop.group
     code <<-EOF
      . #{node.apache_hadoop.home}/sbin/set-env.sh

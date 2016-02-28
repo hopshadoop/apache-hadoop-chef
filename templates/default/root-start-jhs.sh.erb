@@ -15,7 +15,7 @@ echo "Starting $command on ..."
 $EXEC_WITH_USER "cd ${bin}/..; . ${bin}/../libexec/hadoop-config.sh ; . ${bin}/set-env.sh ; $MRJH --config \$HADOOP_CONF_DIR start $command"
 
 sleep 2
-head <%= node.apache_hadoop.logs_dir %>/mapred-<%= node.apache_hadoop.yarn.user %>-historyserver-<%= node['hostname' %>.log
+head <%= node.apache_hadoop.logs_dir %>/mapred-<%= node.apache_hadoop.yarn.user %>-historyserver-<%= node.hostname %>.log
 PID_FILE=/tmp/mapred-<%= node.apache_hadoop.yarn.user %>-$command.pid
 PID=`cat $PID_FILE` 
 kill -0 $PID 

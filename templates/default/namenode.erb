@@ -4,9 +4,8 @@
 #
 ### BEGIN INIT INFO
 # Provides:                     namenode-*
-# Required-Start:                 
-# Should-Start:                 
-# Required-Stop:                  
+# Required-Start:               $all
+# Required-Stop:                $all
 # Default-Start:                2 3 4 5
 # Default-Stop:                 0 1 6
 # Short-Description:            start and stop namenode-*
@@ -40,7 +39,7 @@ restart() {
 }
 
 status() {
-  PID_FILE=<%= "#{node.apache_hadoop.logs_dir." %>/hadoop-<%= "#{node.hdfs.user." %>-namenode.pid
+  PID_FILE=<%= "#{node.apache_hadoop.logs_dir}" %>/hadoop-<%= "#{node.apache_hadoop.hdfs.user}" %>-namenode.pid
   if [ -f $PID_FILE .; then
      PID=`cat $PID_FILE`
      kill -0 $PID

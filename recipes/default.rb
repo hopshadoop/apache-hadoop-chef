@@ -23,7 +23,7 @@ end
 
 template "#{node.apache_hadoop.home}/etc/hadoop/core-site.xml" do 
   source "core-site.xml.erb"
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode "755"
   variables({
@@ -54,7 +54,7 @@ template "#{node.apache_hadoop.home}/etc/hadoop/hdfs-site.xml" do
      when false
   source "hdfs-site.xml.erb"
      end
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode "755"
   variables({
@@ -73,7 +73,7 @@ end
 
 template "#{node.apache_hadoop.home}/etc/hadoop/hadoop-env.sh" do
   source "hadoop-env.sh.erb"
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode "755"
 end
@@ -81,7 +81,7 @@ end
 
 template "#{node.apache_hadoop.home}/etc/hadoop/jmxremote.password" do 
   source "jmxremote.password.erb"
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode "600"
 end
@@ -96,14 +96,14 @@ end
 
 template "#{node.apache_hadoop.home}/sbin/kill-process.sh" do 
   source "kill-process.sh.erb"
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode "754"
 end
 
 template "#{node.apache_hadoop.home}/sbin/set-env.sh" do 
   source "set-env.sh.erb"
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode "774"
 end
@@ -121,7 +121,7 @@ if node.apache_hadoop.install_protobuf == "true"
 
   remote_file proto_filename do
     source proto_url
-    owner node.hdfs.user
+    owner node.apache_hadoop.hdfs.user
     group node.apache_hadoop.group
     mode "0755"
     # TODO - checksum
@@ -129,7 +129,7 @@ if node.apache_hadoop.install_protobuf == "true"
   end
 
   bash "install_protobuf_2_5" do
-    user node.hdfs.user
+    user node.apache_hadoop.hdfs.user
     code <<-EOF
     apt-get -y remove protobuf-compiler
     tar -xzf #{proto_filename} -C #{Chef::Config.file_cache_path}
@@ -145,15 +145,15 @@ end
 
 
 if "#{node.apache_hadoop.user_envs}".eql? "true"
-  hadoop_user_envs node.hdfs.user do
+  apache_hadoop_user_envs node.apache_hadoop.hdfs.user do
     action :update
   end
 
-  hadoop_user_envs node.apache_hadoop.yarn.user do
+  apache_hadoop_user_envs node.apache_hadoop.yarn.user do
     action :update
   end
 
-  hadoop_user_envs node.apache_hadoop.mr.user do
+  apache_hadoop_user_envs node.apache_hadoop.mr.user do
     action :update
   end
 end
@@ -168,7 +168,7 @@ end
 
 
 directory "#{node.apache_hadoop.home}/journal" do
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode "0755"
   recursive true
@@ -177,7 +177,7 @@ end
 
 template "/conf/container-executor.cfg" do
   source "container-executor.cfg.erb"
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode "755"
 end
@@ -196,7 +196,7 @@ unless node.apache_hadoop.yarn.key?('yarn.nodemanager.resource.memory_mb')
   else
     pct = 0.50
   end
-  node.apache_hadoop.yarn.nm.memory_mbs = (mem * pct).to_i
+  node.override.apache_hadoop.yarn.nm.memory_mbs = (mem * pct).to_i
 end
 
 rm_dest_ip = rm_private_ip

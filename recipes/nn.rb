@@ -12,7 +12,7 @@ public_ip = my_public_ip()
 for script in node.apache_hadoop.nn.scripts
   template "#{node.apache_hadoop.home}/sbin/#{script}" do
     source "#{script}.erb"
-    owner node.hdfs.user
+    owner node.apache_hadoop.hdfs.user
     group node.apache_hadoop.group
     mode 0775
   end
@@ -30,7 +30,7 @@ end
 if ::File.exist?("#{node.apache_hadoop.home}/.nn_formatted") === false || "#{node.apache_hadoop.reformat}" === "true"
   if activeNN == true
     sleep 10
-    hadoop_start "format-nn" do
+    apache_hadoop_start "format-nn" do
       action :format_nn
       ha_enabled ha_enabled
     end
@@ -47,26 +47,26 @@ if ha_enabled == true
 
   template "#{node.apache_hadoop.home}/sbin/start-zkfc.sh" do
     source "start-zkfc.sh.erb"
-    owner node.hdfs.user
+    owner node.apache_hadoop.hdfs.user
     group node.apache_hadoop.group
     mode 0754
   end
 
   template "#{node.apache_hadoop.home}/sbin/start-standby-nn.sh" do
     source "start-standby-nn.sh.erb"
-    owner node.hdfs.user
+    owner node.apache_hadoop.hdfs.user
     group node.apache_hadoop.group
     mode 0754
   end
 
 
-  hadoop_start "zookeeper-format" do
+  apache_hadoop_start "zookeeper-format" do
     action :zkfc
     ha_enabled ha_enabled
   end
 
   if activeNN == false
-    hadoop_start "standby-nn" do
+    apache_hadoop_start "standby-nn" do
       action :standby
       ha_enabled ha_enabled
     end
@@ -89,7 +89,7 @@ end
 template "/etc/init.d/#{service_name}" do
   not_if { node.apache_hadoop.systemd == "true" }
   source "#{service_name}.erb"
-  owner node.hdfs.user
+  owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
   mode 0754
   notifies :enable, resources(:service => "#{service_name}")
@@ -123,8 +123,8 @@ if node.kagent.enabled == "true"
     stop_script "#{node.apache_hadoop.home}/sbin/stop-nn.sh"
     init_script "#{node.apache_hadoop.home}/sbin/format-nn.sh"
     config_file "#{node.apache_hadoop.conf_dir}/core-site.xml"
-    log_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.hdfs.user}-#{service_name}-#{node.hostname}.log"
-    pid_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.hdfs.user}-#{service_name}.pid"
+    log_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.log"
+    pid_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}.pid"
     web_port node.apache_hadoop.nn.http_port
   end
 end

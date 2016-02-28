@@ -16,7 +16,7 @@ end
 action :format_nn do
   if  "#{new_resource.ha_enabled}".eql? "true"
     bash 'format-nn-ha' do
-      user node.hdfs.user
+      user node.apache_hadoop.hdfs.user
       code <<-EOH
         set -e
         #{node.apache_hadoop.home}/bin/hdfs zkfc -formatZK -force
@@ -24,7 +24,7 @@ action :format_nn do
     end
   end
     bash 'format-nn' do
-      user node.hdfs.user
+      user node.apache_hadoop.hdfs.user
       code <<-EOH
         set -e
         #{node.apache_hadoop.home}/sbin/format-nn.sh
@@ -37,7 +37,7 @@ end
 action :zkfc do
   if  "#{new_resource.ha_enabled}".eql? "true"
     bash 'zookeeper-format' do
-      user node.hdfs.user
+      user node.apache_hadoop.hdfs.user
       code <<-EOH
         set -e
         #{node.apache_hadoop.home}/bin/hdfs zkfc -formatZK -force
@@ -49,7 +49,7 @@ end
 action :standby do
   if  "#{new_resource.ha_enabled}".eql? "true"
     bash 'standby' do
-      user node.hdfs.user
+      user node.apache_hadoop.hdfs.user
       code <<-EOH
         set -e
         #{node.apache_hadoop.home}/sbin/start-standby-nn.sh
@@ -61,7 +61,7 @@ end
 action :jn do
 
 bash "start_journal_node" do
- user node.hdfs.user
+ user node.apache_hadoop.hdfs.user
  code <<-EOF
     cd #{node.apache_hadoop.sbin_dir}
     . ./set-env.sh

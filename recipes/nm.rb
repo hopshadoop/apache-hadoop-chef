@@ -57,7 +57,7 @@ template systemd_script do
     group "root"
     mode 0754
     notifies :enable, resources(:service => service_name)
-    notifies :restart, resources(:service => service_name), :immediately
+    notifies :start, resources(:service => service_name), :immediately
 end
 
 

@@ -40,7 +40,7 @@ restart() {
 }
 
 status() {
-  PID_FILE=<%= "#{node.apache_hadoop.logs_dir." %>/yarn-<%= "#{node.apache_hadoop.yarn.user." %>-proxyserver.pid
+  PID_FILE=<%= "#{node.apache_hadoop.logs_dir}" %>/yarn-<%= "#{node.apache_hadoop.yarn.user}" %>-proxyserver.pid
   if [ -f $PID_FILE .; then
      PID=`cat $PID_FILE`
      kill -0 $PID
