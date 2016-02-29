@@ -22,7 +22,6 @@ depends 'kagent'
 depends 'java'
 depends 'ulimit'
 depends 'sysctl'
-
 depends 'cmake'
 
 %w{ ubuntu debian rhel centos }.each do |os|

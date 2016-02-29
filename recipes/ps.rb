@@ -17,7 +17,7 @@ end
 # end
 
 service service_name do
-  case node.apache_hadoop.use_systemd
+  case node.apache_hadoop.systemd
     when "true"
     provider Chef::Provider::Service::Systemd
   end
@@ -42,7 +42,7 @@ systemd_script = "/usr/lib/systemd/system/#{service_name}.service"
 end
 
 template systemd_script do
-    only_if { node.apache_hadoop.use_systemd == "true" }
+    only_if { node.apache_hadoop.systemd == "true" }
     source "#{service_name}.service.erb"
     owner "root"
     group "root"

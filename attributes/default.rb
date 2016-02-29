@@ -138,4 +138,4 @@ default.apache_hadoop.logging_level            = "WARN"
 default.apache_hadoop.nn.direct_memory_size    = 50
 default.apache_hadoop.ha_enabled               = "false"
 
-default.apache_hadoop.systemd                  = "false"
+default.apache_hadoop.systemd                  = "true"

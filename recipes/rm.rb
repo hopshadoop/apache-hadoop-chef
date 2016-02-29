@@ -1,11 +1,4 @@
-
-case node.platform
-when "ubuntu"
- if node.platform_version.to_f <= 14.04
-   node.override.hadoop.systemd = "false"
- end
-end
-
+include_recipe "apache_hadoop::yarn"
 
 yarn_service="rm"
 service_name="resourcemanager"

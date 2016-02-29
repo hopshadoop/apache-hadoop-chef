@@ -1,12 +1,5 @@
 include_recipe "apache_hadoop::yarn"
 
-case node.platform
-when "ubuntu"
- if node.platform_version.to_f <= 14.04
-   node.override.hadoop.systemd = "false"
- end
-end
-
 
 yarn_service="nm"
 service_name="nodemanager"

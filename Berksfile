@@ -1,8 +1,9 @@
 Encoding.default_external = "UTF-8"
 source 'https://supermarket.chef.io'
+
 metadata
 
-cookbook 'kagent', '~> 0.1.0'
+cookbook 'kagent', '~> 0.1.1'
 cookbook 'java', '~> 1.39.0'
 cookbook 'ulimit', '~> 0.3.3'
 cookbook 'sysctl', '~> 0.7.0'
