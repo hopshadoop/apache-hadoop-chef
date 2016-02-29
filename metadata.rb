@@ -1,4 +1,4 @@
-name             'apache_hadoop'
+name             "apache_hadoop"
 maintainer       "Jim Dowling"
 maintainer_email "jdowling@kth.se"
 license          "GPL 2.0"
