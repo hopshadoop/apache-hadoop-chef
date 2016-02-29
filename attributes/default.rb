@@ -1,7 +1,7 @@
 include_attribute "kagent"
 
 default.apache_hadoop.version                  = "2.4.0"
-default.hdfs.user                              = "hdfs"
+default.apache_hadoop.hdfs.user                = "hdfs"
 default.apache_hadoop.group                    = "hadoop"
 default.apache_hadoop.dir                      = "/srv"
 default.apache_hadoop.base_dir                 = "#{node.apache_hadoop.dir}/hadoop"
@@ -15,13 +15,14 @@ default.apache_hadoop.data_dir                 = "/var/data/hadoop"
 default.apache_hadoop.dn.data_dir              = "#{node.apache_hadoop.data_dir}/hdfs/dn"
 default.apache_hadoop.nn.name_dir              = "#{node.apache_hadoop.data_dir}/hdfs/nn"
 
-default.hdfs.user_home                         = "/user"
-default.hdfs.active_nn                         = true
+default.apache_hadoop.hdfs.user_home           = "/user"
+default.apache_hadoop.hdfs.active_nn           = true
 
 
 default.apache_hadoop.download_url.primary     = "#{download_url}/hadoop-#{node.apache_hadoop.version}.tar.gz"
 default.apache_hadoop.download_url.secondary   = "https://archive.apache.org/dist/hadoop/core/hadoop-#{node.apache_hadoop.version}/hadoop-#{node.apache_hadoop.version}.tar.gz"
 
+default.apache_hadoop.install_protobuf         = "false"
 default.apache_hadoop.protobuf_url             = "https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz"
 default.apache_hadoop.hadoop_src_url           = "https://archive.apache.org/dist/hadoop/core/hadoop-#{node.apache_hadoop.version}/hadoop-#{node.apache_hadoop.version}-src.tar.gz"
 default.apache_hadoop.nn.http_port             = 50070
@@ -124,7 +125,7 @@ default.maven.version                          = "3.2.5"
 default.maven.checksum                         = ""
 
 
-default.apache_hadoop.yarn.yarn.nodemanager.resource.memory-mb                     = ""
+default.apache_hadoop.yarn.yarn.nodemanager.resource.memory_mb                     = ""
 default.apache_hadoop.yarn.memory_percent                                          = "75"
 
 default.apache_hadoop.limits.nofile            = '32768'

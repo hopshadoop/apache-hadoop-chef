@@ -15,8 +15,8 @@
 
 # Variables
 
-START_PROG="<%= node[:hadoop][:home] %>/sbin/root-start-nm.sh"  
-STOP_PROG="<%= node[:hadoop][:home] %>/sbin/stop-nm.sh"  
+START_PROG="<%= node.apache_hadoop.home %>/sbin/root-start-nm.sh"  
+STOP_PROG="<%= node.apache_hadoop.home %>/sbin/stop-nm.sh"  
 
 RETVAL=0
 
@@ -39,7 +39,7 @@ restart() {
 }
 
 status() {
-  PID_FILE=<%= "#{node[:hadoop][:logs_dir]}" %>/yarn-<%= "#{node[:hadoop][:yarn][:user]}" %>-nodemanager.pid
+  PID_FILE=<%= "#{node.apache_hadoop.logs_dir}" %>/yarn-<%= "#{node.apache_hadoop.yarn.user}" %>-nodemanager.pid
   if [ -f $PID_FILE ] ; then
      PID=`cat $PID_FILE`
      kill -0 $PID

@@ -1,27 +1,20 @@
 include_recipe "apache_hadoop::yarn"
 
 
-case node.platform
-when "ubuntu"
- if node.platform_version.to_f <= 14.04
-   node.override.hadoop.systemd = "false"
- end
-end
-
 yarn_service="jhs"
 service_name="historyserver"
 
-for script in node.hadoop.yarn.scripts
-  template "#{node.hadoop.home}/sbin/#{script}-#{yarn_service}.sh" do
+for script in node.apache_hadoop.yarn.scripts
+  template "#{node.apache_hadoop.home}/sbin/#{script}-#{yarn_service}.sh" do
     source "#{script}-#{yarn_service}.sh.erb"
-    owner node.hadoop.yarn.user
-    group node.hadoop.group
+    owner node.apache_hadoop.yarn.user
+    group node.apache_hadoop.group
     mode 0775
   end
 end 
 
 service service_name do
-case node.hadoop.systemd
+case node.apache_hadoop.systemd
   when "true"
   provider Chef::Provider::Service::Systemd
   else
@@ -32,36 +25,37 @@ end
 end
 
 
-tmp_dirs   = ["/mr-history", node.hadoop.jhs.inter_dir, node.hadoop.jhs.done_dir, "/tmp", node.apache_hadoop.hdfs.user_home]
+tmp_dirs   = ["/mr-history", node.apache_hadoop.jhs.inter_dir, node.apache_hadoop.jhs.done_dir, "/tmp", node.apache_hadoop.hdfs.user_home]
 
  for d in tmp_dirs
    Chef::Log.info "Creating hdfs directory: #{d}"
-   hadoop_hdfs_directory d do
+   apache_hadoop_hdfs_directory d do
     action :create_as_superuser
     owner node.apache_hadoop.hdfs.user
-    group node.hadoop.group
+    group node.apache_hadoop.group
     mode "1777"
-    not_if ". #{node.hadoop.home}/sbin/set-env.sh && #{node.hadoop.home}/bin/hdfs dfs -test -d #{d}"
+    not_if ". #{node.apache_hadoop.home}/sbin/set-env.sh && #{node.apache_hadoop.home}/bin/hdfs dfs -test -d #{d}"
    end
  end
 
-node.normal.mr.dirs = [node.hadoop.mr.staging_dir, node.hadoop.mr.tmp_dir, node.apache_hadoop.hdfs.user_home + "/" + node.hadoop.mr.user]
+node.normal.mr.dirs = [node.apache_hadoop.mr.staging_dir, node.apache_hadoop.mr.tmp_dir, node.apache_hadoop.hdfs.user_home + "/" + node.apache_hadoop.mr.user]
  for d in node.mr.dirs
    Chef::Log.info "Creating hdfs directory: #{d}"
-   hadoop_hdfs_directory d do
+   apache_hadoop_hdfs_directory d do
     action :create_as_superuser
-    owner node.hadoop.mr.user
-    group node.hadoop.group
+    owner node.apache_hadoop.mr.user
+    group node.apache_hadoop.group
     mode "0775"
-    not_if ". #{node.hadoop.home}/sbin/set-env.sh && #{node.hadoop.home}/bin/hdfs dfs -test -d #{d}"
+    not_if ". #{node.apache_hadoop.home}/sbin/set-env.sh && #{node.apache_hadoop.home}/bin/hdfs dfs -test -d #{d}"
    end
  end
 
 template "/etc/init.d/#{service_name}" do
-  not_if { node.hadoop.systemd == "true" }
+  not_if { node.apache_hadoop.systemd == "true" }
   source "#{service_name}.erb"
   owner node.apache_hadoop.hdfs.user
-  group node.hadoop.group
+  owner node.apache_hadoop.hdfs.user
+  group node.apache_hadoop.group
   mode 0754
   notifies :enable, resources(:service => service_name)
   notifies :restart, resources(:service => service_name), :immediately
@@ -75,7 +69,7 @@ systemd_script = "/usr/lib/systemd/system/#{service_name}.service"
 end
 
 template systemd_script do
-    only_if { node.hadoop.systemd == "true" }
+    only_if { node.apache_hadoop.systemd == "true" }
     source "#{service_name}.service.erb"
     owner "root"
     group "root"
@@ -88,12 +82,12 @@ end
 if node.kagent.enabled == "true" 
   kagent_config service_name do
     service "MAP_REDUCE"
-    start_script "#{node.hadoop.home}/sbin/root-start-#{yarn_service}.sh"
-    stop_script "#{node.hadoop.home}/sbin/stop-#{yarn_service}.sh"
-    log_file "#{node.hadoop.logs_dir}/yarn-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.log"
+    start_script "#{node.apache_hadoop.home}/sbin/root-start-#{yarn_service}.sh"
+    stop_script "#{node.apache_hadoop.home}/sbin/stop-#{yarn_service}.sh"
+    log_file "#{node.apache_hadoop.logs_dir}/yarn-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.log"
     pid_file "/tmp/mapred-#{node.apache_hadoop.hdfs.user}-#{service_name}.pid"
-    config_file "#{node.hadoop.conf_dir}/mapred-site.xml"
-    web_port node.hadoop["#{yarn_service}"][:http_port]
+    config_file "#{node.apache_hadoop.conf_dir}/mapred-site.xml"
+    web_port node.apache_hadoop["#{yarn_service}"][:http_port]
   end
 end
 

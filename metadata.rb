@@ -4,7 +4,7 @@ maintainer_email "jdowling@kth.se"
 license          "GPL 2.0"
 description      'Installs/Configures the Apache Hadoop distribution'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "1.0"
+version          "0.1.0"
 
 #link:<a target='_blank' href='http://%host%:50070/'>Launch the WebUI for the NameNode</a>
 recipe            "apache_hadoop::nn", "Installs a Hadoop NameNode"
@@ -22,7 +22,6 @@ depends 'kagent'
 depends 'java'
 depends 'ulimit'
 depends 'sysctl'
-
 depends 'cmake'
 
 %w{ ubuntu debian rhel centos }.each do |os|
@@ -66,7 +65,7 @@ attribute "apache_hadoop/mr/user",
 :description => "Username to run mapReduce as",
 :type => 'string'
 
-attribute "hdfs/user",
+attribute "apache_hadoop/hdfs/user",
 :display_name => "Username to run hdfs as",
 :description => "Username to run hdfs as",
 :type => 'string'

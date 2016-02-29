@@ -11,6 +11,6 @@ command=namenode
 pidDir=$HADOOP_PID_DIR
 service=hadoop
 
-<%= node[:hadoop][:home] %>/sbin/kill-process.sh $service <%= node[:hdfs][:user] %> $command $pidDir
+<%= node.apache_hadoop.home %>/sbin/kill-process.sh $service <%= node.apache_hadoop.hdfs.user %> $command $pidDir
 
 exit $?

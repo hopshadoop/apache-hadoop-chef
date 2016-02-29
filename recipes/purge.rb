@@ -24,18 +24,18 @@ EOF
   end
 }
 
-directory "#{node.hadoop.dir}/hadoop-#{node.hadoop.version}" do
+directory "#{node.apache_hadoop.dir}/hadoop-#{node.apache_hadoop.version}" do
   recursive true
   action :delete
   ignore_failure true
 end
 
-link node.hadoop.home do
+link node.apache_hadoop.home do
   action :delete
   ignore_failure true
 end
 
-directory node.hadoop.data_dir do
+directory node.apache_hadoop.data_dir do
   recursive true
   action :delete
   ignore_failure true

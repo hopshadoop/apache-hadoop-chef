@@ -4,3 +4,9 @@
 # use the private_ips
 
 
+case node.platform
+when "ubuntu"
+ if node.platform_version.to_f <= 14.04
+   node.override.apache_hadoop.systemd = "false"
+ end
+end
