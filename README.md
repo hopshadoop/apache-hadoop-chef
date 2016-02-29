@@ -1,7 +1,6 @@
 # Apache Hadoop cookbook
 
 [![Apache License 2.0](http://img.shields.io/badge/license-apache%202.0-green.svg)](http://opensource.org/licenses/Apache-2.0)
-        - nde::memcached
 
 # Requirements
 
