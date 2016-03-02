@@ -24,31 +24,31 @@ EOF
   end
 }
 
-directory "#{node[:hadoop][:dir]}/hadoop-#{node[:hadoop][:version]}" do
+directory "#{node.apache_hadoop.dir}/hadoop-#{node.apache_hadoop.version}" do
   recursive true
   action :delete
   ignore_failure true
 end
 
-link node[:hadoop][:home] do
+link node.apache_hadoop.home do
   action :delete
   ignore_failure true
 end
 
-directory node[:hadoop][:data_dir] do
+directory node.apache_hadoop.data_dir do
   recursive true
   action :delete
   ignore_failure true
 end
 
-directory Chef::Config[:file_cache_path] do
+directory Chef::Config.file_cache_path do
   recursive true
   action :delete
   ignore_failure true
 end
 
 package "Bouncy Castle Remove" do
-  case node[:platform]
+  case node.platform
   when 'redhat', 'centos'
     package_name 'bouncycastle'
   when 'ubuntu', 'debian'

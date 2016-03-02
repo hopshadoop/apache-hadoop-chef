@@ -1,38 +1,36 @@
-libpath = File.expand_path '../../../kagent/libraries', __FILE__
-require File.join(libpath, 'inifile')
 
 case node.platform
 when "ubuntu"
  if node.platform_version.to_f <= 14.04
-   node.override.hadoop.systemd = "false"
+   node.override.apache_hadoop.systemd = "false"
  end
 end
 
 private_ip = my_private_ip()
 public_ip = my_public_ip()
 
-for script in node[:hadoop][:nn][:scripts]
-  template "#{node[:hadoop][:home]}/sbin/#{script}" do
+for script in node.apache_hadoop.nn.scripts
+  template "#{node.apache_hadoop.home}/sbin/#{script}" do
     source "#{script}.erb"
-    owner node[:hdfs][:user]
-    group node[:hadoop][:group]
+    owner node.apache_hadoop.hdfs.user
+    group node.apache_hadoop.group
     mode 0775
   end
 end 
 
 activeNN = true
 ha_enabled = false
-if node[:hadoop][:ha_enabled].eql? "true" || node[:hadoop][:ha_enabled] == true
+if node.apache_hadoop.ha_enabled.eql? "true" || node.apache_hadoop.ha_enabled == true
   ha_enabled = true
 end
 
 # it is ok if all namenodes format the fs. Unless you add a new one later..
 # if the nn has already been formatted, re-formatting it returns error
 # TODO: test if the NameNode is running
-if ::File.exist?("#{node[:hadoop][:home]}/.nn_formatted") === false || "#{node[:hadoop][:reformat]}" === "true"
+if ::File.exist?("#{node.apache_hadoop.home}/.nn_formatted") === false || "#{node.apache_hadoop.reformat}" === "true"
   if activeNN == true
     sleep 10
-    hadoop_start "format-nn" do
+    apache_hadoop_start "format-nn" do
       action :format_nn
       ha_enabled ha_enabled
     end
@@ -42,33 +40,33 @@ if ::File.exist?("#{node[:hadoop][:home]}/.nn_formatted") === false || "#{node[:
     sleep 100
   end
 else 
-  Chef::Log.info "Not formatting the NameNode. Remove this directory before formatting: (sudo rm -rf #{node[:hadoop][:nn][:name_dir]}/current) and set node[:hadoop][:reformat] to true"
+  Chef::Log.info "Not formatting the NameNode. Remove this directory before formatting: (sudo rm -rf #{node.apache_hadoop.nn.name_dir}/current) and set node.apache_hadoop.reformat to true"
 end
 
 if ha_enabled == true
 
-  template "#{node[:hadoop][:home]}/sbin/start-zkfc.sh" do
+  template "#{node.apache_hadoop.home}/sbin/start-zkfc.sh" do
     source "start-zkfc.sh.erb"
-    owner node[:hdfs][:user]
-    group node[:hadoop][:group]
+    owner node.apache_hadoop.hdfs.user
+    group node.apache_hadoop.group
     mode 0754
   end
 
-  template "#{node[:hadoop][:home]}/sbin/start-standby-nn.sh" do
+  template "#{node.apache_hadoop.home}/sbin/start-standby-nn.sh" do
     source "start-standby-nn.sh.erb"
-    owner node[:hdfs][:user]
-    group node[:hadoop][:group]
+    owner node.apache_hadoop.hdfs.user
+    group node.apache_hadoop.group
     mode 0754
   end
 
 
-  hadoop_start "zookeeper-format" do
+  apache_hadoop_start "zookeeper-format" do
     action :zkfc
     ha_enabled ha_enabled
   end
 
   if activeNN == false
-    hadoop_start "standby-nn" do
+    apache_hadoop_start "standby-nn" do
       action :standby
       ha_enabled ha_enabled
     end
@@ -78,7 +76,7 @@ end
 service_name="namenode"
 
 service "#{service_name}" do
-case node.hadoop.systemd
+case node.apache_hadoop.systemd
   when "true"
   provider Chef::Provider::Service::Systemd
   else
@@ -89,16 +87,16 @@ end
 end
 
 template "/etc/init.d/#{service_name}" do
-  not_if { node[:hadoop][:systemd] == "true" }
+  not_if { node.apache_hadoop.systemd == "true" }
   source "#{service_name}.erb"
-  owner node[:hdfs][:user]
-  group node[:hadoop][:group]
+  owner node.apache_hadoop.hdfs.user
+  group node.apache_hadoop.group
   mode 0754
   notifies :enable, resources(:service => "#{service_name}")
   notifies :restart, resources(:service => "#{service_name}"), :immediately
 end
 
-case node[:platform_family]
+case node.platform_family
   when "debian"
 systemd_script = "/lib/systemd/system/#{service_name}.service"
   when "rhel"
@@ -106,7 +104,7 @@ systemd_script = "/usr/lib/systemd/system/#{service_name}.service"
 end
 
 template systemd_script do
-    only_if { node[:hadoop][:systemd] == "true" }
+    only_if { node.apache_hadoop.systemd == "true" }
     source "#{service_name}.service.erb"
     owner "root"
     group "root"
@@ -118,19 +116,16 @@ end
 
 
 
-if node[:kagent][:enabled] == "true" 
+if node.kagent.enabled == "true" 
   kagent_config "#{service_name}" do
     service "HDFS"
-    start_script "#{node[:hadoop][:home]}/sbin/root-start-nn.sh"
-    stop_script "#{node[:hadoop][:home]}/sbin/stop-nn.sh"
-    init_script "#{node[:hadoop][:home]}/sbin/format-nn.sh"
-    config_file "#{node[:hadoop][:conf_dir]}/core-site.xml"
-    log_file "#{node[:hadoop][:logs_dir]}/hadoop-#{node[:hdfs][:user]}-#{service_name}-#{node['hostname']}.log"
-    pid_file "#{node[:hadoop][:logs_dir]}/hadoop-#{node[:hdfs][:user]}-#{service_name}.pid"
-    web_port node[:hadoop][:nn][:http_port]
+    start_script "#{node.apache_hadoop.home}/sbin/root-start-nn.sh"
+    stop_script "#{node.apache_hadoop.home}/sbin/stop-nn.sh"
+    init_script "#{node.apache_hadoop.home}/sbin/format-nn.sh"
+    config_file "#{node.apache_hadoop.conf_dir}/core-site.xml"
+    log_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.log"
+    pid_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}.pid"
+    web_port node.apache_hadoop.nn.http_port
   end
 end
-
-# hadoop_start "#{service_name}" do
-# end
 

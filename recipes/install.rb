@@ -1,17 +1,17 @@
 
-if node[:hadoop][:os_defaults] == "true" then
+if node.apache_hadoop.os_defaults == "true" then
 # http://blog.cloudera.com/blog/2015/01/how-to-deploy-apache-hadoop-clusters-like-a-boss/
-  node.default['sysctl']['allow_sysctl_conf'] = true
-  node.default['sysctl']['params']['vm']['swappiness'] = 1
-  node.default['sysctl']['params']['vm']['overcommit_memory'] = 1
-  node.default['sysctl']['params']['vm']['overcommit_ratio'] = 100
-  node.default['sysctl']['params']['net']['core']['somaxconn']= 1024
+  node.default.sysctl.allow_sysctl_conf = true
+  node.default.sysctl.params.vm.swappiness = 1
+  node.default.sysctl.params.vm.overcommit_memory = 1
+  node.default.sysctl.params.vm.overcommit_ratio = 100
+  node.default.sysctl.params.net.core.somaxconn= 1024
   include_recipe 'sysctl::apply'
 
     #
     # http://www.slideshare.net/vgogate/hadoop-configuration-performance-tuning
     #
-    case node[:platform_family]
+    case node.platform_family
     when "debian"
       bash "configure_os" do
         user "root"
@@ -31,14 +31,14 @@ if node[:hadoop][:os_defaults] == "true" then
     # limits.d settings
     %w(hdfs mapred yarn).each do |u|
       ulimit_domain u do
-        node['hadoop']['limits'].each do |k, v|
+        node.apache_hadoop.limits.each do |k, v|
           rule do
             item k
             type '-'
             value v
           end
         end
-        only_if { node['hadoop'].key?('limits') && !node['hadoop']['limits'].empty? }
+        only_if { node.apache_hadoop.key?('limits') && !node.apache_hadoop.limits.empty? }
       end
     end # End limits.d
 
@@ -49,51 +49,51 @@ if node[:hadoop][:os_defaults] == "true" then
 
   end
 
-node.default['java']['jdk_version'] = 7
-node.default['java']['set_etc_environment'] = true
+node.default.java.jdk_version = 7
+node.default.java.set_etc_environment = true
 include_recipe "java"
 
 kagent_bouncycastle "jar" do
 end
  
-group node[:hadoop][:group] do
+group node.apache_hadoop.group do
   action :create
 end
 
-user node[:hdfs][:user] do
+user node.apache_hadoop.hdfs.user do
   supports :manage_home => true
   action :create
-  home "/home/#{node[:hdfs][:user]}"
+  home "/home/#{node.apache_hadoop.hdfs.user}"
   system true
   shell "/bin/bash"
-  not_if "getent passwd #{node[:hdfs]['user']}"
+  not_if "getent passwd #{node.apache_hadoop.hdfs.user}"
 end
 
-user node[:hadoop][:yarn][:user] do
+user node.apache_hadoop.yarn.user do
   supports :manage_home => true
-  home "/home/#{node[:hadoop][:yarn][:user]}"
-  action :create
-  system true
-  shell "/bin/bash"
-  not_if "getent passwd #{node[:hadoop][:yarn]['user']}"
-end
-
-user node[:hadoop][:mr][:user] do
-  supports :manage_home => true
-  home "/home/#{node[:hadoop][:mr][:user]}"
+  home "/home/#{node.apache_hadoop.yarn.user}"
   action :create
   system true
   shell "/bin/bash"
-  not_if "getent passwd #{node[:hadoop][:mr]['user']}"
+  not_if "getent passwd #{node.apache_hadoop.yarn.user}"
 end
 
-group node[:hadoop][:group] do
+user node.apache_hadoop.mr.user do
+  supports :manage_home => true
+  home "/home/#{node.apache_hadoop.mr.user}"
+  action :create
+  system true
+  shell "/bin/bash"
+  not_if "getent passwd #{node.apache_hadoop.mr.user}"
+end
+
+group node.apache_hadoop.group do
   action :modify
-  members ["#{node[:hdfs][:user]}", "#{node[:hadoop][:yarn][:user]}", "#{node[:hadoop][:mr][:user]}"]
+  members ["#{node.apache_hadoop.hdfs.user}", "#{node.apache_hadoop.yarn.user}", "#{node.apache_hadoop.mr.user}"]
   append true
 end
 
-case node[:platform_family]
+case node.platform_family
 when "debian"
   package "openssh-server" do
     action :install
@@ -108,7 +108,7 @@ when "rhel"
 
 end
 
-if node[:hadoop][:native_libraries].eql? "true" 
+if node.apache_hadoop.native_libraries.eql? "true" 
 
   # build hadoop native libraries: http://www.drweiwang.com/build-hadoop-native-libraries/
   # g++ autoconf automake libtool zlib1g-dev pkg-config libssl-dev cmake
@@ -116,20 +116,20 @@ if node[:hadoop][:native_libraries].eql? "true"
   include_recipe 'build-essential::default'
   include_recipe 'cmake::default'
 
-    protobuf_url = node[:hadoop][:protobuf_url]
+    protobuf_url = node.apache_hadoop.protobuf_url
     base_protobuf_filename = File.basename(protobuf_url)
-    cached_protobuf_filename = "#{Chef::Config[:file_cache_path]}/#{base_protobuf_filename}"
+    cached_protobuf_filename = "#{Chef::Config.file_cache_path}/#{base_protobuf_filename}"
 
     remote_file cached_protobuf_filename do
       source protobuf_url
-      owner node[:hdfs][:user]
-      group node[:hadoop][:group]
+      owner node.apache_hadoop.hdfs.user
+      group node.apache_hadoop.group
       mode "0775"
       action :create_if_missing
     end
 
   protobuf_lib_prefix = "/usr"
-  case node[:platform_family]
+  case node.platform_family
   when "debian"
     package "g++" do
       options "--force-yes"
@@ -161,13 +161,13 @@ if node[:hadoop][:native_libraries].eql? "true"
 
 # https://github.com/burtlo/ark
     ark "maven" do
-      url "http://apache.mirrors.spacedump.net/maven/maven-3/#{node[:maven][:version]}/binaries/apache-maven-#{node[:maven][:version]}-bin.tar.gz"
-      version "#{node[:maven][:version]}"
+      url "http://apache.mirrors.spacedump.net/maven/maven-3/#{node.maven.version}/binaries/apache-maven-#{node.maven.version}-bin.tar.gz"
+      version "#{node.maven.version}"
       path "/usr/local/maven/"
       home_dir "/usr/local/maven"
- #     checksum  "#{node[:maven][:checksum]}"
+ #     checksum  "#{node.maven.checksum}"
       append_env_path true
-      owner "#{node[:hdfs][:user]}"
+      owner "#{node.apache_hadoop.hdfs.user}"
     end
 #    bash 'install-maven' do
 #       user "root"
@@ -188,7 +188,7 @@ if node[:hadoop][:native_libraries].eql? "true"
       user "root"
       code <<-EOH
         set -e
-        cd #{Chef::Config[:file_cache_path]}
+        cd #{Chef::Config.file_cache_path}
 	tar -zxf #{cached_protobuf_filename} 
         cd #{protobuf_name_no_extension}
         ./configure --prefix=#{protobuf_lib_prefix}
@@ -202,52 +202,52 @@ if node[:hadoop][:native_libraries].eql? "true"
 
 end
 
-directory node[:hadoop][:dir] do
-  owner node[:hdfs][:user]
-  group node[:hadoop][:group]
+directory node.apache_hadoop.dir do
+  owner node.apache_hadoop.hdfs.user
+  group node.apache_hadoop.group
   mode "0774"
   recursive true
   action :create
-  not_if { File.directory?("#{node[:hadoop][:dir]}") }
+  not_if { File.directory?("#{node.apache_hadoop.dir}") }
 end
 
-directory node[:hadoop][:data_dir] do
-  owner node[:hdfs][:user]
-  group node[:hadoop][:group]
-  mode "0774"
-  recursive true
-  action :create
-end
-
-
-directory node[:hadoop][:dn][:data_dir] do
-  owner node[:hdfs][:user]
-  group node[:hadoop][:group]
+directory node.apache_hadoop.data_dir do
+  owner node.apache_hadoop.hdfs.user
+  group node.apache_hadoop.group
   mode "0774"
   recursive true
   action :create
 end
 
-directory node[:hadoop][:nn][:name_dir] do
-  owner node[:hdfs][:user]
-  group node[:hadoop][:group]
+
+directory node.apache_hadoop.dn.data_dir do
+  owner node.apache_hadoop.hdfs.user
+  group node.apache_hadoop.group
   mode "0774"
   recursive true
   action :create
 end
 
-primary_url = node[:hadoop][:download_url][:primary]
-secondary_url = node[:hadoop][:download_url][:secondary]
+directory node.apache_hadoop.nn.name_dir do
+  owner node.apache_hadoop.hdfs.user
+  group node.apache_hadoop.group
+  mode "0774"
+  recursive true
+  action :create
+end
+
+primary_url = node.apache_hadoop.download_url.primary
+secondary_url = node.apache_hadoop.download_url.secondary
 Chef::Log.info "Attempting to download hadoop binaries from #{primary_url} or, alternatively, #{secondary_url}"
 
 base_package_filename = File.basename(primary_url)
-cached_package_filename = "#{Chef::Config[:file_cache_path]}/#{base_package_filename}"
+cached_package_filename = "#{Chef::Config.file_cache_path}/#{base_package_filename}"
 
 remote_file cached_package_filename do
   source primary_url
   retries 2
-  owner node[:hdfs][:user]
-  group node[:hadoop][:group]
+  owner node.apache_hadoop.hdfs.user
+  group node.apache_hadoop.group
   mode "0755"
   ignore_failure true
   # TODO - checksum
@@ -255,69 +255,69 @@ remote_file cached_package_filename do
 end
 
 base_package_filename = File.basename(secondary_url)
-cached_package_filename = "#{Chef::Config[:file_cache_path]}/#{base_package_filename}"
+cached_package_filename = "#{Chef::Config.file_cache_path}/#{base_package_filename}"
 
 remote_file cached_package_filename do
   source secondary_url
   retries 2
-  owner node[:hdfs][:user]
-  group node[:hadoop][:group]
+  owner node.apache_hadoop.hdfs.user
+  group node.apache_hadoop.group
   mode "0755"
   # TODO - checksum
   action :create_if_missing
   not_if { ::File.exist?(cached_package_filename) }
 end
 
-hin = "#{node[:hadoop][:home]}/.#{base_package_filename}_downloaded"
+hin = "#{node.apache_hadoop.home}/.#{base_package_filename}_downloaded"
 base_name = File.basename(base_package_filename, ".tar.gz")
 # Extract and install hadoop
 bash 'extract-hadoop' do
   user "root"
   code <<-EOH
-	tar -zxf #{cached_package_filename} -C #{node[:hadoop][:dir]}
-        ln -s #{node[:hadoop][:dir]}/#{node.hadoop.version} #{node.hadoop.base_dir}
+	tar -zxf #{cached_package_filename} -C #{node.apache_hadoop.dir}
+        ln -s #{node.apache_hadoop.dir}/#{node.apache_hadoop.version} #{node.apache_hadoop.base_dir}
         # chown -L : traverse symbolic links
-        chown -RL #{node[:hdfs][:user]}:#{node[:hadoop][:group]} #{node[:hadoop][:home]}
-        chown -RL #{node[:hdfs][:user]}:#{node[:hadoop][:group]} #{node[:hadoop][:base_dir]}
+        chown -RL #{node.apache_hadoop.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.home}
+        chown -RL #{node.apache_hadoop.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.base_dir}
         # remove the config files that we would otherwise overwrite
-        rm -f #{node[:hadoop][:home]}/etc/hadoop/yarn-site.xml
-        rm -f #{node[:hadoop][:home]}/etc/hadoop/core-site.xml
-        rm -f #{node[:hadoop][:home]}/etc/hadoop/hdfs-site.xml
-        rm -f #{node[:hadoop][:home]}/etc/hadoop/mapred-site.xml
+        rm -f #{node.apache_hadoop.home}/etc/hadoop/yarn-site.xml
+        rm -f #{node.apache_hadoop.home}/etc/hadoop/core-site.xml
+        rm -f #{node.apache_hadoop.home}/etc/hadoop/hdfs-site.xml
+        rm -f #{node.apache_hadoop.home}/etc/hadoop/mapred-site.xml
         touch #{hin}
-        chown -RL #{node[:hdfs][:user]}:#{node[:hadoop][:group]} #{node[:hadoop][:home]}
+        chown -RL #{node.apache_hadoop.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.home}
 	EOH
   not_if { ::File.exist?("#{hin}") }
 end
 
 
-if node[:hadoop][:native_libraries] == "true" 
+if node.apache_hadoop.native_libraries == "true" 
 
-  hadoop_src_url = node[:hadoop][:hadoop_src_url]
+  hadoop_src_url = node.apache_hadoop.hadoop_src_url
   base_hadoop_src_filename = File.basename(hadoop_src_url)
   cached_hadoop_src_filename = "/tmp/#{base_hadoop_src_filename}"
 
   remote_file cached_hadoop_src_filename do
     source hadoop_src_url
-    owner node[:hdfs][:user]
-    group node[:hadoop][:group]
+    owner node.apache_hadoop.hdfs.user
+    group node.apache_hadoop.group
     mode "0755"
     action :create_if_missing
   end
 
   hadoop_src_name = File.basename(base_hadoop_src_filename, ".tar.gz")
-  natives="#{node[:hadoop][:dir]}/.downloaded_#{hadoop_src_name}"
+  natives="#{node.apache_hadoop.dir}/.downloaded_#{hadoop_src_name}"
 
   bash 'build-hadoop-from-src-with-native-libraries' do
-    user node[:hdfs][:user]
+    user node.apache_hadoop.hdfs.user
     code <<-EOH
         set -e
         cd /tmp
 	tar -xf #{cached_hadoop_src_filename} 
         cd #{hadoop_src_name}
         mvn package -Pdist,native -DskipTests -Dtar
-        cp -r hadoop-dist/target/hadoop-#{node[:hadoop][:version]}/lib/native/* #{node[:hadoop][:home]}/lib/native/
-        chown -R #{node[:hdfs][:user]} #{node[:hadoop][:home]}/lib/native/
+        cp -r hadoop-dist/target/hadoop-#{node.apache_hadoop.version}/lib/native/* #{node.apache_hadoop.home}/lib/native/
+        chown -R #{node.apache_hadoop.hdfs.user} #{node.apache_hadoop.home}/lib/native/
         touch #{natives}
 	EOH
     not_if { ::File.exist?("#{natives}") }
@@ -325,38 +325,38 @@ if node[:hadoop][:native_libraries] == "true"
 
 end
 
- directory node[:hadoop][:logs_dir] do
-   owner node[:hdfs][:user]
-   group node[:hadoop][:group]
+ directory node.apache_hadoop.logs_dir do
+   owner node.apache_hadoop.hdfs.user
+   group node.apache_hadoop.group
    mode "0775"
    action :create
  end
 
- directory node[:hadoop][:tmp_dir] do
-   owner node[:hdfs][:user]
-   group node[:hadoop][:group]
+ directory node.apache_hadoop.tmp_dir do
+   owner node.apache_hadoop.hdfs.user
+   group node.apache_hadoop.group
    mode "1777"
    action :create
  end
 
-link node[:hadoop][:base_dir] do
-  to node[:hadoop][:home]
+link node.apache_hadoop.base_dir do
+  to node.apache_hadoop.home
 end
 
-include_recipe "hadoop"
+include_recipe "apache_hadoop"
 
 
 bash 'update_permissions_etc_dir' do
   user "root"
   code <<-EOH
     set -e
-    chmod 775 #{node[:hadoop][:conf_dir]}
+    chmod 775 #{node.apache_hadoop.conf_dir}
   EOH
 end
 
-if node[:hadoop][:cgroups].eql? "true" 
+if node.apache_hadoop.cgroups.eql? "true" 
 
-  case node[:platform_family]
+  case node.platform_family
   when "debian"
     package "libcgroup-dev" do
     end
@@ -367,7 +367,7 @@ if node[:hadoop][:cgroups].eql? "true"
     package "libcgroup" do
     end
   end
-  cgroups_mounted= "#{Chef::Config[:file_cache_path]}/.cgroups_mounted"
+  cgroups_mounted= "#{Chef::Config.file_cache_path}/.cgroups_mounted"
   bash 'setup_mount_cgroups' do
     user "root"
     code <<-EOH
@@ -383,9 +383,9 @@ if node[:hadoop][:cgroups].eql? "true"
 
 end
 
- directory "#{node[:hadoop][:home]}/journal" do
-   owner node[:hdfs][:user]
-   group node[:hadoop][:group]
+ directory "#{node.apache_hadoop.home}/journal" do
+   owner node.apache_hadoop.hdfs.user
+   group node.apache_hadoop.group
    mode "0775"
    action :create
  end

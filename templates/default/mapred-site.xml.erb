@@ -84,18 +84,18 @@ http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/ClusterS
 
   <property>
      <name>mapreduce.jobhistory.intermediate-done-dir</name>
-     <value><%= node[:hadoop][:jhs][:inter_dir] %></value>
+     <value><%= node.apache_hadoop.jhs.inter_dir %></value>
   </property>
 
   <property>
      <name>mapreduce.jobhistory.done-dir</name>
-     <value><%= node[:hadoop][:jhs][:done_dir] %></value>
+     <value><%= node.apache_hadoop.jhs.done_dir %></value>
   </property>
 
 
   <property>
      <name>yarn.app.mapreduce.am.staging-dir</name>
-     <value><%= node[:hadoop][:mr][:staging_dir] %></value>
+     <value><%= node.apache_hadoop.mr.staging_dir %></value>
   </property>
 
 </configuration>

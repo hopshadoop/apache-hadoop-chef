@@ -1,15 +1,14 @@
 # Apache Hadoop cookbook
 
 [![Apache License 2.0](http://img.shields.io/badge/license-apache%202.0-green.svg)](http://opensource.org/licenses/Apache-2.0)
-        - nde::memcached
 
 # Requirements
 
 This cookbook has been tested on the following versions (but may work on earlier ones):
 
-* Chef 11.4.0+
-* CentOS 6.5+
-* Ubuntu 12.04+
+* Chef 12.3.0+
+* CentOS 7.0+
+* Ubuntu 14.04+
 
 
 ####Recipes
@@ -31,22 +30,22 @@ This cookbook is karamelized (www.karamel.io).  You can launch a Hadoop Cluster 
 name: eu-west-1
 
 cookbooks:                                                                      
-  hadoop: 
+  apache_hadoop: 
     github: "hopshadoop/apache-hadoop-chef"
-    branch: "master"
+    tag: "v0.1.0"
     
 groups: 
   namenodes:
     size: 1
     recipes: 
-        - hadoop::nn
-        - hadoop::rm
-        - hadoop::jhs                                                            
+        - apache_hadoop::nn
+        - apache_hadoop::rm
+        - apache_hadoop::jhs                                                            
   datanodes:
     size: 2
     recipes: 
-        - hadoop::dn
-        - hadoop::nm
+        - apache_hadoop::dn
+        - apache_hadoop::nm
 ```
 
 

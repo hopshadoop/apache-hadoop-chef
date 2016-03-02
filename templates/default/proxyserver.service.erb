@@ -3,12 +3,12 @@ Description = Hadoop YARN ProxyServer.
 After = syslog.target network.target remote-fs.target
 
 [Service]
-User = <%= node.hadoop.yarn.user %>
+User = <%= node.apache_hadoop.yarn.user %>
 
-PIDFile = /tmp/yarn-<%= node.hadoop.yarn.user %>-proxyserver.pid
-ExecStart = <%= node[:hadoop][:home] %>/sbin/start-ps.sh
-ExecStop = <%= node[:hadoop][:home] %>/sbin/stop-ps.sh
-ExecReload = <%= node[:hadoop][:home] %>/sbin/restart-ps.sh
+PIDFile = /tmp/yarn-<%= node.apache_hadoop.yarn.user %>-proxyserver.pid
+ExecStart = <%= node.apache_hadoop.home %>/sbin/start-ps.sh
+ExecStop = <%= node.apache_hadoop.home %>/sbin/stop-ps.sh
+ExecReload = <%= node.apache_hadoop.home %>/sbin/restart-ps.sh
 
 Type = forking
 
