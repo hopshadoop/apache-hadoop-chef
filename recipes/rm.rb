@@ -67,7 +67,7 @@ template "/etc/init.d/#{service_name}" do
   group node.apache_hadoop.group
   mode 0754
   notifies :enable, resources(:service => service_name)
-  notifies :restart, resources(:service => service_name), :immediately
+  notifies :restart, resources(:service => service_name)
 end
 
 
@@ -85,7 +85,7 @@ template systemd_script do
     group "root"
     mode 0754
     notifies :enable, "service[#{service_name}]"
-    notifies :restart, "service[#{service_name}]", :immediately
+    notifies :restart, "service[#{service_name}]"
 end
 
 
