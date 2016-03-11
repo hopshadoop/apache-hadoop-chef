@@ -40,11 +40,11 @@ default.apache_hadoop.reformat                 = "false"
 default.apache_hadoop.io_buffer_sz             = 131072
 default.apache_hadoop.container_cleanup_delay_sec  = 0
 
-default.apache_hadoop.nn.heap_size             = 1000
+default.apache_hadoop.nn.heap_size             = 500
 
 default.apache_hadoop.yarn.scripts             = %w{ start stop restart root-start }
 default.apache_hadoop.yarn.user                = "yarn"
-default.apache_hadoop.yarn.nm.memory_mbs       = 3584
+default.apache_hadoop.yarn.nm.memory_mbs       = 1600
 default.apache_hadoop.yarn.ps_port             = 20888
 
 default.apache_hadoop.yarn.vpmem_ratio         = 4.1
@@ -135,7 +135,7 @@ default.apache_hadoop.os_defaults              = "true"
 default.apache_hadoop.user_envs                = "true"
 
 default.apache_hadoop.logging_level            = "WARN"
-default.apache_hadoop.nn.direct_memory_size    = 50
+default.apache_hadoop.nn.direct_memory_size    = 100
 default.apache_hadoop.ha_enabled               = "false"
 
 default.apache_hadoop.systemd                  = "true"
