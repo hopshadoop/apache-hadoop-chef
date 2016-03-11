@@ -75,44 +75,52 @@ end
 
 service_name="namenode"
 
-service "#{service_name}" do
-case node.apache_hadoop.systemd
-  when "true"
-  provider Chef::Provider::Service::Systemd
-  else
-  provider Chef::Provider::Service::Init::Debian
-end
-  supports :restart => true, :stop => true, :start => true, :status => true
-  action :nothing 
-end
+if node.apache_hadoop.systemd == "true"
 
-template "/etc/init.d/#{service_name}" do
-  not_if { node.apache_hadoop.systemd == "true" }
-  source "#{service_name}.erb"
-  owner node.apache_hadoop.hdfs.user
-  group node.apache_hadoop.group
-  mode 0754
-  notifies :enable, resources(:service => "#{service_name}")
-  notifies :restart, resources(:service => "#{service_name}"), :immediately
-end
-
-case node.platform_family
+  case node.platform_family
   when "debian"
-systemd_script = "/lib/systemd/system/#{service_name}.service"
-  when "rhel"
-systemd_script = "/usr/lib/systemd/system/#{service_name}.service" 
-end
+    systemd_script = "/lib/systemd/system/#{service_name}.service"
+  else
+    systemd_script = "/usr/lib/systemd/system/#{service_name}.service" 
+  end
 
-template systemd_script do
-    only_if { node.apache_hadoop.systemd == "true" }
+
+  service "#{service_name}" do
+    provider Chef::Provider::Service::Systemd
+    supports :restart => true, :stop => true, :start => true, :status => true
+    action :restart
+  end
+
+
+
+  template systemd_script do
     source "#{service_name}.service.erb"
     owner "root"
     group "root"
     mode 0754
     notifies :enable, "service[#{service_name}]"
     notifies :restart, "service[#{service_name}]", :immediately
-end
+  end
 
+
+else  #sysv
+
+  service "#{service_name}" do
+    provider Chef::Provider::Service::Init::Debian
+    supports :restart => true, :stop => true, :start => true, :status => true
+    action :restart
+  end
+
+  template "/etc/init.d/#{service_name}" do
+    source "#{service_name}.erb"
+    owner node.apache_hadoop.hdfs.user
+    group node.apache_hadoop.group
+    mode 0754
+    notifies :enable, resources(:service => "#{service_name}")
+    notifies :restart, resources(:service => "#{service_name}"), :immediately
+  end
+
+end
 
 
 
