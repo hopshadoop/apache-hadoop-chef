@@ -15,6 +15,7 @@ end
 
 
 if node.apache_hadoop.systemd == "true"
+
   service service_name do
     provider Chef::Provider::Service::Systemd
     supports :restart => true, :stop => true, :start => true, :status => true
@@ -22,10 +23,10 @@ if node.apache_hadoop.systemd == "true"
   end
 
   case node.platform_family
-  when "debian"
-    systemd_script = "/lib/systemd/system/#{service_name}.service"
-  else
+  when "rhel"
     systemd_script = "/usr/lib/systemd/system/#{service_name}.service" 
+  else
+    systemd_script = "/lib/systemd/system/#{service_name}.service"
   end
 
   template systemd_script do
@@ -41,7 +42,6 @@ if node.apache_hadoop.systemd == "true"
 else #sysv
 
   service service_name do
-    provider Chef::Provider::Service::Systemd
     provider Chef::Provider::Service::Init::Debian
     supports :restart => true, :stop => true, :start => true, :status => true
     action :nothing

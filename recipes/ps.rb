@@ -16,42 +16,51 @@ end
 #   action "install_#{yarn_service}"
 # end
 
-service service_name do
-  case node.apache_hadoop.systemd
-    when "true"
+if node.apache_hadoop.systemd == "true"
+
+  service service_name do
     provider Chef::Provider::Service::Systemd
+    supports :restart => true, :stop => true, :start => true, :status => true
+    action :nothing
   end
-  supports :restart => true, :stop => true, :start => true, :status => true
-  action :nothing
-end
 
-template "/etc/init.d/#{service_name}" do
-  source "#{service_name}.erb"
-  owner node.apache_hadoop.yarn.user
-  group node.apache_hadoop.group
-  mode 0754
-  notifies :enable, resources(:service => service_name)
-  notifies :restart, resources(:service => service_name)
-end
-
-case node.platform_family
-  when "debian"
-systemd_script = "/lib/systemd/system/#{service_name}.service"
+  case node.platform_family
   when "rhel"
-systemd_script = "/usr/lib/systemd/system/#{service_name}.service" 
-end
+    systemd_script = "/usr/lib/systemd/system/#{service_name}.service" 
+  else
+    systemd_script = "/lib/systemd/system/#{service_name}.service"
+  end
 
-template systemd_script do
-    only_if { node.apache_hadoop.systemd == "true" }
+  template systemd_script do
     source "#{service_name}.service.erb"
     owner "root"
     group "root"
     mode 0754
     notifies :enable, "service[#{service_name}]"
     notifies :restart, "service[#{service_name}]"
+  end
+
+
+
+
+else # sysv
+
+  service service_name do
+    provider Chef::Provider::Service::Init::Debian
+    supports :restart => true, :stop => true, :start => true, :status => true
+    action :nothing
+  end
+
+  template "/etc/init.d/#{service_name}" do
+    source "#{service_name}.erb"
+    owner node.apache_hadoop.yarn.user
+    group node.apache_hadoop.group
+    mode 0754
+    notifies :enable, resources(:service => service_name)
+    notifies :restart, resources(:service => service_name)
+  end
+
 end
-
-
 
 if node.kagent.enabled == "true" 
   kagent_config service_name do

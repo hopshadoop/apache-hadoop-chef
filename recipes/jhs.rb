@@ -76,7 +76,6 @@ else #sysv
   template "/etc/init.d/#{service_name}" do
     source "#{service_name}.erb"
     owner node.apache_hadoop.hdfs.user
-    owner node.apache_hadoop.hdfs.user
     group node.apache_hadoop.group
     mode 0754
     notifies :enable, resources(:service => service_name)

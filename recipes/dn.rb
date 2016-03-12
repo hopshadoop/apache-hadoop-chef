@@ -21,51 +21,46 @@ service_name="datanode"
 if node.apache_hadoop.systemd == "true"
 
   case node.platform_family
-  when "debian"
-    systemd_script = "/lib/systemd/system/#{service_name}.service"
-  else
+  when "rhel"
     systemd_script = "/usr/lib/systemd/system/#{service_name}.service" 
+  else
+    systemd_script = "/lib/systemd/system/#{service_name}.service"
   end
 
   service "#{service_name}" do
-    case node.apache_hadoop.systemd
-      provider Chef::Provider::Service::Systemd
-      supports :restart => true, :stop => true, :start => true, :status => true
-      action :nothing
-    end
+    provider Chef::Provider::Service::Systemd
+    supports :restart => true, :stop => true, :start => true, :status => true
+    action :nothing
+  end
+
+  template systemd_script do
+    source "#{service_name}.service.erb"
+    owner node.apache_hadoop.hdfs.user
+    group node.apache_hadoop.group
+    mode 0754
+    notifies :enable, "service[#{service_name}]"
+    notifies :restart, "service[#{service_name}]", :immediately
+  end
 
 
-    template systemd_script do
-      source "#{service_name}.service.erb"
-      owner node.apache_hadoop.hdfs.user
-      group node.apache_hadoop.group
-      mode 0754
-      notifies :enable, "service[#{service_name}]"
-      notifies :restart, "service[#{service_name}]", :immediately
-    end
+else #sysv
 
+  service "#{service_name}" do
+    provider Chef::Provider::Service::Init::Debian
+    supports :restart => true, :stop => true, :start => true, :status => true
+    action :nothing
+  end
 
-  else #sysv
+  template "/etc/init.d/#{service_name}" do
+    source "#{service_name}.erb"
+    owner "root"
+    group "root"
+    mode 0754
+    notifies :enable, resources(:service => "#{service_name}")
+    notifies :restart, resources(:service => "#{service_name}"), :immediately
+  end
 
-    service "#{service_name}" do
-      case node.apache_hadoop.systemd
-        provider Chef::Provider::Service::Init::Debian
-        supports :restart => true, :stop => true, :start => true, :status => true
-        action :nothing
-      end
-
-      template "/etc/init.d/#{service_name}" do
-        source "#{service_name}.erb"
-        owner "root"
-        group "root"
-        mode 0754
-        notifies :enable, resources(:service => "#{service_name}")
-        notifies :restart, resources(:service => "#{service_name}"), :immediately
-      end
-
-
-
-    end
+end
 
 if node.kagent.enabled == "true" 
   kagent_config "#{service_name}" do
