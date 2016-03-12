@@ -29,7 +29,9 @@ if node.apache_hadoop.os_defaults == "true" then
     end
 
     # limits.d settings
-    %w(#{node.apache_hadoop.hdfs.user} #{node.apache_hadoop.mr.user} #{node.apache_hadoop.yarn.user}).each do |u|
+    users = [ "#{node.apache_hadoop.hdfs.user}", "#{node.apache_hadoop.mr.user}", "#{node.apache_hadoop.yarn.user}"]
+
+    users.each do |u|
       ulimit_domain u do
         node.apache_hadoop.limits.each do |k, v|
           rule do
