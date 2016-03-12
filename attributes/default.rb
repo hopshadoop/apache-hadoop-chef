@@ -44,7 +44,6 @@ default.apache_hadoop.nn.heap_size             = 500
 
 default.apache_hadoop.yarn.scripts             = %w{ start stop restart root-start }
 default.apache_hadoop.yarn.user                = "yarn"
-default.apache_hadoop.yarn.nm.memory_mbs       = 1600
 default.apache_hadoop.yarn.ps_port             = 20888
 
 default.apache_hadoop.yarn.vpmem_ratio         = 4.1
@@ -125,8 +124,9 @@ default.maven.version                          = "3.2.5"
 default.maven.checksum                         = ""
 
 
-default.apache_hadoop.yarn.yarn.nodemanager.resource.memory_mb                     = ""
-default.apache_hadoop.yarn.memory_percent                                          = "75"
+# If yarn.nm.memory_mbs is not set, then memory_percent is used instead
+default.apache_hadoop.yarn.nm.memory_mbs       = 2500
+default.apache_hadoop.yarn.memory_percent      = "75"
 
 default.apache_hadoop.limits.nofile            = '32768'
 default.apache_hadoop.limits.nproc             = '65536'
