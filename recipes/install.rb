@@ -28,18 +28,6 @@ if node.apache_hadoop.os_defaults == "true" then
     
   end
   
-  # node.apache_hadoop.limits.each do |k, v|
-  #   rule do
-  #     item k
-  #     type '-'
-  #     value v
-  #   end
-  # end
-  #        only_if { node.apache_hadoop.key?('limits') && !node.apache_hadoop.limits.empty? && not_if { ::File.exists?("/etc/security/limits.d/#{u}.conf")}}
-  
-  #    end 
-
-  # Remove extra mapreduce file, if it exists
 end
 
 
