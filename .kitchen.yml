@@ -35,12 +35,6 @@ suites:
 
     attributes:
          apache_hadoop:
-            hdfs:
-               user: "glassfish"
-            yarn:
-               user: "glassfish"
-            mr:
-               user: "glassfish"
             nn:
                private_ips: ["10.0.2.15"]
                public_ips: ["10.0.2.15"]

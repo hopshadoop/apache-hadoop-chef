@@ -51,8 +51,9 @@ users.each do |u|
     filehandle_limit node.apache_hadoop.limits.nofile
     process_limit node.apache_hadoop.limits.nproc
     memory_limit node.apache_hadoop.limits.memory_limit
-    stack_soft_limit 2048
-    stack_hard_limit 2048
+#    memlock           unlimited
+    stack_soft_limit 65533
+    stack_hard_limit 65533
   end
 end
 
