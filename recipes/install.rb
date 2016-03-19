@@ -31,19 +31,11 @@ if node.apache_hadoop.os_defaults == "true" then
 end
 
 
-# limits.d settings
-users = [ "#{node.apache_hadoop.hdfs.user}", "#{node.apache_hadoop.mr.user}", "#{node.apache_hadoop.yarn.user}"]
 
-users.each do |u|
-  user_ulimit u do
-    filehandle_limit node.apache_hadoop.limits.nofile
-    process_limit node.apache_hadoop.limits.nproc
-    memory_limit node.apache_hadoop.limits.memory_limit
-#    memlock           unlimited
-    stack_soft_limit 65533
-    stack_hard_limit 65533
-  end
-end
+
+
+
+
 
 node.default.java.jdk_version = 7
 node.default.java.set_etc_environment = true

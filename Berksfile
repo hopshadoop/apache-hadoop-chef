@@ -5,7 +5,7 @@ metadata
 
 cookbook 'kagent', '~> 0.1.2'
 cookbook 'java', '~> 1.39.0'
-cookbook 'ulimit', '~> 0.3.3'
+cookbook 'ulimit2', '~> 0.2.0'
 cookbook 'sysctl', '~> 0.7.0'
 cookbook 'cmake', '~> 0.3.0'
 
