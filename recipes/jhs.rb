@@ -34,7 +34,7 @@ node.normal.mr.dirs = [node.apache_hadoop.mr.staging_dir, node.apache_hadoop.mr.
     action :create_as_superuser
     owner node.apache_hadoop.mr.user
     group node.apache_hadoop.group
-    mode "0775"
+    mode "0777"
     not_if ". #{node.apache_hadoop.home}/sbin/set-env.sh && #{node.apache_hadoop.home}/bin/hdfs dfs -test -d #{d}"
    end
  end

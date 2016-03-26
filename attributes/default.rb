@@ -130,6 +130,7 @@ default.apache_hadoop.yarn.memory_percent      = "75"
 
 default.apache_hadoop.limits.nofile            = '32768'
 default.apache_hadoop.limits.nproc             = '65536'
+default.apache_hadoop.limits.memory_limit      = '100000'
 default.apache_hadoop.os_defaults              = "true"
 
 default.apache_hadoop.user_envs                = "true"
