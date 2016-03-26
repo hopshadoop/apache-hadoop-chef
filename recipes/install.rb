@@ -1,4 +1,14 @@
 
+case node.platform
+when "ubuntu"
+ if node.platform_version.to_f <= 14.04
+   node.override.apache_hadoop.systemd = "false"
+ end
+end
+
+
+
+
 if node.apache_hadoop.os_defaults == "true" then
   # http://blog.cloudera.com/blog/2015/01/how-to-deploy-apache-hadoop-clusters-like-a-boss/
   node.default.sysctl.allow_sysctl_conf = true

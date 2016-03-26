@@ -9,6 +9,8 @@ PIDFile = <%= node.apache_hadoop.logs_dir %>/hadoop-<%= node.apache_hadoop.hdfs.
 ExecStart = <%= node.apache_hadoop.home %>/sbin/start-dn.sh
 ExecStop = <%= node.apache_hadoop.home %>/sbin/stop-dn.sh
 ExecReload = <%= node.apache_hadoop.home %>/sbin/restart-dn.sh
+LimitNOFILE = 65000
+LimitNPROC = 10000
 
 Type = forking
 

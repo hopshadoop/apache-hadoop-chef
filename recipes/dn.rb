@@ -35,12 +35,27 @@ if node.apache_hadoop.systemd == "true"
 
   template systemd_script do
     source "#{service_name}.service.erb"
-    owner node.apache_hadoop.hdfs.user
-    group node.apache_hadoop.group
+    owner "root"
+    group "root"
     mode 0754
     notifies :enable, "service[#{service_name}]"
     notifies :restart, "service[#{service_name}]", :immediately
   end
+
+  directory "/etc/systemd/system/#{service_name}.service.d" do
+    owner "root"
+    group "root"
+    mode "755"
+    action :create
+    recursive true
+  end
+
+  template "/etc/systemd/system/#{service_name}.service.d/limits.conf" do
+    source "limits.conf.erb"
+    owner "root"
+    mode 0774
+    action :create
+  end 
 
 
 else #sysv
