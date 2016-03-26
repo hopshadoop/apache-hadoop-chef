@@ -1,6 +1,16 @@
 
+case node.platform
+when "ubuntu"
+ if node.platform_version.to_f <= 14.04
+   node.override.apache_hadoop.systemd = "false"
+ end
+end
+
+
+
+
 if node.apache_hadoop.os_defaults == "true" then
-# http://blog.cloudera.com/blog/2015/01/how-to-deploy-apache-hadoop-clusters-like-a-boss/
+  # http://blog.cloudera.com/blog/2015/01/how-to-deploy-apache-hadoop-clusters-like-a-boss/
   node.default.sysctl.allow_sysctl_conf = true
   node.default.sysctl.params.vm.swappiness = 1
   node.default.sysctl.params.vm.overcommit_memory = 1
@@ -8,48 +18,34 @@ if node.apache_hadoop.os_defaults == "true" then
   node.default.sysctl.params.net.core.somaxconn= 1024
   include_recipe 'sysctl::apply'
 
-    #
-    # http://www.slideshare.net/vgogate/hadoop-configuration-performance-tuning
-    #
-    case node.platform_family
-    when "debian"
-      bash "configure_os" do
-        user "root"
-        code <<-EOF
+  #
+  # http://www.slideshare.net/vgogate/hadoop-configuration-performance-tuning
+  #
+  case node.platform_family
+  when "debian"
+    bash "configure_os" do
+      user "root"
+      code <<-EOF
    EOF
-      end
-    when "redhat"
-      bash "configure_os" do
-        user "root"
-        code <<-EOF
+    end
+  when "redhat"
+    bash "configure_os" do
+      user "root"
+      code <<-EOF
       echo "never" > /sys/kernel/mm/redhat_transparent_hugepages/defrag
      EOF
-      end
-      
     end
-
-    # limits.d settings
-    users = [ "#{node.apache_hadoop.hdfs.user}", "#{node.apache_hadoop.mr.user}", "#{node.apache_hadoop.yarn.user}"]
-
-    users.each do |u|
-      ulimit_domain u do
-        node.apache_hadoop.limits.each do |k, v|
-          rule do
-            item k
-            type '-'
-            value v
-          end
-        end
-        only_if { node.apache_hadoop.key?('limits') && !node.apache_hadoop.limits.empty? }
-      end
-    end # End limits.d
-
-    # Remove extra mapreduce file, if it exists
-    file '/etc/security/limits.d/mapreduce.conf' do
-      action :delete
-    end
-
+    
   end
+  
+end
+
+
+
+
+
+
+
 
 node.default.java.jdk_version = 7
 node.default.java.set_etc_environment = true

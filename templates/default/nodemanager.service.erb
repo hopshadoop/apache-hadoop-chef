@@ -9,6 +9,8 @@ PIDFile = <%= node.apache_hadoop.logs_dir %>/yarn-<%= node.apache_hadoop.yarn.us
 ExecStart = <%= node.apache_hadoop.home %>/sbin/start-nm.sh
 ExecStop = <%= node.apache_hadoop.home %>/sbin/stop-nm.sh
 ExecReload = <%= node.apache_hadoop.home %>/sbin/restart-nm.sh
+LimitNOFILE = 65000
+LimitNPROC = 10000
 
 Type = forking
 

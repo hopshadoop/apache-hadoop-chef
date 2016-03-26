@@ -20,7 +20,7 @@ recipe            "apache_hadoop::ps", "Installs a WebProxy Server for YARN"
 
 depends 'kagent'
 depends 'java'
-depends 'ulimit'
+depends 'ulimit2'
 depends 'sysctl'
 depends 'cmake'
 
