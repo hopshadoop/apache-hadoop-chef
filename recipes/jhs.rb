@@ -14,7 +14,7 @@ for script in node.apache_hadoop.yarn.scripts
 end 
 
 
-tmp_dirs   = ["/mr-history", node.apache_hadoop.jhs.inter_dir, node.apache_hadoop.jhs.done_dir, "/tmp", node.apache_hadoop.hdfs.user_home]
+tmp_dirs   = ["/mr-history", node.apache_hadoop.jhs.inter_dir, node.apache_hadoop.jhs.done_dir]
 
  for d in tmp_dirs
    Chef::Log.info "Creating hdfs directory: #{d}"
