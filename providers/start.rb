@@ -12,6 +12,18 @@ action :start_if_not_running do
 
 end
 
+action :systemd_reload do
+  bash "start-if-not-running-#{new_resource.name}" do
+    user "root"
+    code <<-EOH
+     set -e
+     systemctl daemon-reload
+    EOH
+  end
+
+end
+
+
 
 action :format_nn do
   if  "#{new_resource.ha_enabled}".eql? "true"

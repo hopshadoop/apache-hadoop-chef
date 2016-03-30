@@ -89,6 +89,9 @@ if node.apache_hadoop.systemd == "true"
     action :create
   end 
 
+  apache_hadoop_start "reload_nn" do
+    action :systemd_reload
+  end  
 
 
 else #sysv
