@@ -155,7 +155,7 @@ if node.kagent.enabled == "true"
 end
 
 
-tmp_dirs   = ["/tmp", node.apache_hadoop.hdfs.user_home, node.apache_hadoop.hdfs.user_home + "/" + node.apache_hadoop.hdfs.user,, node.apache_hadoop.yarn_log_dir]]
+tmp_dirs   = ["/tmp", node.apache_hadoop.hdfs.user_home, node.apache_hadoop.hdfs.user_home + "/" + node.apache_hadoop.hdfs.user, node.apache_hadoop.yarn_log_dir]]
 
 for d in tmp_dirs
   apache_hadoop_hdfs_directory d do
