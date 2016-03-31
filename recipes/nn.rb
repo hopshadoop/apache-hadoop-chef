@@ -153,4 +153,3 @@ if node.kagent.enabled == "true"
     web_port node.apache_hadoop.nn.http_port
   end
 end
-
