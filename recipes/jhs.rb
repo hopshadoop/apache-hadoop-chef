@@ -14,13 +14,13 @@ for script in node.apache_hadoop.yarn.scripts
 end 
 
 
-tmp_dirs   = ["/mr-history", node.apache_hadoop.jhs.inter_dir, node.apache_hadoop.jhs.done_dir, "/tmp", node.apache_hadoop.hdfs.user_home]
+tmp_dirs   = ["/mr-history", node.apache_hadoop.jhs.inter_dir, node.apache_hadoop.jhs.done_dir]
 
  for d in tmp_dirs
    Chef::Log.info "Creating hdfs directory: #{d}"
    apache_hadoop_hdfs_directory d do
     action :create_as_superuser
-    owner node.apache_hadoop.hdfs.user
+    owner node.apache_hadoop.mr.user
     group node.apache_hadoop.group
     mode "1777"
     not_if ". #{node.apache_hadoop.home}/sbin/set-env.sh && #{node.apache_hadoop.home}/bin/hdfs dfs -test -d #{d}"
