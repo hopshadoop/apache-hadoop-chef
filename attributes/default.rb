@@ -68,7 +68,20 @@ default.apache_hadoop.yarn.aux_services        = "mapreduce_shuffle"
 default.apache_hadoop.mr.user                  = "mapred"
 default.apache_hadoop.mr.shuffle_class         = "org.apache.hadoop.mapred.ShuffleHandler"
 
-default.apache_hadoop.yarn.app_classpath       = "#{node.apache_hadoop.home}/etc/hadoop/, #{node.apache_hadoop.home}/share/hadoop/common/*, #{node.apache_hadoop.home}/share/hadoop/common/lib/*, #{node.apache_hadoop.home}/share/hadoop/hdfs/*, #{node.apache_hadoop.home}/share/hadoop/hdfs/lib/*, #{node.apache_hadoop.home}/share/hadoop/yarn/*, #{node.apache_hadoop.home}/share/hadoop/yarn/lib/*"#, #{node.apache_hadoop.home}, #{node.apache_hadoop.home}/lib/*, #{node.apache_hadoop.home}/share/hadoop/tools/lib/*, #{node.apache_hadoop.home}/share/hadoop/yarn/test/*, #{node.apache_hadoop.home}/share/hadoop/mapreduce/*, #{node.apache_hadoop.home}/share/hadoop/mapreduce/lib/*, #{node.apache_hadoop.home}/share/hadoop/mapreduce/test/*"
+default.apache_hadoop.yarn.app_classpath       = "#{node.apache_hadoop.home}, 
+                                                  #{node.apache_hadoop.home}/lib/*, 
+                                                  #{node.apache_hadoop.home}/etc/hadoop/,  
+                                                  #{node.apache_hadoop.home}/share/hadoop/common/*, 
+                                                  #{node.apache_hadoop.home}/share/hadoop/common/lib/*, 
+                                                  #{node.apache_hadoop.home}/share/hadoop/hdfs/*, 
+                                                  #{node.apache_hadoop.home}/share/hadoop/hdfs/lib/*, 
+                                                  #{node.apache_hadoop.home}/share/hadoop/yarn/*, 
+                                                  #{node.apache_hadoop.home}/share/hadoop/yarn/lib/*, 
+                                                  #{node.apache_hadoop.home}/share/hadoop/tools/lib/*, 
+                                                  #{node.apache_hadoop.home}/share/hadoop/mapreduce/*, 
+                                                  #{node.apache_hadoop.home}/share/hadoop/mapreduce/lib/*"
+#                                                  #{node.apache_hadoop.home}/share/hadoop/yarn/test/*, 
+#                                                  #{node.apache_hadoop.home}/share/hadoop/mapreduce/test/*"
 
 default.apache_hadoop.rm.addr                  = []
 default.apache_hadoop.rm.http_port             = 8088

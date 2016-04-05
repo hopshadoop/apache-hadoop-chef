@@ -20,19 +20,23 @@ end
 
 activeNN = true
 ha_enabled = false
-if node.apache_hadoop.ha_enabled.eql? "true" || node.apache_hadoop.ha_enabled == true
+if node.apache_hadoop.ha_enabled.eql? "true" || node.apache_hadoop.ha_enabled == true # 
   ha_enabled = true
 end
 
+active_ip = private_recipe_ip("apache_hadoop","nn")
+my_ip = my_private_ip()
 # it is ok if all namenodes format the fs. Unless you add a new one later..
 # if the nn has already been formatted, re-formatting it returns error
 # TODO: test if the NameNode is running
 if ::File.exist?("#{node.apache_hadoop.home}/.nn_formatted") === false || "#{node.apache_hadoop.reformat}" === "true"
   if activeNN == true
     sleep 10
-    apache_hadoop_start "format-nn" do
-      action :format_nn
-      ha_enabled ha_enabled
+    if "#{my_ip}" == "#{active_ip}"
+       apache_hadoop_start "format-nn" do
+         action :format_nn
+         ha_enabled ha_enabled
+       end
     end
   else
     # wait for the active nn to come up
