@@ -5,6 +5,7 @@ license          "GPL 2.0"
 description      'Installs/Configures the Apache Hadoop distribution'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.1.0"
+source_url       "https://github.com/hopshadoop/apache-hadoop-chef"
 
 #link:<a target='_blank' href='http://%host%:50070/'>Launch the WebUI for the NameNode</a>
 recipe            "apache_hadoop::nn", "Installs a Hadoop NameNode"
