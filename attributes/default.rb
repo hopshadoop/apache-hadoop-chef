@@ -53,7 +53,8 @@ default.apache_hadoop.yarn.vcores              = 4
 default.apache_hadoop.yarn.min_vcores          = 1
 default.apache_hadoop.yarn.max_vcores          = 4
 default.apache_hadoop.yarn.log_aggregation     = "true"
-default.apache_hadoop.yarn_log_dir             = node.apache_hadoop.hdfs.user_home + "/" + node.apache_hadoop.yarn.user + "/logs"
+#default.apache_hadoop.yarn.nodemanager.remote-app-log-dir =  "/tmp/" + "/logs"
+default.apache_hadoop.yarn.nodemanager.remote-app-log-dir = node.apache_hadoop.hdfs.user_home + "/" + node.apache_hadoop.yarn.user + "/logs"
 default.apache_hadoop.yarn.log_retain_secs     = 86400
 default.apache_hadoop.yarn.log_retain_check    = 100
 
