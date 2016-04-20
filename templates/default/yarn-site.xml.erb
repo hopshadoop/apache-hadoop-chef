@@ -3,24 +3,24 @@
 <configuration>
   <property>
     <name>yarn.resourcemanager.resource-tracker.address</name>
-    <value>hdfs://<%= @rm_private_ip %>:8031</value>
+    <value><%= @rm_private_ip %>:8031</value>
     <description>host is the hostname of the resource manager and port is the port on which the NodeManagers contact the Resource Manager.</description>
   </property>
   <property>
     <name>yarn.resourcemanager.scheduler.address</name>
-    <value>hdfs://<%= @rm_private_ip %>:8030</value>
+    <value><%= @rm_private_ip %>:8030</value>
   </property>
   <property>
     <name>yarn.resourcemanager.address</name>
-    <value>hdfs://<%= @rm_private_ip %>:8032</value>
+    <value><%= @rm_private_ip %>:8032</value>
   </property>
   <property>
     <name>yarn.resourcemanager.admin.address</name>
-    <value>hdfs://<%= @rm_private_ip %>:8033</value>
+    <value><%= @rm_private_ip %>:8033</value>
   </property>
   <property>
     <name>yarn.web-proxy.address</name>
-    <value>hdfs://<%= @rm_private_ip %>:<%= node.apache_hadoop.yarn.ps_port %></value>
+    <value><%= @rm_private_ip %>:<%= node.apache_hadoop.yarn.ps_port %></value>
   </property>
   <property>
     <name>yarn.resourcemanager.webapp.address</name>
