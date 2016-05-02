@@ -51,9 +51,7 @@ node.default.java.jdk_version = 7
 node.default.java.set_etc_environment = true
 include_recipe "java"
 
-kagent_bouncycastle "jar" do
-end
- 
+
 group node.apache_hadoop.group do
   action :create
 end
