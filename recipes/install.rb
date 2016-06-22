@@ -10,6 +10,7 @@ end
 
 
 if node.apache_hadoop.os_defaults == "true" then
+
   # http://blog.cloudera.com/blog/2015/01/how-to-deploy-apache-hadoop-clusters-like-a-boss/
   node.default.sysctl.allow_sysctl_conf = true
   node.default.sysctl.params.vm.swappiness = 1

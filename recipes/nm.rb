@@ -35,7 +35,7 @@ if node.apache_hadoop.systemd == "true"
     group "root"
     mode 0754
     notifies :enable, resources(:service => service_name)
-    notifies :start, resources(:service => service_name), :immediately
+    notifies :start, resources(:service => service_name)
   end
 
   directory "/etc/systemd/system/#{service_name}.service.d" do
@@ -72,7 +72,7 @@ else #sysv
     group node.apache_hadoop.group
     mode 0754
     notifies :enable, resources(:service => service_name)
-    notifies :restart, resources(:service => service_name), :immediately
+    notifies :restart, resources(:service => service_name)
   end
 
 end
