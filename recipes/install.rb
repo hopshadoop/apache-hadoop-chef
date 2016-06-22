@@ -115,7 +115,7 @@ if node.apache_hadoop.native_libraries.eql? "true"
 
     protobuf_url = node.apache_hadoop.protobuf_url
     base_protobuf_filename = File.basename(protobuf_url)
-    cached_protobuf_filename = "/tmp/binary/#{base_protobuf_filename}"
+    cached_protobuf_filename = "/tmp/#{base_protobuf_filename}"
 
     remote_file cached_protobuf_filename do
       source protobuf_url
@@ -185,7 +185,7 @@ if node.apache_hadoop.native_libraries.eql? "true"
       user "root"
       code <<-EOH
         set -e
-        cd /tmp/binary
+        cd /tmp
 	tar -zxf #{cached_protobuf_filename} 
         cd #{protobuf_name_no_extension}
         ./configure --prefix=#{protobuf_lib_prefix}
@@ -238,7 +238,7 @@ secondary_url = node.apache_hadoop.download_url.secondary
 Chef::Log.info "Attempting to download hadoop binaries from #{primary_url} or, alternatively, #{secondary_url}"
 
 base_package_filename = File.basename(primary_url)
-cached_package_filename = "/tmp/binary/#{base_package_filename}"
+cached_package_filename = "/tmp/#{base_package_filename}"
 
 remote_file cached_package_filename do
   source primary_url
@@ -252,7 +252,7 @@ remote_file cached_package_filename do
 end
 
 base_package_filename = File.basename(secondary_url)
-cached_package_filename = "/tmp/binary/#{base_package_filename}"
+cached_package_filename = "/tmp/#{base_package_filename}"
 
 remote_file cached_package_filename do
   source secondary_url
@@ -364,7 +364,7 @@ if node.apache_hadoop.cgroups.eql? "true"
     package "libcgroup" do
     end
   end
-  cgroups_mounted= "/tmp/binary/.cgroups_mounted"
+  cgroups_mounted= "/tmp/.cgroups_mounted"
   bash 'setup_mount_cgroups' do
     user "root"
     code <<-EOH
