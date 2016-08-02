@@ -133,8 +133,6 @@ default.apache_hadoop.nn.addrs                 = []
 default.apache_hadoop.native_libraries         = "false"
 default.apache_hadoop.cgroups                  = "false"
 
-default.kagent.enabled                         = "false"
-
 default.maven.version                          = "3.2.5"
 default.maven.checksum                         = ""
 

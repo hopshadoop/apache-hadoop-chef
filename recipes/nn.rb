@@ -151,7 +151,7 @@ if node.kagent.enabled == "true"
     start_script "#{node.apache_hadoop.home}/sbin/root-start-nn.sh"
     stop_script "#{node.apache_hadoop.home}/sbin/stop-nn.sh"
     init_script "#{node.apache_hadoop.home}/sbin/format-nn.sh"
-    config_file "#{node.apache_hadoop.conf_dir}/core-site.xml"
+    config_file "#{node.apache_hadoop.conf_dir}/hdfs-site.xml"
     log_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.log"
     pid_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}.pid"
     web_port node.apache_hadoop.nn.http_port
