@@ -55,6 +55,10 @@ attribute "apache_hadoop/container_cleanup_delay_sec",
 :description => "The number of seconds container data is retained after termination",
 :type => 'string'
 
+attribute "apache_hadoop/group",
+:description => "Group to run hdfs/yarn/mr as",
+:type => 'string'
+
 attribute "apache_hadoop/yarn/user",
 :display_name => "Username to run yarn as",
 :description => "Username to run yarn as",
