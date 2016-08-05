@@ -115,8 +115,8 @@ else #sysv
 
 end
 
-if node.kagent.enabled == "true" 
-  kagent_config service_name do
+#if node.kagent.enabled == "true" 
+  kagent_config "resourcemanager" do
     service "YARN"
     start_script "#{node.apache_hadoop.home}/sbin/root-start-#{yarn_service}.sh"
     stop_script "#{node.apache_hadoop.home}/sbin/stop-#{yarn_service}.sh"
@@ -128,7 +128,7 @@ if node.kagent.enabled == "true"
     command_user node.apache_hadoop.yarn.user
     command_script "#{node.apache_hadoop.home}/bin/yarn"
   end
-end
+#end
 
 tmp_dirs   = [node.apache_hadoop.hdfs.user_home + "/" + node.apache_hadoop.yarn.user, node.apache_hadoop.yarn.nodemanager.remote_app_log_dir]
 for d in tmp_dirs

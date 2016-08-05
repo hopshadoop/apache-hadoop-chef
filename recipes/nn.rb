@@ -145,7 +145,7 @@ end
 
 
 
-if node.kagent.enabled == "true" 
+#if node.kagent.enabled == "true" 
   kagent_config "#{service_name}" do
     service "HDFS"
     start_script "#{node.apache_hadoop.home}/sbin/root-start-nn.sh"
@@ -156,7 +156,7 @@ if node.kagent.enabled == "true"
     pid_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}.pid"
     web_port node.apache_hadoop.nn.http_port
   end
-end
+#end
 
 tmp_dirs   = [ "/tmp", node.apache_hadoop.hdfs.user_home, node.apache_hadoop.hdfs.user_home + "/" + node.apache_hadoop.hdfs.user ]
 

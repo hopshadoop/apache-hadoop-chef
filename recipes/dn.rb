@@ -80,7 +80,7 @@ else #sysv
 
 end
 
-if node.kagent.enabled == "true" 
+#if node.kagent.enabled == "true" 
   kagent_config "#{service_name}" do
     service "HDFS"
     start_script "#{node.apache_hadoop.home}/sbin/root-start-dn.sh"
@@ -93,4 +93,4 @@ if node.kagent.enabled == "true"
     command_user node.apache_hadoop.hdfs.user
     command_script "#{node.apache_hadoop.home}/bin/hdfs"
   end
-end
+#end
