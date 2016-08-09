@@ -6,9 +6,9 @@ After = syslog.target network.target remote-fs.target
 User = <%= node.apache_hadoop.yarn.user %>
 
 PIDFile = <%= node.apache_hadoop.logs_dir %>/yarn-<%= node.apache_hadoop.yarn.user %>-nodemanager.pid
-ExecStart = <%= node.apache_hadoop.home %>/sbin/start-nm.sh
-ExecStop = <%= node.apache_hadoop.home %>/sbin/stop-nm.sh
-ExecReload = <%= node.apache_hadoop.home %>/sbin/restart-nm.sh
+ExecStart = <%= node.apache_hadoop.base_dir %>/sbin/start-nm.sh
+ExecStop = <%= node.apache_hadoop.base_dir %>/sbin/stop-nm.sh
+ExecReload = <%= node.apache_hadoop.base_dir %>/sbin/restart-nm.sh
 LimitNOFILE = 65000
 LimitNPROC = 10000
 

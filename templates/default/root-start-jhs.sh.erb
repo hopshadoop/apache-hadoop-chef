@@ -6,7 +6,7 @@ EXEC_WITH_USER="su <%= node.apache_hadoop.mr.user %> -l -c"
 bin=`dirname "${BASH_SOURCE-$0}"`
 bin=`cd "$bin"; pwd`
 
-rootDir=<%= node.apache_hadoop.home %>
+rootDir=<%= node.apache_hadoop.base_dir %>
 
 MRJH=$rootDir/sbin/mr-jobhistory-daemon.sh
 

@@ -6,9 +6,9 @@ After = syslog.target network.target remote-fs.target
 User = <%= node.apache_hadoop.hdfs.user %>
 
 PIDFile = <%= node.apache_hadoop.logs_dir %>/hadoop-<%= node.apache_hadoop.hdfs.user %>-namenode.pid
-ExecStart = <%= node.apache_hadoop.home %>/sbin/start-nn.sh
-ExecStop = <%= node.apache_hadoop.home %>/sbin/stop-nn.sh
-ExecReload = <%= node.apache_hadoop.home %>/sbin/restart-nn.sh
+ExecStart = <%= node.apache_hadoop.base_dir %>/sbin/start-nn.sh
+ExecStop = <%= node.apache_hadoop.base_dir %>/sbin/stop-nn.sh
+ExecReload = <%= node.apache_hadoop.base_dir %>/sbin/restart-nn.sh
 LimitNOFILE = 65000
 LimitNPROC = 10000
 

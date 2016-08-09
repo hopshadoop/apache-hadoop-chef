@@ -12,7 +12,7 @@ HADOOP_LIBEXEC_DIR=${HADOOP_LIBEXEC_DIR:-$DEFAULT_LIBEXEC_DIR}
 . $HADOOP_LIBEXEC_DIR/hadoop-config.sh
 . ${bin}/set-env.sh
 
-rootDir=<%= node.apache_hadoop.home %>
+rootDir=<%= node.apache_hadoop.base_dir %>
 
 HDFS=$rootDir/bin/hdfs
 log=$rootDir/logs/hadoop-<%= node.apache_hadoop.hdfs.user %>-$command.log

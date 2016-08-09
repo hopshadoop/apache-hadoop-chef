@@ -4,6 +4,6 @@ command=proxyserver
 pidDir=<%= node.apache_hadoop.logs_dir %>
 service=yarn
 
-<%= node.apache_hadoop.home %>/sbin/kill-process.sh $service <%= node.apache_hadoop.yarn.user %> $command $pidDir
+<%= node.apache_hadoop.base_dir %>/sbin/kill-process.sh $service <%= node.apache_hadoop.yarn.user %> $command $pidDir
 
 exit $?

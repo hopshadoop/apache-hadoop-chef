@@ -118,8 +118,8 @@ end
 #if node.kagent.enabled == "true" 
   kagent_config "resourcemanager" do
     service "YARN"
-    start_script "#{node.apache_hadoop.home}/sbin/root-start-#{yarn_service}.sh"
-    stop_script "#{node.apache_hadoop.home}/sbin/stop-#{yarn_service}.sh"
+    start_script "#{node.apache_hadoop.base_dir}/sbin/root-start-#{yarn_service}.sh"
+    stop_script "#{node.apache_hadoop.base_dir}/sbin/stop-#{yarn_service}.sh"
     log_file "#{node.apache_hadoop.logs_dir}/yarn-#{node.apache_hadoop.yarn.user}-#{service_name}-#{node.hostname}.log"
     pid_file "#{node.apache_hadoop.logs_dir}/yarn-#{node.apache_hadoop.yarn.user}-#{service_name}.pid"
     config_file "#{node.apache_hadoop.conf_dir}/yarn-site.xml"

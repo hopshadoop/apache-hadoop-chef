@@ -31,7 +31,7 @@ action :format_nn do
       user node.apache_hadoop.hdfs.user
       code <<-EOH
         set -e
-        #{node.apache_hadoop.home}/bin/hdfs zkfc -formatZK -force
+        #{node.apache_hadoop.base_dir}/bin/hdfs zkfc -formatZK -force
  	EOH
     end
   end
@@ -39,8 +39,8 @@ action :format_nn do
       user node.apache_hadoop.hdfs.user
       code <<-EOH
         set -e
-        #{node.apache_hadoop.home}/sbin/format-nn.sh
-        touch #{node.apache_hadoop.home}/.nn_formatted
+        #{node.apache_hadoop.base_dir}/sbin/format-nn.sh
+        touch #{node.apache_hadoop.base_dir}/.nn_formatted
  	EOH
     end
 
@@ -52,7 +52,7 @@ action :zkfc do
       user node.apache_hadoop.hdfs.user
       code <<-EOH
         set -e
-        #{node.apache_hadoop.home}/bin/hdfs zkfc -formatZK -force
+        #{node.apache_hadoop.base_dir}/bin/hdfs zkfc -formatZK -force
  	EOH
     end
   end
@@ -64,7 +64,7 @@ action :standby do
       user node.apache_hadoop.hdfs.user
       code <<-EOH
         set -e
-        #{node.apache_hadoop.home}/sbin/start-standby-nn.sh
+        #{node.apache_hadoop.base_dir}/sbin/start-standby-nn.sh
  	EOH
     end
   end

@@ -6,9 +6,9 @@ After = syslog.target network.target remote-fs.target
 User = <%= node.apache_hadoop.yarn.user %>
 
 PIDFile = /tmp/yarn-<%= node.apache_hadoop.yarn.user %>-proxyserver.pid
-ExecStart = <%= node.apache_hadoop.home %>/sbin/start-ps.sh
-ExecStop = <%= node.apache_hadoop.home %>/sbin/stop-ps.sh
-ExecReload = <%= node.apache_hadoop.home %>/sbin/restart-ps.sh
+ExecStart = <%= node.apache_hadoop.base_dir %>/sbin/start-ps.sh
+ExecStop = <%= node.apache_hadoop.base_dir %>/sbin/stop-ps.sh
+ExecReload = <%= node.apache_hadoop.base_dir %>/sbin/restart-ps.sh
 
 Type = forking
 
