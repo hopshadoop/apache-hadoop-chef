@@ -68,8 +68,8 @@ else #sysv
 
   template "/etc/init.d/#{service_name}" do
     source "#{service_name}.erb"
-    owner node.apache_hadoop.yarn.user
-    group node.apache_hadoop.group
+    owner "root"
+    group "root"
     mode 0754
     notifies :enable, resources(:service => service_name)
     notifies :restart, resources(:service => service_name)
