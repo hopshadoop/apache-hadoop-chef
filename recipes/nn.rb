@@ -139,6 +139,7 @@ else  #sysv
     mode 0754
     notifies :enable, resources(:service => "#{service_name}")
     notifies :restart, resources(:service => "#{service_name}"), :immediately
+  end 
 end
 
 
