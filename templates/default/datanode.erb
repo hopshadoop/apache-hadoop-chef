@@ -19,8 +19,6 @@ START_PROG="<%= node.apache_hadoop.base_dir %>/sbin/root-start-dn.sh"
 STOP_PROG="<%= node.apache_hadoop.base_dir %>/sbin/stop-dn.sh"  
 
 
-RETVAL=0
-
 EXEC_WITH_USER=
 
 start() {
@@ -42,12 +40,11 @@ restart() {
 
 status() {
   PID_FILE=<%= "#{node.apache_hadoop.logs_dir}" %>/hadoop-<%= "#{node.apache_hadoop.hdfs.user}" %>-datanode.pid
+  res=1
   if [ -f $PID_FILE ] ; then
      PID=`cat $PID_FILE`
      kill -0 $PID
      res=$?
-  else 
-     res=1
   fi
   if [ $res -eq 0 ] ; then
    echo "datanode($PID) is running"
@@ -87,4 +84,4 @@ case "$1" in
   esac
 
 
-exit $RETVAL
+exit $?

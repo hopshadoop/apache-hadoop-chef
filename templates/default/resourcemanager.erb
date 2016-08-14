@@ -18,9 +18,6 @@
 START_PROG="<%= node.apache_hadoop.base_dir %>/sbin/root-start-rm.sh"  
 STOP_PROG="<%= node.apache_hadoop.base_dir %>/sbin/stop-rm.sh"  
 
-
-RETVAL=0
-
 EXEC_WITH_USER=
 
 start() {
@@ -41,12 +38,11 @@ restart() {
 
 status() {
   PID_FILE=<%= "#{node.apache_hadoop.logs_dir}" %>/yarn-<%= "#{node.apache_hadoop.yarn.user}" %>-resourcemanager.pid
+  res=1
   if [ -f $PID_FILE ] ; then
      PID=`cat $PID_FILE`
      kill -0 $PID
      res=$?
-  else 
-     res=1
   fi
   if [ $res -eq 0 ] ; then
    echo "resourcemanager($PID) is running"
@@ -83,4 +79,4 @@ case "$1" in
   esac
 
 
-exit $RETVAL
+exit $?
