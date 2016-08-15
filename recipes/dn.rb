@@ -83,10 +83,7 @@ end
 #if node.kagent.enabled == "true" 
   kagent_config "#{service_name}" do
     service "HDFS"
-    start_script "#{node.apache_hadoop.home}/sbin/root-start-dn.sh"
-    stop_script "#{node.apache_hadoop.home}/sbin/stop-dn.sh"
-    log_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.log"
-    pid_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}.pid"
+    log_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.out"
     config_file "#{node.apache_hadoop.conf_dir}/hdfs-site.xml"
     web_port node.apache_hadoop.dn.http_port
     command "hdfs"

@@ -147,12 +147,8 @@ end
 if node.kagent.enabled == "true" 
   kagent_config "#{service_name}" do
     service "HDFS"
-    start_script "#{node.apache_hadoop.base_dir}/sbin/root-start-nn.sh"
-    stop_script "#{node.apache_hadoop.base_dir}/sbin/stop-nn.sh"
-    init_script "#{node.apache_hadoop.base_dir}/sbin/format-nn.sh"
     config_file "#{node.apache_hadoop.conf_dir}/hdfs-site.xml"
-    log_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.log"
-    pid_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}.pid"
+    log_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.out"
     web_port node.apache_hadoop.nn.http_port
   end
 end
