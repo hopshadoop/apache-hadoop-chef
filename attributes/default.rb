@@ -153,3 +153,8 @@ default.apache_hadoop.nn.direct_memory_size    = 100
 default.apache_hadoop.ha_enabled               = "false"
 
 default.apache_hadoop.systemd                  = "true"
+
+
+node.default.java.jdk_version                         = "8"
+node.default.java.install_flavor                      = "oracle"
+node.default.java.oracle.accept_oracle_download_terms = true

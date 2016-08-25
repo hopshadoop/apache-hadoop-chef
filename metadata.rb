@@ -28,6 +28,14 @@ depends 'cmake'
   supports os
 end
 
+attribute "java/jdk_version",
+:display_name =>  "Jdk version",
+:type => 'string'
+
+attribute "java/install_flavor",
+:display_name =>  "Oracle (default) or openjdk",
+:type => 'string'
+
 attribute "apache_hadoop/yarn/nm/memory_mbs",
 :display_name => "Apache_Hadoop NodeManager Memory in MB",
 :type => 'string'

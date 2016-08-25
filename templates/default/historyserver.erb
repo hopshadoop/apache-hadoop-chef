@@ -30,13 +30,6 @@ stop() {
   return $?
 }
 
-restart() {
-  stop
-  sleep 3
-  start
-  return $?
-}
-
 status() {
   PID_FILE=/tmp/mapred-<%= "#{node.apache_hadoop.yarn.user}" %>-historyserver.pid
   res=1
@@ -51,6 +44,16 @@ status() {
    echo "jobhistoryserver is not running"
   fi
   return $res
+}
+
+restart() {
+  res=`status()`
+  if [ "$res" == "0" ] ; then
+    stop
+    sleep 3
+  fi
+  start
+  return $?
 }
 
 

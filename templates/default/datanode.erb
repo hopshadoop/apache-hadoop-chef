@@ -22,6 +22,7 @@ STOP_PROG="<%= node.apache_hadoop.base_dir %>/sbin/stop-dn.sh"
 EXEC_WITH_USER=
 
 start() {
+  ulimit -n 65000 2>&1 > /dev/null
   $EXEC_WITH_USER "$START_PROG"
   return $?
 }
@@ -29,12 +30,6 @@ start() {
 stop() {
   $EXEC_WITH_USER "$STOP_PROG"
 
-  return $?
-}
-
-restart() {
-  $EXEC_WITH_USER "$STOP_PROG"
-  $EXEC_WITH_USER "$START_PROG"
   return $?
 }
 
@@ -52,6 +47,16 @@ status() {
    echo "datanode is not running"
   fi
   return $res
+}
+
+restart() {
+  res=`status()`
+  if [ "$res" == "0" ] ; then
+    stop
+    sleep 3
+  fi
+  start
+  return $?
 }
 
 
