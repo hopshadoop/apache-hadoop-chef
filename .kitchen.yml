@@ -18,7 +18,7 @@ provisioner:
 platforms:
   - name: ubuntu-14.04
 #  - name: ubuntu-15.04
-  - name: centos-7.0
+#  - name: centos-7.0
 
 suites:
   - name: default
@@ -64,6 +64,7 @@ suites:
          kagent:
             private_ips: ["10.0.2.15"]
             public_ips: ["10.0.2.15"]
+            enabled: "false"
          private_ips: ["10.0.2.15"]
          public_ips: ["10.0.2.15"]
          vagrant: "true"

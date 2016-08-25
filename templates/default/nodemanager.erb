@@ -48,8 +48,8 @@ status() {
 
 
 restart() {
-  res=`status()`
-  if [ "$res" == "0" ] ; then
+  status
+  if [ $? -eq 0 ] ; then
     stop
     sleep 3
   fi

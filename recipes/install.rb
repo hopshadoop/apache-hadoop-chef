@@ -7,8 +7,6 @@ when "ubuntu"
 end
 
 
-
-
 if node.apache_hadoop.os_defaults == "true" then
 
   # http://blog.cloudera.com/blog/2015/01/how-to-deploy-apache-hadoop-clusters-like-a-boss/
@@ -47,9 +45,6 @@ end
 
 
 
-
-node.default.java.jdk_version = 7
-node.default.java.set_etc_environment = true
 include_recipe "java"
 
 
