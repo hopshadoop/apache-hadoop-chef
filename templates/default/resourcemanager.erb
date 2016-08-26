@@ -18,7 +18,7 @@
 START_PROG="<%= node.apache_hadoop.base_dir %>/sbin/root-start-rm.sh"  
 STOP_PROG="<%= node.apache_hadoop.base_dir %>/sbin/stop-rm.sh"  
 
-EXEC_WITH_USER=
+EXEC_WITH_USER="su <%= node.apache_hadoop.yarn.user %> -c"
 
 start() {
   ulimit -n 65000 2>&1 > /dev/null
@@ -27,7 +27,7 @@ start() {
 }
 
 stop() {
-  $EXEC_WITH_USER "$STOP_PROG"
+  "$STOP_PROG"
   return $?
 }
 
