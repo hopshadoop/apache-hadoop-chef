@@ -86,8 +86,8 @@ end
     log_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.out"
     config_file "#{node.apache_hadoop.conf_dir}/hdfs-site.xml"
     web_port node.apache_hadoop.dn.http_port
-    command "hdfs"
-    command_user node.apache_hadoop.hdfs.user
-    command_script "#{node.apache_hadoop.home}/bin/hdfs"
+#    command "hdfs"
+#    command_user node.apache_hadoop.hdfs.user
+#    command_script "#{node.apache_hadoop.home}/bin/hdfs"
   end
 #end
