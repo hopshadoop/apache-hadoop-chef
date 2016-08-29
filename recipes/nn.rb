@@ -148,7 +148,7 @@ if node.kagent.enabled == "true"
   kagent_config "#{service_name}" do
     service "HDFS"
     config_file "#{node.apache_hadoop.conf_dir}/hdfs-site.xml"
-    log_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.out"
+    log_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.log"
     web_port node.apache_hadoop.nn.http_port
   end
 end
