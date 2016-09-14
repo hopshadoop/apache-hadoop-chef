@@ -41,10 +41,6 @@ end
 
 
 
-
-
-
-
 include_recipe "java"
 
 
@@ -57,7 +53,7 @@ user node.apache_hadoop.hdfs.user do
   supports :manage_home => true
   action :create
   home "/home/#{node.apache_hadoop.hdfs.user}"
-  system true
+#  system true
   shell "/bin/bash"
   not_if "getent passwd #{node.apache_hadoop.hdfs.user}"
 end
@@ -66,7 +62,7 @@ user node.apache_hadoop.yarn.user do
   supports :manage_home => true
   home "/home/#{node.apache_hadoop.yarn.user}"
   action :create
-  system true
+#  system true
   shell "/bin/bash"
   not_if "getent passwd #{node.apache_hadoop.yarn.user}"
 end
@@ -75,7 +71,7 @@ user node.apache_hadoop.mr.user do
   supports :manage_home => true
   home "/home/#{node.apache_hadoop.mr.user}"
   action :create
-  system true
+#  system true
   shell "/bin/bash"
   not_if "getent passwd #{node.apache_hadoop.mr.user}"
 end
