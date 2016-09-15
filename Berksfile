@@ -9,3 +9,4 @@ cookbook 'java'
 cookbook 'sysctl', '~> 0.7.0'
 cookbook 'cmake', '~> 0.3.0'
 
+cookbook 'magic_shell'
