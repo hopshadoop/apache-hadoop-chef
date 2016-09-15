@@ -146,7 +146,7 @@ default.apache_hadoop.limits.nproc             = '65536'
 default.apache_hadoop.limits.memory_limit      = '100000'
 default.apache_hadoop.os_defaults              = "true"
 
-default.apache_hadoop.user_envs                = "true"
+default.apache_hadoop.user_envs                = "false"
 
 default.apache_hadoop.logging_level            = "WARN"
 default.apache_hadoop.nn.direct_memory_size    = 100

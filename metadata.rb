@@ -23,6 +23,7 @@ depends 'kagent'
 depends 'java'
 depends 'sysctl'
 depends 'cmake'
+depends 'magic_shell'
 
 %w{ ubuntu debian rhel centos }.each do |os|
   supports os

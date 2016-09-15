@@ -378,3 +378,27 @@ end
    mode "0775"
    action :create
  end
+
+
+magic_shell_environment 'PATH' do
+  value "$PATH:#{node.apache_hadoop.base_dir}/bin"
+end
+
+
+magic_shell_environment 'HADOOP_HOME' do
+  value node.apache_hadoop.base_dir
+end
+
+magic_shell_environment 'HADOOP_CONF_DIR' do
+  value "#{node.apache_hadoop.base_dir}/etc/hadoop"
+end
+
+magic_shell_environment 'HADOOP_PID_DIR' do
+  value "#{node.apache_hadoop.base_dir}/logs"
+end
+
+magic_shell_environment 'HADOOP_PID_DIR' do
+  value "#{node.apache_hadoop.base_dir}/logs"
+end
+
+
