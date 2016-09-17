@@ -132,3 +132,7 @@ attribute "apache_hadoop/yarn/rt",
 attribute "apache_hadoop/dir",
           :description => "Hadoop installation directory",
           :type => 'string'
+
+attribute "apache_hadoop/yarn/aux_services",
+          :description => "mapreduce_shuffle, spark_shuffle",
+          :type => "string"
