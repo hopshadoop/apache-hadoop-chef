@@ -155,3 +155,5 @@ default.apache_hadoop.ha_enabled               = "false"
 default.apache_hadoop.systemd                  = "true"
 
 
+default.apache_hadoop.log.maxfilesize          = "256MB"
+default.apache_hadoop.log.maxbackupindex       = 10
