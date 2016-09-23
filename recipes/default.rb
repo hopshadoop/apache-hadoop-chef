@@ -21,6 +21,20 @@ if node.apache_hadoop.ha_enabled.eql? "true" || node.apache_hadoop.ha_enabled ==
 end
 
 
+file "#{node.apache_hadoop.home}/etc/hadoop/log4j.properties" do 
+  owner node.apache_hadoop.hdfs.user
+  action :delete
+end
+
+template "#{node.apache_hadoop.home}/etc/hadoop/log4j.properties" do
+  source "log4j.properties.erb"
+  owner node.apache_hadoop.hdfs.user
+  group node.apache_hadoop.group
+  mode "666"
+  action :create_if_missing
+end
+
+
 template "#{node.apache_hadoop.home}/etc/hadoop/core-site.xml" do 
   source "core-site.xml.erb"
   owner node.apache_hadoop.hdfs.user
