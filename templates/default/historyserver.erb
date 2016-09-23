@@ -31,7 +31,7 @@ stop() {
 }
 
 status() {
-  PID_FILE=/tmp/mapred-<%= "#{node.apache_hadoop.yarn.user}" %>-historyserver.pid
+  PID_FILE=/tmp/mapred-<%= "#{node.apache_hadoop.mr.user}" %>-historyserver.pid
   res=1
   if [ -f $PID_FILE ] ; then
      PID=`cat $PID_FILE`
