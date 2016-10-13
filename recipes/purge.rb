@@ -57,3 +57,14 @@ package "Bouncy Castle Remove" do
  ignore_failure true
  action :purge
 end
+
+
+primary_url = node.apache_hadoop.download_url.primary
+base_package_filename = File.basename(primary_url)
+cached_package_filename = "/tmp/#{base_package_filename}"
+
+file cached_package_filename do
+  action :delete
+  ignore_failure true
+end
+

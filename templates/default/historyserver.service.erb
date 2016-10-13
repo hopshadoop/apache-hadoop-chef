@@ -9,6 +9,8 @@ PIDFile = /tmp/mapred-<%= node.apache_hadoop.mr.user %>-historyserver.pid
 ExecStart = <%= node.apache_hadoop.base_dir %>/sbin/start-jhs.sh
 ExecStop = <%= node.apache_hadoop.base_dir %>/sbin/stop-jhs.sh
 ExecReload = <%= node.apache_hadoop.base_dir %>/sbin/restart-jhs.sh
+LimitNOFILE = 65000
+LimitNPROC = 10000
 
 Type = forking
 
