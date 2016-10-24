@@ -18,7 +18,7 @@ for script in node.apache_hadoop.nn.scripts
   end
 end 
 
-Chef::Log.info "NameNode format option: #{node.apache_hadoop.nn.format_options"
+Chef::Log.info "NameNode format option: #{node.apache_hadoop.nn.format_options}"
 
 template "#{node.apache_hadoop.home}/sbin/format-nn.sh" do
   source "format-nn.sh.erb"
@@ -26,8 +26,8 @@ template "#{node.apache_hadoop.home}/sbin/format-nn.sh" do
   group node.apache_hadoop.group
   mode 0775
   variables({
-              :format_opts => node.apache_hadoop.nn.format_options
-            })
+            :format_opts => node.apache_hadoop.nn.format_options
+        })
 end
 
 
