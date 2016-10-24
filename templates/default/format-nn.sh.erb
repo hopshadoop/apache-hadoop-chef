@@ -23,8 +23,7 @@ $rootDir/sbin/stop-nn.sh
 echo "$HDFS $command -format -force -nonInteractive > $log"
 
 # -force causes us to fail
-#$HDFS $command -format -force -nonInteractive > "$log"
-$HDFS $command -format -nonInteractive > "$log"
+$HDFS $command <%= @format_opts %>  > "$log"
 res=$?
 sleep 5
 cat "$log"

@@ -18,6 +18,18 @@ for script in node.apache_hadoop.nn.scripts
   end
 end 
 
+template "#{node.apache_hadoop.home}/sbin/format-nn.sh" do
+  source "format-nn.sh.erb"
+  owner node.apache_hadoop.hdfs.user
+  group node.apache_hadoop.group
+  mode 0775
+  variables({
+              :format_opts => node.apache_hadoop.nn.format_options
+            })
+end
+
+
+
 activeNN = true
 ha_enabled = false
 if node.apache_hadoop.ha_enabled.eql? "true" || node.apache_hadoop.ha_enabled == true # 

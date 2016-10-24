@@ -29,11 +29,13 @@ default.apache_hadoop.nn.http_port             = 50070
 default.apache_hadoop.dn.http_port             = 50075
 default.apache_hadoop.nn.port                  = 8020
 
+default.apache_hadoop.nn.format_options        = "-format -nonInteractive"
+
 default.apache_hadoop.leader_check_interval_ms = 1000
 default.apache_hadoop.missed_hb                = 1
 default.apache_hadoop.num_replicas             = 3
 default.apache_hadoop.db                       = "hadoop"
-default.apache_hadoop.nn.scripts               = %w{ format-nn.sh start-nn.sh stop-nn.sh restart-nn.sh root-start-nn.sh hdfs.sh yarn.sh hadoop.sh } 
+default.apache_hadoop.nn.scripts               = %w{ start-nn.sh stop-nn.sh restart-nn.sh root-start-nn.sh hdfs.sh yarn.sh hadoop.sh } 
 default.apache_hadoop.dn.scripts               = %w{ start-dn.sh stop-dn.sh restart-dn.sh root-start-dn.sh hdfs.sh yarn.sh hadoop.sh } 
 default.apache_hadoop.max_retries              = 0
 default.apache_hadoop.reformat                 = "false"
