@@ -273,6 +273,7 @@ bash 'extract-hadoop' do
         rm -f #{node.apache_hadoop.home}/etc/hadoop/core-site.xml
         rm -f #{node.apache_hadoop.home}/etc/hadoop/hdfs-site.xml
         rm -f #{node.apache_hadoop.home}/etc/hadoop/mapred-site.xml
+        rm -f #{node.apache_hadoop.home}/etc/hadoop/log4j.properties
         touch #{hin}
         chown -RL #{node.apache_hadoop.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.home}
 	EOH
