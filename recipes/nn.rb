@@ -18,6 +18,8 @@ for script in node.apache_hadoop.nn.scripts
   end
 end 
 
+Chef::Log.info "NameNode format option: #{node.apache_hadoop.nn.format_options"
+
 template "#{node.apache_hadoop.home}/sbin/format-nn.sh" do
   source "format-nn.sh.erb"
   owner node.apache_hadoop.hdfs.user
