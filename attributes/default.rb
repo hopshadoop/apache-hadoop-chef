@@ -17,7 +17,7 @@ default.apache_hadoop.nn.name_dir              = "#{node.apache_hadoop.data_dir}
 
 default.apache_hadoop.hdfs.user_home           = "/user"
 default.apache_hadoop.hdfs.active_nn           = true
-
+default.apache_hadoop.hdfs.blocksize           = "134217728"
 
 default.apache_hadoop.download_url.primary     = "#{download_url}/hadoop-#{node.apache_hadoop.version}.tar.gz"
 default.apache_hadoop.download_url.secondary   = "https://archive.apache.org/dist/hadoop/core/hadoop-#{node.apache_hadoop.version}/hadoop-#{node.apache_hadoop.version}.tar.gz"

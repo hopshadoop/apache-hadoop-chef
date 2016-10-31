@@ -77,6 +77,10 @@ attribute "apache_hadoop/hdfs/user",
           :description => "Username to run hdfs as",
           :type => 'string'
 
+attribute "apache_hadoop/hdfs/blocksize",
+          :description => "HDFS Blocksize (128k, 512m, 1g, etc). Default 128m.",
+          :type => 'string'
+
 attribute "apache_hadoop/format",
           :description => "Format HDFS, Run 'hdfs namenode -format",
           :type => 'string'
