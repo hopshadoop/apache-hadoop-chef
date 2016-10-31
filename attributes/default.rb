@@ -1,6 +1,6 @@
 include_attribute "kagent"
 
-default.apache_hadoop.version                  = "2.4.0"
+default.apache_hadoop.version                  = "2.7.3"
 default.apache_hadoop.hdfs.user                = "hdfs"
 default.apache_hadoop.group                    = "hadoop"
 default.apache_hadoop.dir                      = "/srv"
