@@ -20,7 +20,7 @@ log=$rootDir/logs/hadoop-<%= node.apache_hadoop.hdfs.user %>-$command.log
 echo "Stopping namenode if running ..."
 $rootDir/sbin/stop-nn.sh
 # -force ensures command doesn't user to confirm for re-formatting.
-echo "$HDFS $command -format -force -nonInteractive > $log"
+echo "$HDFS $command <%= @format_opts %> > $log"
 
 # -force causes us to fail
 $HDFS $command <%= @format_opts %>  > "$log"
