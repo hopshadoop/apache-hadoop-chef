@@ -15,6 +15,8 @@ default.apache_hadoop.data_dir                 = "/var/data/hadoop"
 default.apache_hadoop.dn.data_dir              = "#{node.apache_hadoop.data_dir}/hdfs/dn"
 default.apache_hadoop.nn.name_dir              = "#{node.apache_hadoop.data_dir}/hdfs/nn"
 
+default.apache_hadoop.nm.log_dir               = "#{node.apache_hadoop.logs_dir}/userlogs"
+
 default.apache_hadoop.hdfs.user_home           = "/user"
 default.apache_hadoop.hdfs.active_nn           = true
 default.apache_hadoop.hdfs.blocksize           = "134217728"

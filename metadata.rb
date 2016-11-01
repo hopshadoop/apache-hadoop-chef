@@ -140,3 +140,7 @@ attribute "apache_hadoop/dir",
 attribute "apache_hadoop/yarn/aux_services",
           :description => "mapreduce_shuffle, spark_shuffle",
           :type => "string"
+
+attribute "apache_hadoop/nm/log_dir",
+          :description => "Directory for storing user logs for the nodemanager",
+          :type => 'string'
