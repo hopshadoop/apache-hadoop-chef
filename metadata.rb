@@ -90,6 +90,10 @@ attribute "apache_hadoop/tmp_dir",
           :type => 'string'
 
 attribute "apache_hadoop/data_dir",
+          :description => "The directory in which Hadoop's NameNodes and DataNodes store their data",
+          :type => 'string'
+
+attribute "apache_hadoop/dn/data_dir",
           :description => "The directory in which Hadoop's DataNodes store their data",
           :type => 'string'
 
