@@ -93,8 +93,8 @@ default.apache_hadoop.rm.http_port             = 8088
 default.apache_hadoop.nm.http_port             = 8042
 default.apache_hadoop.jhs.http_port            = 19888
 
-default.apache_hadoop.rm.scheduler_class       = "org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler"
-#default.apache_hadoop.rm.scheduler_class     = "org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler"
+#default.apache_hadoop.rm.scheduler_class       = "org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler"
+default.apache_hadoop.rm.scheduler_class       = "org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler"
 default.apache_hadoop.rm.scheduler_capacity.calculator_class  = "org.apache.hadoop.yarn.util.resource.DominantResourceCalculator"
 
 default.apache_hadoop.mr.tmp_dir               = "/mapreduce"
