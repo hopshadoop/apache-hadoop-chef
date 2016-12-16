@@ -320,6 +320,7 @@ end
    group node.apache_hadoop.group
    mode "0775"
    action :create
+   recursive true
  end
 
  directory node.apache_hadoop.tmp_dir do
