@@ -265,7 +265,7 @@ bash 'extract-hadoop' do
   code <<-EOH
         set -e
 	tar -zxf #{cached_package_filename} -C #{node.apache_hadoop.dir}
-        ln -s #{node.apache_hadoop.base_dir} #{node.apache_hadoop.home} 
+        ln -s #{node.apache_hadoop.home} #{node.apache_hadoop.base_dir}
         # chown -L : traverse symbolic links
         chown -RL #{node.apache_hadoop.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.home}
         chown -RL #{node.apache_hadoop.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.base_dir}
