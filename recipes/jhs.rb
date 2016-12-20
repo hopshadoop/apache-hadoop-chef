@@ -103,12 +103,12 @@ else #sysv
 
 end
 
-#if node.kagent.enabled == "true" 
+if node.kagent.enabled == "true" 
   kagent_config service_name do
     service "MAP_REDUCE"
     log_file "#{node.apache_hadoop.logs_dir}/mapred-#{node.apache_hadoop.mr.user}-#{service_name}-#{node.hostname}.log"
     config_file "#{node.apache_hadoop.conf_dir}/mapred-site.xml"
     web_port node.apache_hadoop["#{yarn_service}"][:http_port]
   end
-#end
+end
 

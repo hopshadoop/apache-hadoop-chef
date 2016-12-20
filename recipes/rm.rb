@@ -115,17 +115,14 @@ else #sysv
 
 end
 
-#if node.kagent.enabled == "true" 
+if node.kagent.enabled == "true" 
   kagent_config "resourcemanager" do
     service "YARN"
     log_file "#{node.apache_hadoop.logs_dir}/yarn-#{node.apache_hadoop.yarn.user}-#{service_name}-#{node.hostname}.log"
     config_file "#{node.apache_hadoop.conf_dir}/yarn-site.xml"
     web_port node.apache_hadoop["#{yarn_service}"][:http_port]
-#    command "yarn"
-#    command_user node.apache_hadoop.yarn.user
-#    command_script "#{node.apache_hadoop.home}/bin/yarn"
   end
-#end
+end
 
 tmp_dirs   = [node.apache_hadoop.hdfs.user_home + "/" + node.apache_hadoop.yarn.user, node.apache_hadoop.yarn.nodemanager.remote_app_log_dir]
 for d in tmp_dirs

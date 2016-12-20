@@ -80,14 +80,11 @@ else #sysv
 
 end
 
-#if node.kagent.enabled == "true" 
+if node.kagent.enabled == "true" 
   kagent_config "#{service_name}" do
     service "HDFS"
     log_file "#{node.apache_hadoop.logs_dir}/hadoop-#{node.apache_hadoop.hdfs.user}-#{service_name}-#{node.hostname}.log"
     config_file "#{node.apache_hadoop.conf_dir}/hdfs-site.xml"
     web_port node.apache_hadoop.dn.http_port
-#    command "hdfs"
-#    command_user node.apache_hadoop.hdfs.user
-#    command_script "#{node.apache_hadoop.home}/bin/hdfs"
   end
-#end
+end
