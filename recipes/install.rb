@@ -263,8 +263,9 @@ base_name = File.basename(base_package_filename, ".tar.gz")
 bash 'extract-hadoop' do
   user "root"
   code <<-EOH
+        set -e
 	tar -zxf #{cached_package_filename} -C #{node.apache_hadoop.dir}
-        ln -s #{node.apache_hadoop.dir}/#{node.apache_hadoop.version} #{node.apache_hadoop.base_dir}
+        ln -s #{node.apache_hadoop.dir}/"hadoop-"#{node.apache_hadoop.version} #{node.apache_hadoop.base_dir}
         # chown -L : traverse symbolic links
         chown -RL #{node.apache_hadoop.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.home}
         chown -RL #{node.apache_hadoop.hdfs.user}:#{node.apache_hadoop.group} #{node.apache_hadoop.base_dir}
