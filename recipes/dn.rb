@@ -38,7 +38,9 @@ if node.apache_hadoop.systemd == "true"
     owner "root"
     group "root"
     mode 0754
+if node.services.enabled == "true"
     notifies :enable, "service[#{service_name}]"
+end
     notifies :restart, "service[#{service_name}]", :immediately
   end
 
@@ -74,7 +76,9 @@ else #sysv
     owner "root"
     group "root"
     mode 0754
+if node.services.enabled == "true"
     notifies :enable, resources(:service => "#{service_name}")
+end
     notifies :restart, resources(:service => "#{service_name}"), :immediately
   end
 
