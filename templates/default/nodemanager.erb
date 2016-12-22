@@ -21,6 +21,7 @@ STOP_PROG="<%= node.apache_hadoop.base_dir %>/sbin/stop-nm.sh"
 EXEC_WITH_USER="su <%= node.apache_hadoop.yarn.user %> -c"
 
 start() {
+  rm -f <%= node.apache_hadoop.logs_dir %>/hadoop.log
   $EXEC_WITH_USER "$START_PROG"
   return $?
 }

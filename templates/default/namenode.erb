@@ -21,6 +21,7 @@ EXEC_WITH_USER="su <%= node.apache_hadoop.hdfs.user %> -c"
 
 start() {
   ulimit -n 65000 2>&1 > /dev/null
+  rm -f <%= node.apache_hadoop.logs_dir %>/hadoop.log
   $EXEC_WITH_USER "$START_PROG"
   return $?
 }
