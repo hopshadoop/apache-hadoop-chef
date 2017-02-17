@@ -178,7 +178,7 @@ for d in tmp_dirs
     action :create_as_superuser
     owner node.apache_hadoop.hdfs.user
     group node.apache_hadoop.group
-    mode "1777"
+    mode "1770"
     not_if ". #{node.apache_hadoop.base_dir}/sbin/set-env.sh && #{node.apache_hadoop.base_dir}/bin/hdfs dfs -test -d #{d}"
   end
 end
