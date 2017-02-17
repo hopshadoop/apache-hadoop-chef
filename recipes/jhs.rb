@@ -22,7 +22,7 @@ tmp_dirs   = ["/mr-history", node.apache_hadoop.jhs.inter_dir, node.apache_hadoo
     action :create_as_superuser
     owner node.apache_hadoop.mr.user
     group node.apache_hadoop.group
-    mode "1770"
+    mode "1775"
     not_if ". #{node.apache_hadoop.home}/sbin/set-env.sh && #{node.apache_hadoop.home}/bin/hdfs dfs -test -d #{d}"
    end
  end
@@ -34,7 +34,7 @@ node.normal.mr.dirs = [node.apache_hadoop.mr.staging_dir, node.apache_hadoop.mr.
     action :create_as_superuser
     owner node.apache_hadoop.mr.user
     group node.apache_hadoop.group
-    mode "0770"
+    mode "0775"
     not_if ". #{node.apache_hadoop.home}/sbin/set-env.sh && #{node.apache_hadoop.home}/bin/hdfs dfs -test -d #{d}"
    end
  end
