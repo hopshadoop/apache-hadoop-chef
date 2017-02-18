@@ -128,13 +128,24 @@ if node.kagent.enabled == "true"
   end
 end
 
-tmp_dirs   = [node.apache_hadoop.hdfs.user_home + "/" + node.apache_hadoop.yarn.user, node.apache_hadoop.yarn.nodemanager.remote_app_log_dir]
+tmp_dirs   = [node.apache_hadoop.hdfs.user_home + "/" + node.apache_hadoop.yarn.user]
 for d in tmp_dirs
   apache_hadoop_hdfs_directory d do
     action :create_as_superuser
     owner node.apache_hadoop.yarn.user
     group node.apache_hadoop.group
     mode "1775"
+    not_if ". #{node.apache_hadoop.home}/sbin/set-env.sh && #{node.apache_hadoop.home}/bin/hdfs dfs -test -d #{d}"
+  end
+end
+
+tmp_dirs   = [node.apache_hadoop.yarn.nodemanager.remote_app_log_dir]
+for d in tmp_dirs
+  apache_hadoop_hdfs_directory d do
+    action :create_as_superuser
+    owner node.apache_hadoop.yarn.user
+    group node.apache_hadoop.group
+    mode "1777"
     not_if ". #{node.apache_hadoop.home}/sbin/set-env.sh && #{node.apache_hadoop.home}/bin/hdfs dfs -test -d #{d}"
   end
 end
