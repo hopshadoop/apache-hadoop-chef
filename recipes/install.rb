@@ -194,7 +194,7 @@ end
 directory node.apache_hadoop.dir do
   owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
-  mode "0774"
+  mode "0775"
   recursive true
   action :create
   not_if { File.directory?("#{node.apache_hadoop.dir}") }
@@ -203,7 +203,7 @@ end
 directory node.apache_hadoop.data_dir do
   owner node.apache_hadoop.hdfs.user
   group node.apache_hadoop.group
-  mode "0774"
+  mode "0775"
   recursive true
   action :create
 end
