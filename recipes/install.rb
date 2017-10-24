@@ -44,10 +44,10 @@ end
 include_recipe "java"
 
 
-#group node.apache_hadoop.group do
-#  action :create
-#  not_if "getent group #{node.apache_hadoop.group}"
-#end
+group node.apache_hadoop.group do
+  action :create
+  not_if "getent group #{node.apache_hadoop.group}"
+end
 
 user node.apache_hadoop.hdfs.user do
   home "/home/#{node.apache_hadoop.hdfs.user}"
